@@ -1,0 +1,321 @@
+
+
+
+
+@import generals
+
+p
+    // margin: 0
+h6
+    padding: 0
+    margin: 0
+    margin-bottom: 15px
+
+.container
+    padding: 0
+.row
+    margin: 0
+    div
+        padding: 0
+
+
+#infoInterview
+    background-color: $fondoComplemento
+    padding: 80px 0
+    .global
+        padding: 0
+        @include responsivo(telefonoTable)
+            width: 90%
+        @include responsivo(pcMedio)
+            width: 90%
+        @include responsivo(general)
+            // max-width: 80%
+            // min-width: 1000px
+        @include responsivo(resto)
+            // max-width: 70%
+            // min-width: 1000px
+        .row.intr
+            box-shadow: $boxShadow2
+            background-color: white
+            padding: 0
+            padding-bottom: 25px!important
+        .interviewInfo
+            padding-top: 25px
+            padding-left: 2.5%
+            padding-right: 2.5%
+            .row.titlePrincipal
+                padding: 25px 0
+                h5
+                    padding-bottom: 15px
+                    border-bottom: 1px solid rgba(0,0,0,0.2)
+                    margin-bottom: 25px
+                    display: flex
+                    width: 100%
+                    font-size: 25px
+                    // display: block
+                    small
+                        display: block
+                        width: fit-content
+                        float: right
+                        font-size: 14px
+                        margin: auto
+                        margin-right: 0
+            .intervirew4
+                padding-top: 30px
+                border-top: 1px solid rgba(0,0,0,0.3)
+            .row.interview3
+                margin-top: auto
+                // display: block
+                margin-top: 50px
+            .row.interview2
+                margin-bottom: 20px
+            .row.interviewsData
+                padding-top: 30px
+                border-top: 1px solid rgba(0,0,0,0.3)
+                .container.candidatos
+                    .candidatoEntrevista
+                        overflow: auto
+                        height: 115px
+                        button
+                            justify-content: space-between
+                            width: 85%
+                            margin: 0
+                            margin-right: auto
+                            display: flex
+                            text-decoration: none
+                            transition: $trans
+                            padding: 10px
+                            background-color: transparent
+                            border: 0
+                            // width: fit-content
+                            .img
+                                img
+                                    width: 40px
+                                    height: 40px
+                                    border-radius: 100px
+                            .nombre
+                                margin: auto 15px
+                                display: flex
+                                h6
+                                    display: block
+                                    margin: auto 0
+                                    transition: $trans
+                            .star-rating
+                                margin: 0 15px
+                                span.fa.fa-star-o
+                                    // transition: $trans
+                            &:hover
+                                background-color: $azulOscuro
+                                .nombre
+                                    h6
+                                        color: white
+                                .star-rating
+                                    span.fa.fa-star-o
+                                        color: white
+
+            .row.interview
+                display: flex
+                flex-direction: column
+                margin-bottom: 30px
+                h6
+                    // display: block
+                    text-align: center
+                    margin-bottom: 15px
+                .pautado
+                    text-align: center
+                    display: flex
+                    justify-content: center
+                    flex-direction: column
+
+                    .dat
+                        padding: 0
+                        border: 1px solid $azulOscuro
+                        position: relative
+                        max-width: 140px
+                        margin: 0 auto
+                        &::before
+                            content: ''
+                            float: left
+                            position: absolute
+                            left: 13.5%
+                            top: 5px
+                            width: 10px
+                            height: 10px
+                            background: #111
+                            z-index: 1
+                            -moz-border-radius: 10px
+                            -webkit-border-radius: 10px
+                            border-radius: 10px
+                            -moz-box-shadow: 0 1px 1px #fff
+                            -webkit-box-shadow: 0 1px 1px #fff
+                            box-shadow: 0 1px 1px #fff
+                        &::after
+                            content: ''
+                            float: left
+                            position: absolute
+                            right: 13%
+                            top: 5px
+                            width: 10px
+                            height: 10px
+                            background: #111
+                            z-index: 1
+                            -moz-border-radius: 10px
+                            -webkit-border-radius: 10px
+                            border-radius: 10px
+                            -moz-box-shadow: 0 1px 1px #fff
+                            -webkit-box-shadow: 0 1px 1px #fff
+                            box-shadow: 0 1px 1px #fff
+
+                        .mes
+                            font-size: 20px
+                            padding: 5px 25px
+                            padding-top: 15px
+                            // background-color: $fondoComplemento
+                            border-bottom: 2px solid black
+                            color: $azulOscuro
+                            font-weight: bold
+                            position: relative
+                            &::before
+                                content: ''
+                                float: left
+                                position: absolute
+                                left: 15%
+                                top: -10px
+                                width: 6px
+                                height: 20px
+                                background: #dadada
+                                background: -webkit-gradient(linear,left top,left bottom,from(#f1f1f1),to(#aaa))
+                                background: -moz-linear-gradient(top,#f1f1f1,#aaa)
+                                z-index: 2
+                                -moz-border-radius: 2px
+                                -webkit-border-radius: 2px
+                                border-radius: 2px
+                            &::after
+                                content: ''
+                                float: left
+                                position: absolute
+                                top: -10px
+                                width: 6px
+                                height: 20px
+                                background: #dadada
+                                background: -webkit-gradient(linear,left top,left bottom,from(#f1f1f1),to(#aaa))
+                                background: -moz-linear-gradient(top,#f1f1f1,#aaa)
+                                z-index: 2
+                                -moz-border-radius: 2px
+                                -webkit-border-radius: 2px
+                                border-radius: 2px
+                        .dia
+                            padding: 10px 0
+                            font-size: 25px
+                            font-weight: bold
+                        .anio
+                            font-size: 22px
+                            padding: 5px 25px
+                            background-color: $azulOscuro
+                            color: white
+                            h6
+                                padding: 0
+                                margin-bottom: 0
+                                color: white
+                    .dat.realizada
+                        .mes
+                            &::after
+                                right: 15px
+                        .dia
+                            padding-left: 10px
+                            padding-right: 10px
+
+        .userInfo
+            padding: 0!important
+            // padding-bottom: 25px
+            p
+                color: black!important
+                font-size: 16px
+                height: auto
+                // max-height: 100px
+                // overflow: auto
+            .col
+                padding: 0 5%
+                h6
+                    padding: 0
+                    margin-bottom: 10px
+                    color: black
+                    font-size: 16px
+            .archivos
+                padding-bottom: 25px
+                position: relative
+                margin-bottom: 25px
+                &::after
+                    position: absolute
+                    content: ''
+                    border-bottom: 2px solid rgba($azulOscuro, 0.4)
+                    left: 0
+                    right: 0
+                    bottom: 0
+                    width: 75%
+                    display: block
+                    margin: auto
+                .photoFiles
+                    padding: 0!important
+                    .dataFam
+                        p
+                            margin-bottom: 0
+                    .foto
+                        position: relative
+                        span.etiqueta
+                            position: absolute
+                            top: 0
+                            left: 0
+                            right: 0
+                            color: white
+                            background-color: rgba(green,0.7)
+                            // background-color: green
+                            font-size: 20px
+                            text-align: center
+                            padding: 6px 0
+                            font-weight: bold
+                        img
+                            object-fit: cover
+                            height: auto
+                            width: 100%
+                            max-height: 280px
+
+                    .files
+                        padding: 0 2.5%
+                        padding-top: 25px
+                        display: flex
+                        // flex-direction: column
+                        justify-content: center
+                        align-items: center
+                        flex-wrap: wrap
+                        a
+                            font-size: 16px
+                            text-decoration: none
+                            color: black
+                            transition: $trans
+                            // margin-bottom: 15px
+                            i
+                                margin: 0 5px
+                                font-size: 20px
+                            &:hover
+                                color: $azulOscuro
+                        a.name
+                            color: black
+                            font-size: 20px
+                            text-decoration: none
+                            transition: $trans
+                            margin-bottom: 15px
+                            font-weight: bold
+                            width: 100%
+                            display: block
+                            text-align: center
+                            &:hover
+                                color: $azulOscuro
+            .dataUser
+                overflow: auto
+                // height: 250px
+                max-height: 320px
+
+
+
+

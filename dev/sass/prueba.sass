@@ -1,0 +1,49 @@
+
+
+
+
+$desdeT: 320px
+$hastaT: 767px
+
+$desdeM: $hastaT + 1
+$hastaM: 1000px
+
+$desdeG: $hastaM
+$hastaG: $desdeG + 500
+
+@mixin responsivo($media)
+    @if $media == telefonoTable
+        @media only screen and (min-width: $desdeT) and (max-width: $hastaT)
+            @content
+    @else if $media == pcMedio
+        @media only screen and (min-width: $desdeM) and (max-width: $hastaM)
+            @content
+    @else if $media == general
+        @media only screen and (min-width: $desdeG) and (max-width: $hastaG)
+            @content
+    @else if $media == resto
+        @media only screen and (min-width: $hastaG + 1)
+            @content
+
+.copyright
+    width: 100%
+
+div#footerRights
+    width: 100%!important
+    display: block
+    p
+        text-align: center
+        display: flex
+        justify-content: center
+        align-items: center
+        color: black
+        font-size: 15.5px
+        margin-bottom: 0
+        img
+            width: 115px
+        @include responsivo(telefonoTable)
+            flex-direction: column
+        @include responsivo(pcMedio)
+            flex-direction: column
+
+

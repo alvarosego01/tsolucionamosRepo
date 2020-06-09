@@ -1,0 +1,645 @@
+
+// quitar cosa del focus
+*
+    outline: none!important
+
+*::focus
+    outline: 0
+
+
+
+
+// arreglar hora picker
+span.wickedpicker__controls__control-up
+    &::before
+        display: none
+span.wickedpicker__controls__control-down
+    &::after
+        display: none
+
+li.wickedpicker__controls__control,
+span.wickedpicker__controls__control--separator-inner
+    font-size: 20px
+
+
+$desdeT: 320px
+$hastaT: 767px
+
+$desdeM: $hastaT + 1
+$hastaM: 1000px
+
+$desdeG: $hastaM
+$hastaG: $desdeG + 500
+
+@mixin responsivo($media)
+    @if $media == telefonoTable
+        @media only screen and (min-width: $desdeT) and (max-width: $hastaT)
+            @content
+    @else if $media == pcMedio
+        @media only screen and (min-width: $desdeM) and (max-width: $hastaM)
+            @content
+    @else if $media == general
+        @media only screen and (min-width: $desdeG) and (max-width: $hastaG)
+            @content
+    @else if $media == resto
+        @media only screen and (min-width: $hastaG + 1)
+            @content
+
+
+
+
+
+$hexTrans: 99
+
+// colores
+$verdeOscuro: #00ACAC
+$azulOscuro: #336EB2
+$fondoComplemento: #F1F1F1
+$doradoStar: #efb810
+$amarilloPastel: #FEF165
+$verde: green
+$grisPastel: #CDCDCD
+$rojoSalmon: #FD5634
+
+
+// sombraBonita
+
+$boxShadow1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)
+$boxShadow2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)
+
+// otras cosas
+$trans: all 0.2s ease-in-out
+
+.resalte1
+    color: $azulOscuro
+
+// // fuentes
+// @font-face
+//     font-family: 'Moon-Bold'
+//     src: url('../../fuentes/Moon Bold.otf') format('opentype')
+// @font-face
+//     font-family: 'Moon-Light'
+//     src: url('../../fuentes/Moon Light.otf') format('opentype')
+// @font-face
+//     font-family: 'Roboto-Bold'
+//     src: url('../../fuentes/Roboto-Bold.ttf') format('ttf')
+// @font-face
+//     font-family: 'Roboto-Light'
+//     src: url('../../fuentes/Roboto-Light.ttf') format('ttf')
+// @font-face
+//     font-family: 'Roboto-Regular'
+//     src: url('../../fuentes/Roboto-Regular.ttf') format('ttf')
+// @font-face
+//     font-family: 'RobotoCondensed-Regular'
+//     src: url('../../fuentes/RobotoCondensed-Regular.ttf') format('ttf')
+
+
+.validateMessage
+    color: red
+
+// expandir tamaño de todos los modals
+.swal-modal
+    min-width: 500px!important
+    width: auto
+    margin: 10% auto!important
+    margin-top: 15%!important
+    z-index: 999999999
+    max-width: 60%!important
+    @include responsivo(telefonoTable)
+        max-width: 80%!important
+    @include responsivo(pcMedio)
+        max-width: 80%!important
+    @include responsivo(general)
+        max-width: 60%!important
+    @include responsivo(resto)
+        max-width: 40%!important
+
+//  spinner de carga
+#spinnerLoad
+    position: fixed
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    width: 100%!important
+    height: 100%!important
+    display: none
+    justify-content: center
+    align-content: center
+    align-items: center
+    z-index: 999999999999!important
+
+//colors
+$color_mine_shaft_approx: $azulOscuro!important
+
+.sk-folding-cube
+    margin: auto
+    width: 60px!important
+    height: 60px!important
+    position: relative
+    z-index: 9999999999999
+    //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: rotateZ(45deg)
+    .sk-cube
+        float: left
+        width: 50%
+        height: 50%
+        position: relative
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: scale(1.1)
+        &:before
+            content: ''
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            background-color: $color_mine_shaft_approx
+            animation: sk-foldCubeAngle 2.4s infinite linear both
+            //If you use compass, instead of the line below you could use + transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+            transform-origin: 100% 100%
+    .sk-cube2
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: scale(1.1) rotateZ(90deg)
+        &:before
+            animation-delay: 0.3s
+    .sk-cube3
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: scale(1.1) rotateZ(180deg)
+        &:before
+            animation-delay: 0.6s
+    .sk-cube4
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: scale(1.1) rotateZ(270deg)
+        &:before
+            animation-delay: 0.9s
+
+@-webkit-keyframes sk-foldCubeAngle
+    0%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateX(-180deg)
+        opacity: 0
+
+    10%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateX(-180deg)
+        opacity: 0
+
+    25%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateX(0deg)
+        opacity: 1
+
+    75%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateX(0deg)
+        opacity: 1
+
+    90%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateY(180deg)
+        opacity: 0
+
+    100%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateY(180deg)
+        opacity: 0
+@keyframes sk-foldCubeAngle
+    0%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateX(-180deg)
+        opacity: 0
+
+    10%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateX(-180deg)
+        opacity: 0
+
+    25%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateX(0deg)
+        opacity: 1
+
+    75%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateX(0deg)
+        opacity: 1
+
+    90%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateY(180deg)
+        opacity: 0
+
+    100%
+        //If you use compass, instead of the line below you could use + transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: perspective(140px) rotateY(180deg)
+        opacity: 0
+
+
+// remarcado de hipervinculos
+.hiper,
+.hiperOffColor
+    font-weight: bold
+.hiper
+    color: $azulOscuro
+
+
+
+
+
+footer#main-footer
+    ul.et-social-icons
+        display: none!important
+    div#footer-bottom
+        padding-top: 5px
+        border-top: 5px solid $verdeOscuro
+        background-color: white!important
+        .container
+            #footer-info
+                width: 100%!important
+                padding: 0!important
+                .dataFooter
+                    display: flex
+                    flex-direction: row
+                    justify-content: center
+                    padding-top: 10px
+                    @include responsivo(telefonoTable)
+                        flex-direction: column
+                        .devFooter
+                            flex-direction: column!important
+                            margin-left: 0!important
+                            a
+                                top: 0!important
+                    @include responsivo(pcMedio)
+                        flex-direction: column
+                        .devFooter
+                            flex-direction: column!important
+                            margin-left: 0!important
+                            a
+                                top: 0!important
+                    // .rights
+                    .devFooter
+                        display: flex
+                        flex-direction: row
+                        margin-left: 5px
+                        a
+                            position: relative
+                            top: -10px
+                            img.logoFooter
+                                width: 120px
+
+
+
+
+
+// hora picker
+.wickedpicker
+    z-index: 9999999999999999!important
+
+
+// date picker posicion
+div#ui-datepicker-div
+    z-index: 999999999!important
+    left: 50%!important
+    top: 50%!important
+    transform: translate(-50%, -50%)!important
+
+
+// estilos, efectos y señaladores generales
+.cChanged
+    // border: 5px dashed salmon!important
+    background-color: $rojoSalmon
+    color: white
+    a
+        color: white!important
+
+    // color: white!important
+.cGarantia
+    background-color: $amarilloPastel
+    color: black
+.cExtra
+    background-color: lightgoldenrodyellow!important
+    color: black!important
+
+.cSelected
+    background-color: green!important
+    color: white
+    a
+        color: white!important
+    // background-c
+
+tbody
+    tr
+        transition: $trans
+
+
+
+
+div#et-top-navigation
+    padding-bottom: 25px!important
+    ul#top-menu
+        display: flex
+        li
+            display: flex
+            a
+                padding-bottom: 0
+                margin: auto 0
+
+            ul.sub-menu
+                top: 30px
+
+// notificaciones
+li#menuNotif
+    div#notification-header
+        // padding-bottom: 25px
+        position: relative
+        button#notification-icon
+            border: 0
+            background-color: transparent
+            padding-bottom: 0
+            padding: 0!important
+            position: relative
+            span#notification-count
+                font-size: 20px
+                color: salmon
+                font-weight: bold
+                position: relative
+                top: -5px
+                position: absolute
+                left: -8px
+                top: 0px
+                width: fit-content
+            img
+                // padding-top: 5px
+                width: 35px
+        ul#notification-latest
+            width: 400px!important
+            max-width: 500px!important
+            right: 0
+            top: 30px
+            // opacity: 1!important
+            // visibility: visible!important
+            // padding-left: 20px
+            // padding-right: 20px
+            h6
+                font-size: 20px!important
+                color: black
+                padding: 0 20px!important
+            li
+                transition: all 0.2s ease-in-out
+                color: rgba(53,54,54,0.7)
+                // font-size: 18px
+                position: relative
+                // &:hover
+                    // background-color: rgba(0, 0, 0, 0.03)
+                a
+                    width: 100%!important
+                    font-size: 17px
+                span.new
+                    background-color: salmon
+                    width: 5px
+                    height: 5px
+                    border-radius: 100%
+                    margin: auto
+                    position: absolute
+                    left: 0
+                    bottom: 0
+                    top: 0
+        &:hover
+            ul#notification-latest
+                opacity: 1
+                visibility: visible
+
+
+
+
+.swal-overlay.swal-overlay--show-modal
+    .swal-modal
+        .swal-footer
+            button.swal-button--confirm
+                background-color: $azulOscuro
+            .swal-button-container
+                &:nth-of-type(2)
+                    button
+                        background-color: $azulOscuro
+
+
+
+
+.btn-info,
+.btn-primary
+    background-color: $azulOscuro
+    border-color: $azulOscuro
+
+
+// estilo de las listas de ofertas que se puedan ver por ahi
+#listOfferts
+    .container
+        padding: 0
+        .row
+            .gridOffer
+                .card
+                    border: 0
+                    box-shadow: $boxShadow2
+                    margin: 0
+                    margin-bottom: 40px
+                    position: relative
+                    overflow: hidden
+                    width: 100%!important
+                    .card-img-top
+                        // width: 100%!important
+                        object-fit: cover
+                        height: 350px
+
+                    .card-body
+                        padding: 0!important
+                        position: absolute
+                        left: 0
+                        right: 0
+                        bottom: 0
+                        width: 100%
+                        height: 0
+                        opacity: 0
+                        transition: $trans
+                        display: flex
+                        flex-direction: column
+                        justify-content: flex-end
+                        a
+                            border: 0
+                            // opacity: 0
+                    .card-title
+                        text-align: center
+                        font-size: 20px
+                        padding: 0
+                        margin-bottom: 25px
+                    &:hover
+                        .card-body
+                            opacity: 1
+                            height: 100%
+                            background-color: rgba($azulOscuro, 0.60)
+                        .card-title
+                            color: white
+
+
+.wickedpicker
+    height: unset!important
+    p.wickedpicker__title
+        background-color: $azulOscuro
+        color: white
+        padding: 10px 5px
+        font-size: 18px
+        span
+            &::before
+                color: white
+                font-size: 16px
+
+
+::-webkit-scrollbar
+    width: 5px
+    // height: 5px
+    // max-height: 10px
+    border-radius: 100px
+
+/* Track */
+::-webkit-scrollbar-track
+    background: #f1f1f1
+
+
+/* Handle */
+::-webkit-scrollbar-thumb
+    background: $azulOscuro
+
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover
+    background: #555
+
+
+
+
+.star-rating
+    line-height:32px
+    font-size:1.25em
+    .fa-star
+        color: $doradoStar
+
+
+// ajuste de selector de fechas
+div#ui-datepicker-div
+    border-radius: 0!important
+    border: 0!important
+    padding: 0
+    box-shadow: $boxShadow2
+    .ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-all
+        padding: 10px
+        border-radius: 0
+        border: 0
+        background-color: $azulOscuro
+        color: white
+        a.ui-datepicker-prev.ui-corner-all
+            transform: rotate(135deg)
+            border: solid white
+            border-width: 0 3px 3px 0
+            display: inline-block
+            // padding: 3px
+            height: 15px
+            width: 15px
+            border-radius: 0
+            margin-left: 10px
+            margin-top: 5px
+            display: flex
+            top: 0
+            bottom: 0
+            margin: auto 10px
+            span.ui-icon.ui-icon-circle-triangle-w
+                display: none
+        a.ui-datepicker-next.ui-corner-all
+            transform: rotate(-45deg)
+            border: solid white
+            border-width: 0 3px 3px 0
+            display: inline-block
+            // padding: 3px
+            height: 15px
+            width: 15px
+            border-radius: 0
+            margin-right: 10px
+            margin-top: 5px
+            display: flex
+            top: 0
+            bottom: 0
+            margin: auto 10px
+            span.ui-icon.ui-icon-circle-triangle-e
+                display: none
+        a.ui-state-hover
+            background-color: transparent!important
+    table.ui-datepicker-calendar
+        padding-left: 2.5%
+        padding-right: 2.5%
+        thead
+        tbody
+            margin-top: 15px
+            // fecha no disponible
+            td
+                padding: 0
+                background-color: white
+                color: black
+                border: 1px solid rgba(0, 0, 0, 0.3)
+                a
+                    background-color: transparent
+                    border: 0
+                    padding: 0
+                    // padding-top: 5%
+                    // padding-bottom: 5%
+                    padding-right: 5%
+                    color: #312e25
+                    transition: $trans
+                a.ui-state-hover
+                    background-color: $azulOscuro
+                    color: white
+                span.ui-state-default
+                    padding: 0
+                    border: 0
+                    padding-right: 5%
+            td.ui-datepicker-unselectable.ui-state-disabled
+                span.ui-state-default
+                    // background: none!important
+                    padding: 0
+                    background-color: grey
+                    color: black
+            td.ui-datepicker-current-day
+                a
+                    color: white
+                    background-color: $azulOscuro
+
+
+
+
+// colores de selecciones
+
+.selectForContract
+    background-color: $azulOscuro
+    color: white
+    transition: $trans
+    button.btn.btn-primary
+        background-color: white
+        border: 1px solid white
+        color: black
+        transition: $trans
+    &:hover
+        button.btn.btn-primary
+            background-color: $azulOscuro
+            border: 1px solid $azulOscuro
+            color: white
+
+
+
+.et_right_sidebar
+    #main-content
+        .container
+            &:before
+                display: none
+
+
+
+span.resalte1
+    margin-right: 8px!important
