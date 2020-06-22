@@ -1,0 +1,483 @@
+@import generals
+
+
+#et-boc
+    display: none
+
+.row
+    margin: 0
+
+
+
+#firmaContratista
+    width: 300px
+    height: 150px
+    display: flex
+    justify-content: center!important
+    margin: auto
+    margin-bottom: 25px
+    canvas
+        width: 300px
+        height: 150px
+    @include responsivo(telefonoTable)
+        width: 300px
+        height: 150px
+        display: flex
+        justify-content: center!important
+        margin: auto
+        canvas
+            width: 300px
+            height: 150px
+    @include responsivo(pcMedio)
+        width: 300px
+        height: 150px
+        display: flex
+        justify-content: center!important
+        margin: auto
+        canvas
+            width: 300px
+            height: 150px
+
+// campo de firmas
+#FirmaUsuario
+    width: 300px
+    height: 150px
+    display: flex
+    justify-content: center!important
+    margin: auto
+    margin-bottom: 25px
+    canvas
+        width: 300px
+        height: 150px
+    @include responsivo(telefonoTable)
+        width: 300px
+        height: 150px
+        display: flex
+        justify-content: center!important
+        margin: auto
+        canvas
+            width: 300px
+            height: 150px
+    @include responsivo(pcMedio)
+        width: 300px
+        height: 150px
+        display: flex
+        justify-content: center!important
+        margin: auto
+        canvas
+            width: 300px
+            height: 150px
+
+
+
+
+//colors
+$color_fuscous_gray_approx: #555
+$color_gallery_approx: #eee
+$white: #fff
+$color_alto_approx: #ddd
+$color_pink_swan_approx: #bbb
+$color_suva_gray_approx: #888
+$web_orange:  orange
+
+//fonts
+$font_0: fontawesome
+
+//urls
+$url_0: url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css)
+
+div.tabMisVacantes
+    // min-width: 320px
+    // max-width: 1100px
+    // padding: 20px
+    // margin: 0 auto
+    // background: $white
+
+
+    section
+        display: none
+        padding: 20px 0 0
+        border-top: 1px solid $color_alto_approx
+
+    input
+        display: none
+        &:checked + label
+            color: $color_fuscous_gray_approx
+            border: 1px solid $color_alto_approx
+            border-top: 2px solid $web_orange
+            border-bottom: 1px solid $white
+    label
+        display: inline-block
+        margin: 0 0 -1px
+        padding: 15px 25px
+        font-weight: 600
+        text-align: center
+        color: $color_pink_swan_approx
+        border: 1px solid transparent
+        &:before
+            font-family: $font_0
+            font-weight: normal
+            margin-right: 10px
+        &:hover
+            color: $color_suva_gray_approx
+            cursor: pointer
+
+    #tab1:checked ~ #content1
+        display: block
+
+    #tab2:checked ~ #content2
+        display: block
+
+    #tab3:checked ~ #content3
+        display: block
+
+    #tab4:checked ~ #content4
+        display: block
+
+
+
+
+
+#listOfferts
+    .card
+        // box-shadow: $boxShadow1!important
+        img
+            height: 250px!important
+
+.tabMisVacantes
+    @include responsivo(telefonoTable)
+        min-width: 90%
+    @include responsivo(pcMedio)
+        min-width: 90%
+    @include responsivo(general)
+        min-width: 80%
+    @include responsivo(resto)
+        min-width: 80%
+        width: max-content!important
+    #content2
+        .opc
+            .approvedUsers
+                position: relative
+                padding: 10px 0
+                margin-top: 10px
+                &:before
+                    position: absolute
+                    content: ''
+                    border-top: 1px solid rgba(0,0,0,0.25)
+                    width: 90%
+                    display: block
+                    color: black
+                    margin: 0 auto
+                    top: 0
+                    left: 0
+                    right: 0
+                .profieAvatar
+                    img
+                        width: 30px
+
+
+
+.entry-content
+    .container
+        &::before
+            display: none!important
+
+// navbar
+div.tabMisVacantes
+    // min-width: 320px
+    // max-width: 1100px
+    padding: 50px 0
+    margin: 0 auto
+    background: $white
+    section#content1,
+    section#content2,
+    section#content3,
+    section#content4,
+    section#content5,
+    section#content6,
+    section#content7
+        display: none
+        padding: 20px 0 0
+        border-top: 1px solid $color_alto_approx
+        transition: all 0.2s ease-in-out
+    section.active
+        display: block!important
+
+    .navOpc
+        // display: none
+        ul
+            // padding-left: 20px
+            border-left: 1.5px solid $azulOscuro
+            border-left: 1.5px solid $azulOscuro
+            padding: 0!important
+            list-style: none!important
+            list-style-type: none!important
+            // padding: 25px 0
+            // padding: 25px 0
+            li
+                padding-bottom: 10px
+                a
+                    // display: none
+                    color: black
+                    font-size: 20px
+                    text-decoration: none
+                    transition: all 0.2s ease-in-out
+                    position: relative
+                    padding-left: 20px
+                    padding-bottom: 5px
+                    // padding-bottom: 15px
+                    &::after
+                        content: ''
+                        background-color: $azulOscuro!important
+                        position: absolute
+                        left: 0
+                        // right: 0
+                        // top: 0
+                        bottom: 0
+                        display: block
+                        transition: all 0.2s ease-in-out
+                        width: 0
+                        border-bottom: $azulOscuro
+                        height: 1.5px
+                        // z-index: -5
+                &:hover
+                    a
+                        &::after
+                            width: 100%
+            li.active
+                a
+                    // background-color: red
+                    &::after
+                        width: 100%!important
+
+
+.factUsers
+    .container
+        padding: 0!important
+
+
+article
+    .entry-content
+        background-color: $fondoComplemento!important
+        padding: 50px 0!important
+        .tabMisVacantes
+            padding: 50px 2.5%!important
+            box-shadow: $boxShadow2
+            background-color: white
+            .row
+                margin: 0
+                .navOpc
+                    border-right: 1px solid rgba(0,0,0,0.3)
+                    // padding: 0
+                .mainSections
+                    // padding: 0
+                    section
+                        border-top: 0!important
+                        padding-top: 0!important
+                        .table.table-hover, thead, tbody,tr
+                            // display: block
+                            // width: 100%
+                            // box-sizing: border-box
+                        .table.table-hover
+                            th,td
+                                padding: 5px 10px!important
+                            tbody
+                                td
+                                    // display: flex
+                                    // width: fit-content
+                                    // flex-direction: column
+                    .notifTab
+
+                    .oferts
+                        margin: 25px 0
+                        .card
+                            padding: 0
+                    .usuarioFirma
+                        .firma
+                            display: flex
+                            flex-direction: column
+                            img
+                                width: 300px
+                                margin: auto
+                                display: block
+                                margin-bottom: 25px
+                            button
+                                width: fit-content
+                                margin: 0 auto
+                                display: block
+                    .row.entrevista
+                        // margin-bottom: 25px
+                        .card
+                            width: 100%
+                            margin-bottom: 25px
+                            box-shadow: $boxShadow1
+                        .avisoRes
+                            text-align: center
+                            font-size: 20px
+                        .row.candidato
+                            // padding-right: 0!important
+                            // padding-left: 0!important
+                            // padding:
+                            padding: 0!important
+                            .imagenContainer
+                                padding: 0
+                                // display: none
+                                .imagen
+                                    height: 100%
+                                    display: flex
+                                    justify-content: center
+                                    img
+                                        height: 100%
+                                        display: block
+                                        margin: auto 0
+                                        object-fit: cover!important
+                                        // height: 80px!important
+                                        // width: 80px
+                                        // border-radius: 100px
+                            .info
+                                padding: 12.5px 0
+                            .container
+                                padding: 0!important
+
+    .buttonCustom
+        margin-bottom: 15px
+
+
+
+.misPostulaciones
+    .card
+        img.card-img-top.w-100
+            object-fit: cover!important
+            height: 180px!important
+            // display: block
+        .card-body
+            padding: 0
+            padding-top: 15px
+            .card-text
+                padding-left: 2.5%
+                padding-right: 2.5%
+                height: 125px
+                overflow: auto
+
+
+
+// lista de entrevistas candidata
+.entrevistasCandidata
+    .card
+        margin-bottom: 25px
+        box-sizing: border-box
+        box-shadow: $boxShadow1
+        table
+            margin-bottom: 0
+        .aviso
+            text-align: center
+            width: 100%
+            font-size: 16px
+            display: block
+        .opc
+            margin-top: 25px
+            small
+                font-size: 16px
+                margin-bottom: 5px
+    .card.cActive
+        border-left: 5px solid $azulOscuro
+// lista de contratos de candidata
+section#content3
+    h6
+        padding: 0
+        margin-bottom: 10px
+    p
+        margin: 0
+    .container
+        margin: 0
+        padding: 0
+    .contractListCand
+        .card
+            padding: 0 2.5%
+            padding-left: 0
+            box-shadow: $boxShadow1
+            margin-bottom: 25px
+            .buttonCustom
+                margin-bottom: 0
+                display: flex
+                flex-direction: row
+                justify-content: space-around
+                margin-top: 15px
+                a
+                    display: block
+            .info
+                padding: 15px 2.5%
+                .subInfo
+                    margin-top: 15px
+                    .row
+                        margin-bottom: 15px
+                        .desc
+                            p
+                                overflow: auto
+                                max-height: 100px
+            .contratistaImg
+                padding: 0
+                position: relative
+                span
+                    position: absolute
+                    left: 0
+                    right: 0
+                    display: block
+                    margin: 0 auto
+                    padding: 5px 25px
+                    text-align: center
+                    width: 100%
+                    transition: $trans
+                    z-index: 1
+                    font-weight: bold
+                    letter-spacing: 2.5px
+                span.top
+                    top: 0
+                span.bottom
+                    bottom: 0
+                span.activo
+                    background-color: $azulOscuro
+                    color: white
+                span.garantia
+                    background-color: $azulOscuro
+                    color: white
+                span.definitivo
+                    background-color: $verde
+                    color: white
+                span.inactivo,
+                span.cancelado
+                    background-color: $grisPastel
+                    color: black
+                span.cambio
+                    background-color: $amarilloPastel
+                    color: black
+                span.caducado
+                    background-color: $grisPastel
+                    color: black
+                span.eliminado
+                    background-color: $rojoSalmon
+                    color: white
+                div.sueldo
+                    position: absolute
+                    right: 0
+                    top: 0
+                    z-index: 1
+                    background-color: $azulOscuro
+                    padding: 5px 10px
+                    color: white
+                    display: flex
+                    flex-direction: row
+                    .n
+                        opacity: 1
+                        font-size: 16px
+                        margin: 0 5px
+                    .m
+                        font-size: 16px
+                img
+                    object-fit: cover!important
+                    position: absolute
+                    height: 100%
+                    // height: 100%!important
+
+
+
