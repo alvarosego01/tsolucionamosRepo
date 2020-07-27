@@ -39,10 +39,142 @@ h6
             background-color: white
             padding: 0
             padding-bottom: 25px!important
+            @include responsivo(telefonoTable)
+                display: flex
+                flex-direction: column-reverse
+                // flex-direction: column
+                width: 100%
+                .col-7.interviewInfo
+                    flex: unset!important
+                    min-width: 100%
+                    .titlePrincipal
+                        h5
+                            display: flex
+                            flex-direction: column
+                            text-align: center
+                            small
+                                display: block
+                                width: 100%
+                                text-align: center
+                                margin-top: 15px
+                    .row.interview2
+                        .info
+                            width: 100%
+                        .container.info2
+                            .row
+                                display: flex
+                                flex-direction: column
+                                .col-6
+                                    flex: unset
+                                    min-width: 100%
+                        .psicoTestsFields
+                            .pruebas
+                                h6
+                                    width: 100%
+                                    display: flex
+                                    flex-direction: column
+                                    text-align: center
+                                    small
+                                        display: block
+                                        width: 100%
+                                        text-align: center
+                                .img
+                                    display: flex
+                                    justify-content: center
+                    .row.intervirew4
+                        h6
+                            display: flex
+                            width: 100%
+                            flex-direction: column
+                            text-align: center
+                            small
+                                display: block
+                                width: 100%
+                                text-align: center
+                        .row
+                            display: flex
+                            flex-direction: column
+                            width: 100%
+                            margin-bottom: 25px
+                            .col-6
+                                flex: unset
+                                min-width: 100%
+                            h6
+                                text-align: left!important
+                            // *
+                                // width: 100%
+
+
+                .col-5.userInfo
+                    flex: unset!important
+                    min-width: 100%
+                    .container
+                        .archivos
+                            .photoFiles
+                                .foto
+                                    img
+                                        object-fit: contain
+                                        object-position: top
+                                        max-height: 500px
+                                .files
+                                    display: flex
+                                    flex-direction: column
+                        .container.dataUser
+                            // display: none
+                            .row
+                                &:nth-of-type(1)
+                                    // display: none
+                                    .col
+                                        flex: unset
+                                        min-width: 100%
+                                &:nth-of-type(2)
+                                    .col
+                                        flex: unset
+                                        min-width: 100%
+            @include responsivo(pcMedio)
+                display: flex
+                flex-direction: column-reverse
+                // flex-direction: column
+                width: 100%
+                .col-7.interviewInfo
+                    flex: unset!important
+                    min-width: 100%
+                .col-5.userInfo
+                    flex: unset!important
+                    min-width: 100%
+                    .container
+                        .archivos
+                            .photoFiles
+                                .foto
+                                    img
+                                        object-fit: contain
+                                        object-position: top
+                                        max-height: 500px
+                                .files
+                                    display: flex
+                                    flex-direction: column
+                        // .container.dataUser
+                        //     // display: none
+                        //     .row
+                        //         &:nth-of-type(1)
+                        //             // display: none
+                        //             .col
+                        //                 // flex: unset
+                        //                 // min-width: 50%
+                        //         &:nth-of-type(2)
         .interviewInfo
             padding-top: 25px
             padding-left: 2.5%
             padding-right: 2.5%
+            display: flex
+            // justify-content: center
+            .container.cont
+                margin: auto 0
+                display: flex
+                height: 100%
+                flex-direction: column
+                justify-content: space-between
+
             .row.titlePrincipal
                 padding: 25px 0
                 h5
@@ -61,14 +193,14 @@ h6
                         margin: auto
                         margin-right: 0
             .intervirew4
-                padding-top: 30px
-                border-top: 1px solid rgba(0,0,0,0.3)
+                // padding-top: 16px
+                // border-bottom: 1px solid rgba(0,0,0,0.3)
             .row.interview3
                 margin-top: auto
                 // display: block
                 margin-top: 50px
             .row.interview2
-                margin-bottom: 20px
+                margin-bottom: 16px
             .row.interviewsData
                 padding-top: 30px
                 border-top: 1px solid rgba(0,0,0,0.3)
@@ -197,6 +329,7 @@ h6
                                 top: -10px
                                 width: 6px
                                 height: 20px
+                                right: 15%
                                 background: #dadada
                                 background: -webkit-gradient(linear,left top,left bottom,from(#f1f1f1),to(#aaa))
                                 background: -moz-linear-gradient(top,#f1f1f1,#aaa)
@@ -263,22 +396,30 @@ h6
                     .foto
                         position: relative
                         span.etiqueta
-                            position: absolute
-                            top: 0
-                            left: 0
-                            right: 0
-                            color: white
-                            background-color: rgba(green,0.7)
+                            // position: absolute
+                            // top: 0
+                            // left: 0
+                            // right: 0
+                            // color: white
+                            // background-color: rgba(green,0.7)
                             // background-color: green
                             font-size: 20px
                             text-align: center
                             padding: 6px 0
                             font-weight: bold
+                            width: 100%
+                            display: block
                         img
                             object-fit: cover
                             height: auto
                             width: 100%
-                            max-height: 280px
+                            max-height: 400px
+                        span.etiqueta.confirmada
+                            background-color: rgba(green, 0.7)!important
+                            color: white
+                        span.etiqueta.pendiente
+                            background-color: rgba($amarilloPastel, 0.7)!important
+                            color: black
 
                     .files
                         padding: 0 2.5%
@@ -319,3 +460,47 @@ h6
 
 
 
+
+
+.psicoTestsFields
+    width: 100%
+    .pruebas
+        padding: 16px 0
+        border-top: 1px solid rgba(0,0,0,0.2)
+        border-bottom: 1px solid rgba(0,0,0,0.2)
+        p
+            padding-bottom: 0
+            width: 100%
+        .row
+            display: flex
+            flex-direction: row
+            // justify-content: center
+            a
+                display: flex
+                flex-direction: column
+                color: black
+                text-decoration: none
+                text-align: center
+                margin: 0 15px
+                transition: $trans
+                i
+                    font-size: 40px
+                span
+                    font-size: 18px
+                &:hover
+                    color: $azulOscuro
+        .cumple,
+        .noCumple
+            margin: 16px 0
+            font-weight: bold
+            width: 100%
+        .cumple
+            color: green
+        .noCumple
+            color: red
+            // width: 100%
+            // text-align: center
+        // .img
+        //     a
+        //         display: flex
+        //         flex-direction: column

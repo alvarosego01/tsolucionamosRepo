@@ -2,11 +2,15 @@
 
 // -------------------------------------------------------
 
-var dateFormat = "mm/dd/yy",
+
+var dateFormat = "dd/mm/yy",
     from = jQuery("#fechaInicio")
         .datepicker({
             defaultDate: "+1w",
             changeMonth: true,
+            dateFormat: 'dd/mm/yy',
+            minDate: 7
+
 
         })
         .on("change", function () {
@@ -16,6 +20,8 @@ var dateFormat = "mm/dd/yy",
     to = jQuery("#fechaFin").datepicker({
         defaultDate: "+1w",
         changeMonth: true,
+        dateFormat: 'dd/mm/yy'
+        // minDate: 90
 
     })
         .on("change", function () {
@@ -48,8 +54,6 @@ jQuery('#formFirma').remove();
 
 var formPayService = jQuery('#formPayIt > form').clone()[0];
 jQuery('#formPayIt').remove();
-
-
 
 var validCreateOffer = {
     "servicio": {
@@ -96,7 +100,7 @@ var validCreateOffer = {
         required: true,
         valid: {
             nullCheckbox: {
-                message: 'Debes aceptar los terminos y condiciones'
+                message: 'Debes estar de acuerdo'
             }
         }
     },
@@ -136,6 +140,15 @@ var validCreateOffer = {
             }
         }
     },
+    "otroServicio": {
+        field: 'textfield',
+        required: true,
+        valid: {
+            null: {
+                message: 'Debes especificar un servicio'
+            }
+        }
+    },
     "titulo": {
         field: 'textfield',
         required: true,
@@ -167,7 +180,7 @@ var validCreateOffer = {
         field: 'imagen',
         required: true,
         valid: {
-            formatImage: {
+            formatImages: {
                 message: 'Tipo de archivo inválido, solo se permite JPG/JPEG/PNG'
             },
             nullImage: {
@@ -179,7 +192,7 @@ var validCreateOffer = {
         field: 'imagen',
         required: false,
         valid: {
-            formatImage: {
+            formatImages: {
                 message: 'Tipo de archivo inválido, solo se permite JPG/JPEG/PNG'
             }
         }
@@ -188,7 +201,7 @@ var validCreateOffer = {
         field: 'imagen',
         required: false,
         valid: {
-            formatImage: {
+            formatImages: {
                 message: 'Tipo de archivo inválido, solo se permite JPG/JPEG/PNG'
             }
         }
@@ -197,7 +210,7 @@ var validCreateOffer = {
         field: 'imagen',
         required: false,
         valid: {
-            formatImage: {
+            formatImages: {
                 message: 'Tipo de archivo inválido, solo se permite JPG/JPEG/PNG'
             }
         }
@@ -206,7 +219,7 @@ var validCreateOffer = {
         field: 'imagen',
         required: false,
         valid: {
-            formatImage: {
+            formatImages: {
                 message: 'Tipo de archivo inválido, solo se permite JPG/JPEG/PNG'
             }
         }
@@ -334,36 +347,19 @@ function processStep(data) {
     var pgActual = ((p) && (p != 1)) ? p : 1;
     data.step = pgActual + 1;
 
+    if(data.step == 2){
+        data.step = 3;
+    }
+
     // console.log(data);
     datos = data;
     console.log(datos);
-    // if (data.dataService) {
 
-    //     // var aux =
-
-    //     // datos['datos'] = JSON.stringify(aux);
-    //     // console.log(datos);
-    //     // return;
-    // }
-    // if(data.contratoServicio){
-
-    //     // //  x = JSON.stringify(data.contratoServicio);
-    //     // var x = data.contratoServicio;
-
-    //     // datos['contratoServicio'] = x;
-
-    // }
-
-    // var obj = _.extend({}, data);
     var obj = data;
     // console.log(obj);
     // return;
     var valJson = JSON.stringify(obj);
-    // console.log(valJson);
-    // return;
 
-    // console.log(valJson);
-    // return;
     jQuery.ajax({
         url: s.ajaxurl,
         type: "POST",
@@ -456,12 +452,6 @@ function continueUseSign() {
             }
 
         })
-
-
-
-
-
-
         return;
 
     }
@@ -543,9 +533,6 @@ function saveSign() {
         }
 
     });
-
-
-    console.log(values);
 
     if ((values['jsonfirmaFamilia']) && (values['jsonfirmaFamilia'] != null) && (values['jsonfirmaFamilia'] != '')) {
 
@@ -639,6 +626,9 @@ function payService() {
         }
     });
 
+     jQuery('.swal-icon.swal-icon--info').html(icoMoney);
+    jQuery('.swal-icon.swal-icon--info').addClass('noAfterBefore');
+
 
     configValidatorType(dataPago);
 
@@ -698,19 +688,15 @@ function processpayService() {
         }
     });
 
-    console.log('objeto', datos);
-    // AHORA ESTOY AQUI
-
     if (error != true) {
         datos.step = datos.step + 1;
-        // se toman los datos de la factura
-        // var formData1 = new FormData(jQuery('.swal-modal.formPayNow form.formData')[0]);
+        datos.contratoServicio = '-';
+        datos.firmaFamilia = '-';
+        datos.guardarFirma = 0;
+        terminosCompleto = '-';
+
         var form = jQuery('.swal-modal.formPayNow form.formData');
-        // var form = jQuery('#formSentOffer form.formData');
-
-        // var files = jQuery("#comprobante")[0].files;
         var images =  jQuery('input:file', form);
-
         jQuery.each(images, function (indexInArray, valueOfElement) {
             var n = jQuery(valueOfElement).attr('name');
             var f = jQuery(valueOfElement)[0].files[0];
@@ -763,7 +749,7 @@ function processpayService() {
                 swal({
                     icon: 'success',
                     title: '¡Exito!',
-                    text: "Comprobaremos la transacción",
+                    text: "El proceso de publicación de anuncio, postulaciones y selección de candidato iniciará cuando comprobemos la validez del pago realizado. Sé paciente por favor",
                     className: 'successSendOffer'
                 }).then(
                     function (retorno) {
@@ -900,3 +886,110 @@ function processpayLater() {
 
 
 //
+
+
+function createPromoAnounce(){
+
+    var info = jQuery('#formSentOffer form');
+    // -----
+    var error = false;
+    var values = [];
+    var contador = 0;
+    var l = [];
+    // extraer cada campo
+
+    jQuery.each(info[0], function (indexInArray, valueOfElement) {
+
+        var name = jQuery(valueOfElement).attr('name');
+        var val = jQuery(valueOfElement).val();
+
+        if (val == '') {
+            val = null;
+        }
+        if((val != '' && val != null) && (val != 0)){
+            values[name] = val;
+            contador++;
+        }
+        // simular click para que salgan los validate message
+        var parent = jQuery(valueOfElement).parent();
+        parent.click();
+        if (jQuery('.validateMessage', parent).is("[error='true']")) {
+            error = true;
+        }
+
+    });
+
+    if( error == false ){
+
+    var formData1 = new FormData(jQuery('#formSentOffer form')[0]);
+
+    formData1.append('action', 'createPromoAnounceProcess');
+
+    jQuery.ajax({
+         url: s.ajaxurl,
+            type: 'post',
+            data: formData1,
+            processData: false,
+            contentType: false,
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+
+            jQuery('.swal-modal.formSelectForContract').remove();
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (response) {
+            console.log("exito", response);
+
+             swal({
+                    icon: 'success',
+                    title: '¡Exito!',
+                    text: "El anuncio ha sido publicado",
+                    className: 'successSendOffer'
+                }).then(
+                    function (retorno) {
+                        // window.location.href = url;
+                        location.reload();
+                    });
+
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+
+            // window.location = pagina;
+
+            jQuery("#spinnerLoad").css('display', 'none');
+        },
+    });
+
+    }else{
+        console.log('error');
+        swal.stopLoading();
+        return;
+    }
+
+}
+
+jQuery( ".servicio select" ).change(function() {
+  // Check input( $( this ).val() ) for validity here
+    var l = jQuery(this).children("option:selected").val();
+    if(l == 'Otro'){
+    jQuery('.otroServicio').removeClass('ocultar');
+    jQuery('.otroServicio input').val('');
+    }else{
+    jQuery('.otroServicio').addClass('ocultar');
+    jQuery('.otroServicio input').val(' ');
+    }
+});

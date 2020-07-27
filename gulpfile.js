@@ -27,7 +27,7 @@ gulp.task('browserSync-Local', () => {
     // online: true,
     notify: true,
     injectChanges: true,
-    proxy: "localhost/",
+    proxy: "localhost/tsolucionamos",
     files: ['assets/**'],
 
   });

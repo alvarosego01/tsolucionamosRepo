@@ -357,7 +357,7 @@ foreach ($data as $r) {
   }
 
             ?>
-  <div class="col-4" style="margin-bottom: 25px">
+  <div class="item" >
 
     <div class="card">
       <?php if($tipoPublic == 'Promoción'){?>
@@ -560,8 +560,6 @@ function misVacantes2($pagController = '')
 
             $urlOferta = $pagina . "?serial=$serial";
 
-//
-            // $etapaEntrevista = $r['entrevista']['etapa'];
             $tabla = $wpdb->prefix . 'proceso_contrato';
             $xxx = $wpdb->get_results("SELECT etapa FROM $tabla where ofertaId='$idOferta' ", ARRAY_A);
             $wpdb->flush();
@@ -569,9 +567,8 @@ function misVacantes2($pagController = '')
 
             $tablaprocesoEntrevistas = $wpdb->prefix . 'proceso_contrato';
             $tablaprocesoEntrevistasEtapas = $wpdb->prefix . 'proceso_contrato_etapas';
-            $elegidos = $wpdb->get_results("SELECT * from $tablaprocesoEntrevistas as proceso INNER JOIN $tablaprocesoEntrevistasEtapas as etapas ON (proceso.id = etapas.idEntrevista) WHERE proceso.ofertaId='$idOferta' and etapas.tipoEntrevista != 'Añadido al proceso de entrevistas'", ARRAY_A);
+            $elegidos = $wpdb->get_results("SELECT * from $tablaprocesoEntrevistas as proceso INNER JOIN $tablaprocesoEntrevistasEtapas as etapas ON (proceso.id = etapas.idEntrevista) WHERE proceso.ofertaId='$idOferta'", ARRAY_A);
             $wpdb->flush();
-
 
             $tablaprocesoEntrevistas = $wpdb->prefix . 'proceso_contrato';
             $iii = $wpdb->get_results("SELECT * from $tablaprocesoEntrevistas WHERE ofertaId='$idOferta' and contratistaId=$contratistaId and candidataId=$contratistaId", ARRAY_A);
@@ -596,6 +593,7 @@ function misVacantes2($pagController = '')
 
       <?php $existeContrato = ''; ?>
   <?php if(count($elegidos) > 0){ ?>
+
   <div class="card">
     <div class="card-body">
       <div class="dataOffer row justify-content-around">
@@ -612,6 +610,18 @@ function misVacantes2($pagController = '')
       $entidCont = '';
             if (count($elegidos) > 0) {
 
+              // colocar a familia en ultimo lugar
+              $aux = null;
+              foreach ($elegidos as $key => $value) {
+                if($value['contratistaId'] == $value['candidataId'] ){
+                  $aux = $value;
+                  unset($elegidos[$key]);
+                }
+              }
+              if($aux != null){
+                array_push($elegidos, $aux);
+              }
+              // ----------------------------------
 
 
             foreach ($elegidos as $key => $value) {
@@ -767,7 +777,7 @@ function misVacantes2($pagController = '')
               <div class="col cumple">
                 <p>
                   ¿Cumple con las espectativas?: <br>
-                  <?php echo $infoResultadoCandidato['cumpleCandidato'] ?>
+                  <?php echo formatUTF8($infoResultadoCandidato['cumpleCandidato']); ?>
                 </p>
               </div>
               <div class="col recomendado">
@@ -823,8 +833,6 @@ function misVacantes2($pagController = '')
 
                 <?php
 
-
-
                 if ( (($res == 'Familia') || ($res == 'Ambos')) &&
                   ( (!isset($statusContrato['status']['solCambio'])  )  )
                 ) {
@@ -835,11 +843,16 @@ function misVacantes2($pagController = '')
                     'fam' => $cccid,
                 );
 
+                // can
+                // fam
+                // serial
+                // current
+
                 $x = json_encode($x, JSON_UNESCAPED_UNICODE);
                 $paginaContrato = esc_url(get_permalink(get_page_by_title('Información de contrato'))); ?>
 
                 <button type="button" class="btn btn-primary btn-block" onclick='selectForContract(<?php echo $x; ?>)'>
-                  Seleccionar para contrato
+                  Seleccionar para el cargo
                 </button>
 
                 <?php if($etapaEntrevista == 5){
@@ -875,7 +888,7 @@ function misVacantes2($pagController = '')
               <div class="col infoResultados">
                 <p>
                   Información de la entrevista: <br>
-                  <?php echo $infoResultadoCandidato['infoCandidatoEntrevista'] ?>
+                  <?php echo formatUTF8($infoResultadoCandidato['infoCandidatoEntrevista']); ?>
                 </p>
               </div>
             </div>
@@ -897,13 +910,13 @@ function misVacantes2($pagController = '')
               <div class="col cumple">
                 <p>
                   ¿Se resolvió una propuesta para la familia?: <br>
-                  <?php echo $infoResultadoCandidato['solucionPropuesta'] ?>
+                  <?php echo formatUTF8($infoResultadoCandidato['solucionPropuesta']); ?>
                 </p>
               </div>
               <!-- <div class="col recomendado">
                             <p>
                                 ¿Quíen enviará la propuesta de contrato?: <br>
-                                <?php echo $infoResultadoCandidato['seleccionPor'] ?>
+                                <?php echo formatUTF8($infoResultadoCandidato['seleccionPor']); ?>
               </p>
             </div> -->
           </div>
@@ -911,7 +924,7 @@ function misVacantes2($pagController = '')
             <div class="col infoResultados">
               <p>
                 Información de la entrevista: <br>
-                <?php echo $infoResultadoCandidato['infoEntrevistaFamilia'] ?>
+                <?php echo formatUTF8($infoResultadoCandidato['infoEntrevistaFamilia']); ?>
               </p>
             </div>
           </div>
@@ -997,10 +1010,10 @@ function misVacantes2($pagController = '')
           $usuario = get_user_meta($candidataId);
           // nombre
           $nombre = $usuario['first_name'][0] . ' ' . $usuario['last_name'][0];
-          if ($r['idEntrevista'] != $entidCont) {
-
-              $nombre = '-Nombre Oculto-';
-          }
+          // if ($r['idEntrevista'] != $entidCont) {
+//
+              // $nombre = '-Nombre Oculto-';
+          // }
 
           $nombre .= ' ' . '(' . $rolCandidata . ')';
           $pagina = esc_url(get_permalink(get_page_by_title('Información de entrevista')));
@@ -2452,7 +2465,7 @@ function templateMisVacantes($args = array())
       <?php misVacantes2($pagController = ''); ?>
     </section>
 
-  <?php } elseif ( validateUserProfileOwner($id, $currentId, 'candidata') && !validateUserProfileOwner($id, $currentId, 'profesional') ) {?>
+  <?php } elseif ( validateUserProfileOwner($id, $currentId, 'candidata') && !validateUserProfileOwner($id, $currentId, 'profesional') ) { ?>
 
      <section id="content1">
       <?php misVacantes1($pagController = ''); ?>
@@ -2470,7 +2483,12 @@ function templateMisVacantes($args = array())
       <?php misVacantes2($pagController = ''); ?>
     </section>
 
-    <?php ?>
+
+    <section id="content6">
+      <?php misVacantes6(); ?>
+    </section>
+
+
 
   <?php } elseif (validateUserProfileOwner($id, $currentId, 'profesional')) {?>
 
@@ -2481,10 +2499,6 @@ function templateMisVacantes($args = array())
 
   <section id="content4">
       <?php misVacantes4($pagController = ''); ?>
-    </section>
-
-    <section id="content6">
-      <?php misVacantes6(); ?>
     </section>
 
 
@@ -3251,6 +3265,13 @@ function stepNewProfesional(){
             $dataReturned = json_decode($dataReturned, true);
             $pg = $dataReturned['step'];
 
+            // echo 'coño pero maldita sea pana';
+
+            // print_r($dataReturned);
+
+
+            // return;
+
             if(isset($_POST['action']) && $_POST['action'] == 'stepNewProfesional' && $_POST['tipo'] == 'retorno3'){
 
               $dataReturned = array(
@@ -3262,6 +3283,9 @@ function stepNewProfesional(){
               $pg = $dataReturned['informacion']['step'];
 
               $auxiliarProfesional = $dataReturned;
+
+              // print_r($stepNewProfesional);
+              // return;
 
 
             }
@@ -3276,6 +3300,10 @@ function stepNewProfesional(){
               );
 
               $pg = $dataReturned['infoGeneral']['step'];
+
+
+              // print_r($pg);
+              // return;
 
             }
 
@@ -3382,7 +3410,7 @@ function newProfesional($retorno = ''){
   </p>
 
   <p>
-      Nuestros profesionales contaran con <strong>segmento exclusivo</strong> dentro de la pagina para colocar 10 fotos, 1 video del funcionamiento de sus servicios (3 minutos) y datos de contacto. Será una membresía a nuestra comunidad por un costo mensual de 150 pesos uruguayos.
+      Nuestros profesionales contaran con <strong>segmento exclusivo</strong> dentro de la pagina para colocar 10 fotos, 1 video del funcionamiento de sus servicios (1.5 minutos) y datos de contacto. Será una membresía a nuestra comunidad por un costo mensual de 150 pesos uruguayos.
   </p>
 
   <div class="pasos">
@@ -3645,9 +3673,19 @@ function newProfesional($retorno = ''){
         <div class="field col form-group imagenes">
           <label for="imagenes">Imagenes de tu trabajo profesional</label>
           <input type="file" class="form-control" id="imagenes" name="imagenes"  accept="image/jpeg, image/png"  multiple/>
+          <!-- <input onchange="" type="file" class="form-control" id="imagenes" name="imagenes"  accept="image/jpeg, image/png"  multiple/> -->
           <small>Máximo 10 imagenes</small>
           <small class="validateMessage"></small>
+
+
+<!--
+
+          <input id="filePond" type="file" class="my-pond" name="filepond"/>
+ -->
         </div>
+
+
+
 
       </div>
       <div class="row video">
@@ -3655,7 +3693,7 @@ function newProfesional($retorno = ''){
         <div class="field col form-group video">
           <label for="video">Video opcional</label>
           <input type="file" class="form-control" id="video" name="video"  accept="video/*" />
-          <small>No mayor a 3 minutos</small>
+          <small>No mayor a 1.5 minutos</small>
           <small class="validateMessage"></small>
         </div>
 
@@ -3666,17 +3704,17 @@ function newProfesional($retorno = ''){
 
            <div class="field col form-group instagram">
               <label for="instagram"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</label>
-              <input type="text" class="form-control form-control-sm" name="instagram" placeholder="Escribe la dirección URL">
+              <input type="text" class="form-control form-control-sm" name="instagram" id="instagram" placeholder="Escribe la dirección URL">
               <small class="validateMessage"></small>
           </div>
           <div class="field col form-group facebook">
               <label for="facebook"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</label>
-              <input type="text" class="form-control form-control-sm" name="facebook" placeholder="Escribe la dirección URL">
+              <input type="text" class="form-control form-control-sm" name="facebook" id="facebook" placeholder="Escribe la dirección URL">
               <small class="validateMessage"></small>
           </div>
            <div class="field col form-group twitter">
               <label for="twitter"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</label>
-              <input type="text" class="form-control form-control-sm" name="twitter" placeholder="Escribe la dirección URL">
+              <input type="text" class="form-control form-control-sm" name="twitter" id="twitter" placeholder="Escribe la dirección URL">
               <small class="validateMessage"></small>
           </div>
 
@@ -3856,9 +3894,7 @@ function newProfesional($retorno = ''){
                                         Pagar ahora
                                 </button>
                                 <?php
-                                // // <button class="btn btn-warning" onclick="payLater()">
-                                        // Pagar después
-                                // </button>
+
                                 ?>
 
                             </div>

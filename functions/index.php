@@ -85,6 +85,73 @@ function resources($resource, $extra = '')
 {
     switch ($resource) {
 
+
+        // <!-- include jQuery library -->
+        // <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+        // <!-- include FilePond library -->
+        // <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+
+        // <!-- include FilePond plugins -->
+        // <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+
+        // <!-- include FilePond jQuery adapter -->
+        // <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
+
+
+        // case 'filePond':
+
+        //     wp_register_style('filePondCss', get_template_directory_uri() . '/../Divi-child/assets/filepond/filepond.css', rand(), 'all');
+        //     wp_enqueue_style('filePondCss');
+        //     wp_register_script('filePondJs',  get_template_directory_uri() . '/../Divi-child/assets/filepond/filepond.js', rand(), 'all');
+        //     wp_enqueue_script('filePondJs');
+        //     wp_register_script('filePondJquery',  get_template_directory_uri() . '/../Divi-child/assets/filepond/filepond.jquery.js', rand(), 'all');
+        //     wp_enqueue_script('filePondJquery');
+
+        //     wp_register_script('FilePondPrevieJs',  get_template_directory_uri() . '/../Divi-child/assets/filepond/filePond-preview.js', rand(), 'all');
+        //     wp_enqueue_script('FilePondPrevieJs');
+
+
+        case 'csv':
+
+
+        break;
+
+        case 'dragable':
+
+
+            // wp_register_script('EntireJS',"https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/draggable.bundle.js", rand(), 'all');
+            // wp_enqueue_script( 'EntireJS' );
+
+            // wp_register_script('legacyJS',"https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/draggable.bundle.legacy.js", rand(), 'all');
+            // wp_enqueue_script( 'legacyJS' );
+
+            // wp_register_script('DraggableJS',"https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/draggable.js", rand(), 'all');
+            // wp_enqueue_script( 'DraggableJS' );
+
+            // wp_register_script('SortableJS',"https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/sortable.js", rand(), 'all');
+            // wp_enqueue_script( 'SortableJS' );
+
+            // wp_register_script('DroppableJS',"https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/droppable.js", rand(), 'all');
+            // wp_enqueue_script( 'DroppableJS' );
+
+            // wp_register_script('SwappableJS',"https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/swappable.js", rand(), 'all');
+            // wp_enqueue_script( 'SwappableJS' );
+
+            // wp_register_script('PluginsJS',"https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/plugins.js", rand(), 'all');
+            // wp_enqueue_script( 'PluginsJS' );
+
+
+            wp_register_script('sortableJS',  get_template_directory_uri() . '/../Divi-child/assets/js/sortable.js', rand(), 'all');
+            wp_enqueue_script('sortableJS');
+
+
+        break;
+
+
+
+        // break;
+
         case 'lightbox':
 
         wp_register_style('lightboxCss', get_template_directory_uri() . '/../Divi-child/assets/lightbox/ekko-lightbox.css', rand(), 'all');
@@ -480,12 +547,8 @@ function aditionalConfig()
     if (is_page('vacantes-disponibles')) {
         resources('bootstrap');
 
-        // resources('jqueryLast');
-        // resources('jQueryUI');
-        // resources('sweetAlert');
-
         // resources('horaPicker');
-        // resources('signature');
+
         // estilos y script de pagina
         resources('horaPicker');
         // para el ajax
@@ -527,6 +590,7 @@ function aditionalConfig()
 
 
         resources('graficos');
+        // resources('csv');
 
           // generales
     wp_register_script('ExportCsv', get_template_directory_uri() . '/../Divi-child/assets/js/table2csv.js', array(), rand(), 'all');
@@ -663,6 +727,8 @@ function aditionalConfig()
            wp_register_script('infoProfesional', get_template_directory_uri() . '/../Divi-child/assets/js/infoProfesional.js', array(), rand(), 'all');
             wp_enqueue_script('infoProfesional');
 
+            resources('dragable');
+
             $admin = admin_url('admin-ajax.php', null);
 
             wp_localize_script(
@@ -677,7 +743,7 @@ function aditionalConfig()
     }
 
     if (is_page('info-vacante') || is_page('informacion-de-profesional')) {
-        // resources('jqueryLast');
+        resources('jqueryLast');
         // --------------------------------------
         // se toma el id del dueño del perfil una vez validado
         $data = resources('dueñoUsuario', 'candidata');
@@ -752,6 +818,9 @@ function aditionalConfig()
         resources('jqueryLast');
         resources('bootstrap');
         resources('sweetAlert');
+
+        resources('filePond');
+
         // estilos y script de pagina
         wp_register_style('NuevaprofesionalesCss', get_template_directory_uri() . '/../Divi-child/assets/css/Nuevaprofesionales.css', array(), rand(), 'all');
         wp_enqueue_style('NuevaprofesionalesCss');

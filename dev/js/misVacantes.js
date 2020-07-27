@@ -1,20 +1,3 @@
-jQuery.datepicker.regional['es'] = {
-    closeText: 'Cerrar', // set a close button text
-    currentText: 'Hoy', // set today text
-    monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',   'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'], // set month names
-    monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'], // set short month names
-    dayNames: ['Domingo','Lunes&#236','Martes&#236','Miercoles&#236','Jueves&#236','Viernes&#236','Sabado'], // set days names
-    dayNamesShort: ['Dom','Lun','Mar','Mier','Jue','Vie','Sab'], // set short day names
-    dayNamesMin: ['Do','Lu','Ma','Mie','Jue','Vie','Sab'], // set more short days names
-    dateFormat: 'dd/mm/yy' // set format date
-};
-
-jQuery.datepicker.setDefaults(jQuery.datepicker.regional['es']);
-
-
-
-
-
 /**
  * wickedpicker v0.4.1 - A simple jQuery timepicker.
  * Copyright (c) 2015-2016 Eric Gagnon - http://github.com/wickedRidge/wickedpicker
@@ -67,7 +50,7 @@ jQuery.datepicker.setDefaults(jQuery.datepicker.regional['es']);
             show: null,
             clearable: false,
             closeOnClickOutside: true,
-            onClickOutside: function() {},
+            onClickOutside: function () { },
         };
 
     /*
@@ -119,7 +102,7 @@ jQuery.datepicker.setDefaults(jQuery.datepicker.regional['es']);
             }
             var timepickerPos = $(element).offset();
 
-            $(element).attr({'aria-showingpicker': 'true', 'tabindex': -1});
+            $(element).attr({ 'aria-showingpicker': 'true', 'tabindex': -1 });
             this.setText(element);
             this.showHideMeridiemControl();
             if (this.getText(element) !== this.getTime()) {
@@ -237,9 +220,9 @@ jQuery.datepicker.setDefaults(jQuery.datepicker.regional['es']);
             $(element).on('click focus', function (event) {
                 //Prevent multiple firings
                 if ($(self.timepicker).is(':hidden')) {
-                  self.showPicker($(this));
-                  window.lastTimePickerControl = $(this); //Put the reference on this timepicker into global scope for unsing that in afterShow function
-                  $(self.hoursElem).focus();
+                    self.showPicker($(this));
+                    window.lastTimePickerControl = $(this); //Put the reference on this timepicker into global scope for unsing that in afterShow function
+                    $(self.hoursElem).focus();
                 }
             });
 
@@ -250,21 +233,21 @@ jQuery.datepicker.setDefaults(jQuery.datepicker.regional['es']);
                 if ($(self.timepicker).is(':visible')) {
                     //Clicking the X
                     if ($(event.target).is(self.close)) {
-                      self.hideTimepicker(window.lastTimePickerControl);
+                        self.hideTimepicker(window.lastTimePickerControl);
                     } else if ($(event.target).closest(self.timepicker).length || $(event.target).closest($('.hasWickedpicker')).length) { //Clicking the Wickedpicker or one of it's inputs
-                      event.stopPropagation();
+                        event.stopPropagation();
                     } else {   //Everything else
-                      if (typeof self.options.onClickOutside === 'function') {
-                        self.options.onClickOutside();
-                      }
-                      else {
-                        console.warn("Type of onClickOutside must be a function");
-                      }
+                        if (typeof self.options.onClickOutside === 'function') {
+                            self.options.onClickOutside();
+                        }
+                        else {
+                            console.warn("Type of onClickOutside must be a function");
+                        }
 
-                      if (!self.options.closeOnClickOutside) {
-                        return;
-                      }
-                      self.hideTimepicker(window.lastTimePickerControl);
+                        if (!self.options.closeOnClickOutside) {
+                            return;
+                        }
+                        self.hideTimepicker(window.lastTimePickerControl);
                     }
                     window.lastTimePickerControl = null;
                 }
@@ -481,13 +464,13 @@ jQuery.datepicker.setDefaults(jQuery.datepicker.regional['es']);
                 'Wickedpicker': this,
                 'input': element
             }, function (event) {
-                if(event.which!=1) return false;
+                if (event.which != 1) return false;
                 var operator = (this.className.indexOf('up') > -1) ? '+' : '-';
                 var passedData = event.data;
                 if (event.type == 'mousedown') {
                     timeOut = setInterval($.proxy(function (args) {
                         args.Wickedpicker.changeValue(operator, args.input, this);
-                    }, this, {'Wickedpicker': passedData.Wickedpicker, 'input': passedData.input}), 200);
+                    }, this, { 'Wickedpicker': passedData.Wickedpicker, 'input': passedData.input }), 200);
                 } else {
                     passedData.Wickedpicker.changeValue(operator, passedData.input, this);
                 }
@@ -552,7 +535,7 @@ jQuery.datepicker.setDefaults(jQuery.datepicker.regional['es']);
         formatTime: function (hour, min, meridiem, seconds) {
             var formattedTime = hour + this.options.timeSeparator + min;
             if (this.options.showSeconds) {
-                formattedTime += this.options.timeSeparator  + seconds;
+                formattedTime += this.options.timeSeparator + seconds;
             }
             if (this.options.twentyFour === false) {
                 formattedTime += ' ' + meridiem;
@@ -579,12 +562,12 @@ jQuery.datepicker.setDefaults(jQuery.datepicker.regional['es']);
          *
          * @param input
          */
-        makePickerInputClearable: function(input) {
+        makePickerInputClearable: function (input) {
             $(input).wrap('<div class="clearable-picker"></div>').after('<span data-clear-picker>&times;</span>');
 
             //When the x is clicked, clear its sibling input field
-            $('[data-clear-picker]').on('click', function(event) {
-               $(this).siblings('.hasWickedpicker').val('');
+            $('[data-clear-picker]').on('click', function (event) {
+                $(this).siblings('.hasWickedpicker').val('');
             });
         },
 
@@ -614,7 +597,7 @@ jQuery.datepicker.setDefaults(jQuery.datepicker.regional['es']);
             var inputValue = $(this.element).val();
             return (inputValue === '') ? this.formatTime(this.selectedHour, this.selectedMin, this.selectedMeridiem, this.selectedSec) : inputValue;
         },
-        _hide: function() {
+        _hide: function () {
             this.hideTimepicker(this.element);
         }
     });
@@ -652,6 +635,9 @@ jQuery('.tabMisVacantes .navOpc li').click(function (e) {
     r = r.split("#tab");
     jQuery('.tabMisVacantes section').removeClass('active');
     jQuery('.tabMisVacantes section#content' + r[1]).addClass('active');
+
+    jQuery('#pagControl form').removeClass('active');
+    jQuery('#pagControl #formpagControl' + r[1]).addClass('active');
 });
 
 jQuery('.tabMisVacantes').ready(function () {
@@ -1076,6 +1062,19 @@ var validCreateOffer2 = {
     }
 }
 
+var controlPag = {
+    "porPagina": {
+        field: 'number',
+        required: true,
+        valid: {
+            number: {
+                message: 'Solo se permite escribir números'
+            }
+        }
+    }
+}
+
+
 
 
 function sendOfferJob() {
@@ -1314,11 +1313,11 @@ function preSendClickOffer() {
 
 
 
-function selectForContract(data){
+function selectForContract(data) {
     swal({
         icon: 'info',
-        title: "Selección para contrato",
-        text: 'Nuestro equipo se hará cargo de formalizar el contrato con el candidato que selecciones',
+        title: "Selección para ejercer cargo de vacante ",
+        // text: 'Nuestro equipo se hará cargo de formalizar el contrato con el candidato que selecciones',
         className: 'formSelectForContract',
         buttons: {
             cancel: {
@@ -1344,7 +1343,7 @@ function selectForContract(data){
 
 }
 
-function sendSelectForContract(data){
+function sendSelectForContract(data) {
 
     // data = JSON.stringify(data);
 
@@ -1386,7 +1385,7 @@ function sendSelectForContract(data){
             swal({
                 icon: 'success',
                 title: '¡Exito!',
-                text: "Candidato seleccionado, ahora nuestro equipo se hará cargo de enviar el contrato",
+                text: "Candidato seleccionado, tendrás a tu disposición un contrato en PDF suscrito con la persona seleccionada",
                 className: 'successSendOffer'
             }).then(
                 function (retorno) {
@@ -1406,17 +1405,17 @@ function sendSelectForContract(data){
 }
 
 
-function showGarantContractOpc(data){
+function showGarantContractOpc(data) {
 
     // console.log(data);
     // return;
-//
+    //
     // dias: 14
-// ​
-// estado: "En garantía"
-// ​
-// garantia: "Días de garantía: 14"
-//
+    // ​
+    // estado: "En garantía"
+    // ​
+    // garantia: "Días de garantía: 14"
+    //
     // return;
     var gdias = 30 - data['dias'];
     swal({
@@ -1460,7 +1459,7 @@ function showGarantContractOpc(data){
 
 
 // candidato definitivo
-function sendConfirmService(data){
+function sendConfirmService(data) {
 
     swal({
         icon: 'info',
@@ -1499,102 +1498,102 @@ function sendConfirmService(data){
 
 
 
-function sendInfoConfirmService(data){
+function sendInfoConfirmService(data) {
 
-      // se jala la información del formulario enviado
-      var info = jQuery('.swal-modal.formExperiencia form.formData');
-      // -----
-      var error = false;
-      var values = [];
-      // extraer cada campo
-      jQuery.each(info[0], function (indexInArray, valueOfElement) {
+    // se jala la información del formulario enviado
+    var info = jQuery('.swal-modal.formExperiencia form.formData');
+    // -----
+    var error = false;
+    var values = [];
+    // extraer cada campo
+    jQuery.each(info[0], function (indexInArray, valueOfElement) {
 
-          var name = jQuery(valueOfElement).attr('name');
-          var val = jQuery(valueOfElement).val();
-          if (val == '') {
-              val = null;
-          }
-          values[name] = val;
-          // simular click para que salgan los validate message
-          var parent = jQuery(valueOfElement).parent();
-          parent.click();
-          if (jQuery('.validateMessage', parent).is("[error='true']")) {
-              error = true;
-          }
+        var name = jQuery(valueOfElement).attr('name');
+        var val = jQuery(valueOfElement).val();
+        if (val == '') {
+            val = null;
+        }
+        values[name] = val;
+        // simular click para que salgan los validate message
+        var parent = jQuery(valueOfElement).parent();
+        parent.click();
+        if (jQuery('.validateMessage', parent).is("[error='true']")) {
+            error = true;
+        }
 
-      });
-      values['tipo'] = 'Calificación de usuario';
-
-
-      var xx = _.extend({}, data);
-      var obj = _.extend({}, values);
-      // console.log('xx',xx);
-      // return;
-      data = {
-          'data': xx,
-          'form': obj
-      }
-      // return;
-      // console.log(data);
-      // return;
-      var valJson = JSON.stringify(data);
+    });
+    values['tipo'] = 'Calificación de usuario';
 
 
-      console.log('valjs',valJson);
-      jQuery.ajax({
-          url: s.ajaxurl,
-          type: 'post',
-          data: {
-              action: 'InfoConfirmService',
-              InfoConfirmService: valJson
-          },
-          beforeSend: function () {
-              console.log("before");
-              // setting a timeout
-              // jQuery("#spinnerPro").css('visibility', 'visible');
-          },
-          error: function () {
-              console.log("error");
-              swal.stopLoading();
+    var xx = _.extend({}, data);
+    var obj = _.extend({}, values);
+    // console.log('xx',xx);
+    // return;
+    data = {
+        'data': xx,
+        'form': obj
+    }
+    // return;
+    // console.log(data);
+    // return;
+    var valJson = JSON.stringify(data);
 
 
-              jQuery('.swal-modal.formSelectForContract').remove();
-              swal({
-                  icon: 'error',
-                  title: "No pudimos procesar tu solicitud",
-                  text: 'Por favor intente mas tarde',
-                  className: 'errorSentOffer'
-              });
-
-          },
-          success: function (response) {
-              console.log("exito", response);
-
-              jQuery('.swal-modal.confirmOfferLaboral').remove();
-              swal({
-                  icon: 'success',
-                  title: '¡Exito!',
-                  text: "La petición de cambio de candidato ha sido enviada, se desactivará el contrato con el candidato actual",
-                  className: 'successSendOffer'
-              }).then(
-                  function (retorno) {
-                      location.reload();
-                  });
-          },
-          complete: function () {
-              console.log("complete");
-              swal.stopLoading();
+    console.log('valjs', valJson);
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'InfoConfirmService',
+            InfoConfirmService: valJson
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            // jQuery("#spinnerPro").css('visibility', 'visible');
+        },
+        error: function () {
+            console.log("error");
+            swal.stopLoading();
 
 
-              // window.location = pagina;
-              // jQuery("#spinnerPro").css('visibility', 'hidden');
-          },
-      });
+            jQuery('.swal-modal.formSelectForContract').remove();
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (response) {
+            console.log("exito", response);
+
+            jQuery('.swal-modal.confirmOfferLaboral').remove();
+            swal({
+                icon: 'success',
+                title: '¡Exito!',
+                text: "La petición de cambio de candidato ha sido enviada, se desactivará el contrato con el candidato actual",
+                className: 'successSendOffer'
+            }).then(
+                function (retorno) {
+                    location.reload();
+                });
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+
+            // window.location = pagina;
+            // jQuery("#spinnerPro").css('visibility', 'hidden');
+        },
+    });
 
 }
 
 // si la familia pide cambio
-function sendPetitionChange(data){
+function sendPetitionChange(data) {
     swal({
         icon: 'info',
         title: "Solicitar un nuevo candidato",
@@ -1699,69 +1698,69 @@ function sendReasonsChangeForm(d) {
     // return;
     // console.log(data);
     // return;
-    if( error != true ){
+    if (error != true) {
 
 
-    var valJson = JSON.stringify(data);
+        var valJson = JSON.stringify(data);
 
-    // console.log('valjs',valJson);
+        // console.log('valjs',valJson);
 
-    jQuery.ajax({
-        url: s.ajaxurl,
-        type: 'post',
-        data: {
-            action: 'sendConfirmPetitionChange',
-            sendConfirmPetitionChange: valJson
-        },
-        beforeSend: function () {
-            console.log("before");
-            // setting a timeout
-            // jQuery("#spinnerPro").css('visibility', 'visible');
-        },
-        error: function () {
-            console.log("error");
-            swal.stopLoading();
+        jQuery.ajax({
+            url: s.ajaxurl,
+            type: 'post',
+            data: {
+                action: 'sendConfirmPetitionChange',
+                sendConfirmPetitionChange: valJson
+            },
+            beforeSend: function () {
+                console.log("before");
+                // setting a timeout
+                // jQuery("#spinnerPro").css('visibility', 'visible');
+            },
+            error: function () {
+                console.log("error");
+                swal.stopLoading();
 
 
-            jQuery('.swal-modal.formSelectForContract').remove();
-            swal({
-                icon: 'error',
-                title: "No pudimos procesar tu solicitud",
-                text: 'Por favor intente mas tarde',
-                className: 'errorSentOffer'
-            });
-
-        },
-        success: function (response) {
-            console.log("exito", response);
-
-            jQuery('.swal-modal.confirmOfferLaboral').remove();
-            swal({
-                icon: 'success',
-                title: '¡Exito!',
-                text: "La petición de cambio de candidato ha sido enviada, se desactivará el contrato con el candidato actual",
-                className: 'successSendOffer'
-            }).then(
-                function (retorno) {
-                    location.reload();
+                jQuery('.swal-modal.formSelectForContract').remove();
+                swal({
+                    icon: 'error',
+                    title: "No pudimos procesar tu solicitud",
+                    text: 'Por favor intente mas tarde',
+                    className: 'errorSentOffer'
                 });
-        },
-        complete: function () {
-            console.log("complete");
-            swal.stopLoading();
+
+            },
+            success: function (response) {
+                console.log("exito", response);
+
+                jQuery('.swal-modal.confirmOfferLaboral').remove();
+                swal({
+                    icon: 'success',
+                    title: '¡Exito!',
+                    text: "La petición de cambio de candidato ha sido enviada, se desactivará el contrato con el candidato actual",
+                    className: 'successSendOffer'
+                }).then(
+                    function (retorno) {
+                        location.reload();
+                    });
+            },
+            complete: function () {
+                console.log("complete");
+                swal.stopLoading();
 
 
-            // window.location = pagina;
-            // jQuery("#spinnerPro").css('visibility', 'hidden');
-        },
-    });
-}
+                // window.location = pagina;
+                // jQuery("#spinnerPro").css('visibility', 'hidden');
+            },
+        });
+    }
 
 }
 
 
 // solicitud reprogramar entrevista
-function preSendFamSolChangeDate(data){
+function preSendFamSolChangeDate(data) {
 
     swal({
         icon: 'info',
@@ -1786,21 +1785,22 @@ function preSendFamSolChangeDate(data){
             }
         }
     });
-    jQuery("#date").datepicker({ minDate: 2 });
+    jQuery("#date").datepicker({ minDate: 2, dateFormat: 'dd/mm/yy' });
 
-    var options = { now: "12:35", //hh:mm 24 hour format only, defaults to current time
-    twentyFour: false, //Display 24 hour format, defaults to false
-    upArrow: 'wickedpicker__controls__control-up', //The up arrow class selector to use, for custom CSS
-    downArrow: 'wickedpicker__controls__control-down', //The down arrow class selector to use, for custom CSS
-    close: 'wickedpicker__close', //The close class selector to use, for custom CSS
-    hoverState: 'hover-state', //The hover state class to use, for custom CSS
-    title: 'Selector de hora', //The Wickedpicker's title,
-    showSeconds: false, //Whether or not to show seconds,
-    secondsInterval: 1, //Change interval for seconds, defaults to 1 ,
-    minutesInterval: 1, //Change interval for minutes, defaults to 1
-    beforeShow: null, //A function to be called before the Wickedpicker is shown
-    show: null, //A function to be called when the Wickedpicker is shown
-    clearable: false, //Make the picker's input clearable (has clickable "x")
+    var options = {
+        now: "12:35", //hh:mm 24 hour format only, defaults to current time
+        twentyFour: false, //Display 24 hour format, defaults to false
+        upArrow: 'wickedpicker__controls__control-up', //The up arrow class selector to use, for custom CSS
+        downArrow: 'wickedpicker__controls__control-down', //The down arrow class selector to use, for custom CSS
+        close: 'wickedpicker__close', //The close class selector to use, for custom CSS
+        hoverState: 'hover-state', //The hover state class to use, for custom CSS
+        title: 'Selector de hora', //The Wickedpicker's title,
+        showSeconds: false, //Whether or not to show seconds,
+        secondsInterval: 1, //Change interval for seconds, defaults to 1 ,
+        minutesInterval: 1, //Change interval for minutes, defaults to 1
+        beforeShow: null, //A function to be called before the Wickedpicker is shown
+        show: null, //A function to be called when the Wickedpicker is shown
+        clearable: false, //Make the picker's input clearable (has clickable "x")
     };
 
     jQuery('input#hora').wickedpicker(options);
@@ -1816,12 +1816,12 @@ function preSendFamSolChangeDate(data){
 
     jQuery('.swal-modal.formSendChangeDate button.swal-button.swal-button--confirm.formSubmitConfirm').attr('onclick', "SendFamSolChangeDate(" + data + ")");
 
-        // validaciones
+    // validaciones
     configValidatorType(reprogramaEntrevista);
 
 }
 
-function SendFamSolChangeDate(data){
+function SendFamSolChangeDate(data) {
     var info = jQuery('.swal-modal.formSendChangeDate form.formData');
     // -----
     var error = false;
@@ -1847,72 +1847,72 @@ function SendFamSolChangeDate(data){
     // console.log(values);
     // return;
     if ((error != true)) {
-    var obj = _.extend({}, values);
+        var obj = _.extend({}, values);
 
-    dt = {
-        'entrevistaId': data,
-        'info': obj
-    }
-    var valJson = JSON.stringify(dt);
-    // console.log(valJson);
-    jQuery.ajax({
-        url: s.ajaxurl,
-        type: 'post',
-        data: {
-            action: 'SendFamSolChangeDate',
-            SendFamSolChangeDate: valJson
-        },
-        beforeSend: function () {
-            console.log("before");
-            // setting a timeout
-            // jQuery("#spinnerPro").css('visibility', 'visible');
-        },
-        error: function () {
-            console.log("error");
-            swal.stopLoading();
+        dt = {
+            'entrevistaId': data,
+            'info': obj
+        }
+        var valJson = JSON.stringify(dt);
+        // console.log(valJson);
+        jQuery.ajax({
+            url: s.ajaxurl,
+            type: 'post',
+            data: {
+                action: 'SendFamSolChangeDate',
+                SendFamSolChangeDate: valJson
+            },
+            beforeSend: function () {
+                console.log("before");
+                // setting a timeout
+                // jQuery("#spinnerPro").css('visibility', 'visible');
+            },
+            error: function () {
+                console.log("error");
+                swal.stopLoading();
 
 
-            jQuery('.swal-modal.formSelectForContract').remove();
-            swal({
-                icon: 'error',
-                title: "No pudimos procesar tu solicitud",
-                text: 'Por favor intente mas tarde',
-                className: 'errorSentOffer'
-            });
-
-        },
-        success: function (response) {
-            console.log("exito", response);
-
-            jQuery('.swal-modal.confirmOfferLaboral').remove();
-            swal({
-                icon: 'success',
-                title: '¡Exito!',
-                text: "La petición de reprogramación de entrevista ha sido enviada a administración",
-                className: 'successSendOffer'
-            }).then(
-                function (retorno) {
-                    location.reload();
+                jQuery('.swal-modal.formSelectForContract').remove();
+                swal({
+                    icon: 'error',
+                    title: "No pudimos procesar tu solicitud",
+                    text: 'Por favor intente mas tarde',
+                    className: 'errorSentOffer'
                 });
-        },
-        complete: function () {
-            console.log("complete");
-            swal.stopLoading();
+
+            },
+            success: function (response) {
+                console.log("exito", response);
+
+                jQuery('.swal-modal.confirmOfferLaboral').remove();
+                swal({
+                    icon: 'success',
+                    title: '¡Exito!',
+                    text: "La petición de reprogramación de entrevista ha sido enviada a administración",
+                    className: 'successSendOffer'
+                }).then(
+                    function (retorno) {
+                        location.reload();
+                    });
+            },
+            complete: function () {
+                console.log("complete");
+                swal.stopLoading();
 
 
-            // window.location = pagina;
-            // jQuery("#spinnerPro").css('visibility', 'hidden');
-        },
-    });
-}else{
-    swal.stopLoading();
-}
+                // window.location = pagina;
+                // jQuery("#spinnerPro").css('visibility', 'hidden');
+            },
+        });
+    } else {
+        swal.stopLoading();
+    }
 }
 
 
 
 // solicitud reprogramar entrevista
-function preSendCandSolChangeDate(data){
+function preSendCandSolChangeDate(data) {
 
     swal({
         icon: 'info',
@@ -1937,21 +1937,22 @@ function preSendCandSolChangeDate(data){
             }
         }
     });
-    jQuery("#date").datepicker({ minDate: 2 });
+    jQuery("#date").datepicker({ minDate: 2, dateFormat: 'dd/mm/yy' });
 
-    var options = { now: "12:35", //hh:mm 24 hour format only, defaults to current time
-    twentyFour: false, //Display 24 hour format, defaults to false
-    upArrow: 'wickedpicker__controls__control-up', //The up arrow class selector to use, for custom CSS
-    downArrow: 'wickedpicker__controls__control-down', //The down arrow class selector to use, for custom CSS
-    close: 'wickedpicker__close', //The close class selector to use, for custom CSS
-    hoverState: 'hover-state', //The hover state class to use, for custom CSS
-    title: 'Selector de hora', //The Wickedpicker's title,
-    showSeconds: false, //Whether or not to show seconds,
-    secondsInterval: 1, //Change interval for seconds, defaults to 1 ,
-    minutesInterval: 1, //Change interval for minutes, defaults to 1
-    beforeShow: null, //A function to be called before the Wickedpicker is shown
-    show: null, //A function to be called when the Wickedpicker is shown
-    clearable: false, //Make the picker's input clearable (has clickable "x")
+    var options = {
+        now: "12:35", //hh:mm 24 hour format only, defaults to current time
+        twentyFour: false, //Display 24 hour format, defaults to false
+        upArrow: 'wickedpicker__controls__control-up', //The up arrow class selector to use, for custom CSS
+        downArrow: 'wickedpicker__controls__control-down', //The down arrow class selector to use, for custom CSS
+        close: 'wickedpicker__close', //The close class selector to use, for custom CSS
+        hoverState: 'hover-state', //The hover state class to use, for custom CSS
+        title: 'Selector de hora', //The Wickedpicker's title,
+        showSeconds: false, //Whether or not to show seconds,
+        secondsInterval: 1, //Change interval for seconds, defaults to 1 ,
+        minutesInterval: 1, //Change interval for minutes, defaults to 1
+        beforeShow: null, //A function to be called before the Wickedpicker is shown
+        show: null, //A function to be called when the Wickedpicker is shown
+        clearable: false, //Make the picker's input clearable (has clickable "x")
     };
 
     jQuery('input#hora').wickedpicker(options);
@@ -1967,12 +1968,12 @@ function preSendCandSolChangeDate(data){
 
     jQuery('.swal-modal.formSendChangeDate button.swal-button.swal-button--confirm.formSubmitConfirm').attr('onclick', "SendCandSolChangeDate(" + data + ")");
 
-        // validaciones
+    // validaciones
     configValidatorType(reprogramaEntrevista);
 
 }
 // enviar los valores
-function SendCandSolChangeDate(data){
+function SendCandSolChangeDate(data) {
     var info = jQuery('.swal-modal.formSendChangeDate form.formData');
     // -----
     var error = false;
@@ -1998,71 +1999,71 @@ function SendCandSolChangeDate(data){
     // console.log(values);
     // return;
     if ((error != true)) {
-    var obj = _.extend({}, values);
+        var obj = _.extend({}, values);
 
-    dt = {
-        'entrevistaId': data,
-        'info': obj
-    }
-    var valJson = JSON.stringify(dt);
-    // console.log(valJson);
-    jQuery.ajax({
-        url: s.ajaxurl,
-        type: 'post',
-        data: {
-            action: 'SendCandSolChangeDate',
-            SendCandSolChangeDate: valJson
-        },
-        beforeSend: function () {
-            console.log("before");
-            // setting a timeout
-            // jQuery("#spinnerPro").css('visibility', 'visible');
-        },
-        error: function () {
-            console.log("error");
-            swal.stopLoading();
+        dt = {
+            'entrevistaId': data,
+            'info': obj
+        }
+        var valJson = JSON.stringify(dt);
+        // console.log(valJson);
+        jQuery.ajax({
+            url: s.ajaxurl,
+            type: 'post',
+            data: {
+                action: 'SendCandSolChangeDate',
+                SendCandSolChangeDate: valJson
+            },
+            beforeSend: function () {
+                console.log("before");
+                // setting a timeout
+                // jQuery("#spinnerPro").css('visibility', 'visible');
+            },
+            error: function () {
+                console.log("error");
+                swal.stopLoading();
 
 
-            jQuery('.swal-modal.formSelectForContract').remove();
-            swal({
-                icon: 'error',
-                title: "No pudimos procesar tu solicitud",
-                text: 'Por favor intente mas tarde',
-                className: 'errorSentOffer'
-            });
-
-        },
-        success: function (response) {
-            console.log("exito", response);
-
-            jQuery('.swal-modal.confirmOfferLaboral').remove();
-            swal({
-                icon: 'success',
-                title: '¡Exito!',
-                text: "La petición de reprogramación de entrevista ha sido enviada a administración",
-                className: 'successSendOffer'
-            }).then(
-                function (retorno) {
-                    location.reload();
+                jQuery('.swal-modal.formSelectForContract').remove();
+                swal({
+                    icon: 'error',
+                    title: "No pudimos procesar tu solicitud",
+                    text: 'Por favor intente mas tarde',
+                    className: 'errorSentOffer'
                 });
-        },
-        complete: function () {
-            console.log("complete");
-            swal.stopLoading();
+
+            },
+            success: function (response) {
+                console.log("exito", response);
+
+                jQuery('.swal-modal.confirmOfferLaboral').remove();
+                swal({
+                    icon: 'success',
+                    title: '¡Exito!',
+                    text: "La petición de reprogramación de entrevista ha sido enviada a administración",
+                    className: 'successSendOffer'
+                }).then(
+                    function (retorno) {
+                        location.reload();
+                    });
+            },
+            complete: function () {
+                console.log("complete");
+                swal.stopLoading();
 
 
-            // window.location = pagina;
-            // jQuery("#spinnerPro").css('visibility', 'hidden');
-        },
-    });
-}else{
-    swal.stopLoading();
+                // window.location = pagina;
+                // jQuery("#spinnerPro").css('visibility', 'hidden');
+            },
+        });
+    } else {
+        swal.stopLoading();
+    }
 }
-}
 
 
 
-function preSendCandConfirmDate(data){
+function preSendCandConfirmDate(data) {
 
     swal({
         icon: 'info',
@@ -2094,7 +2095,7 @@ function preSendCandConfirmDate(data){
 }
 
 
-function SendCandConfirmDate(data){
+function SendCandConfirmDate(data) {
 
     var valJson = JSON.stringify(data);
     jQuery.ajax({
@@ -2150,7 +2151,7 @@ function SendCandConfirmDate(data){
 
 
 
-function preSendFamConfirmDate(data){
+function preSendFamConfirmDate(data) {
 
     swal({
         icon: 'info',
@@ -2181,7 +2182,7 @@ function preSendFamConfirmDate(data){
 }
 
 
-function SendFamConfirmDate(data){
+function SendFamConfirmDate(data) {
 
     // console.log(data);
     // return;
@@ -2270,6 +2271,10 @@ function sendPay(data) {
         }
     });
 
+ jQuery('.swal-icon.swal-icon--info').html(icoMoney);
+    jQuery('.swal-icon.swal-icon--info').addClass('noAfterBefore');
+
+
 
     configValidatorType(dataPago);
 
@@ -2332,63 +2337,63 @@ function processpayService() {
 
     if (error != true) {
         datos.step = datos.step + 1;
-    var formData1 = new FormData(jQuery('.swal-modal.formPayNow form.formData')[0]);
+        var formData1 = new FormData(jQuery('.swal-modal.formPayNow form.formData')[0]);
 
-    // var m = (Object.values(datos));
-    var m = JSON.stringify(datos);
-    // var m = Object.values(datos);
-    formData1.append( 'datos', m);
-    formData1.append( 'terminosCompleto', terminosCompleto);
-    formData1.append( 'action', 'processpayService');
+        // var m = (Object.values(datos));
+        var m = JSON.stringify(datos);
+        // var m = Object.values(datos);
+        formData1.append('datos', m);
+        formData1.append('terminosCompleto', terminosCompleto);
+        formData1.append('action', 'processpayService');
 
-    console.log(terminosCompleto);
+        console.log(terminosCompleto);
 
-    jQuery.ajax({
-        url: s.ajaxurl,
-        type: 'post',
-        data: formData1,
-        processData: false,
-        contentType: false,
-        beforeSend: function () {
-            console.log("before");
-            // setting a timeout
-            // jQuery("#spinnerPro").css('visibility', 'visible');
-        },
-        error: function () {
-            console.log("error");
+        jQuery.ajax({
+            url: s.ajaxurl,
+            type: 'post',
+            data: formData1,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                console.log("before");
+                // setting a timeout
+                // jQuery("#spinnerPro").css('visibility', 'visible');
+            },
+            error: function () {
+                console.log("error");
 
-            jQuery('.swal-modal.formSelectForContract').remove();
-            swal({
-                icon: 'error',
-                title: "No pudimos procesar tu solicitud",
-                text: 'Por favor intente mas tarde',
-                className: 'errorSentOffer'
-            });
-
-        },
-        success: function (response) {
-            console.log("exito", response);
-
-            swal({
-                icon: 'success',
-                title: '¡Exito!',
-                text: "Comprobaremos la transacción",
-                className: 'successSendOffer'
-            }).then(
-                function (retorno) {
-                    // window.location.href = url;
-                    location.reload();
+                jQuery('.swal-modal.formSelectForContract').remove();
+                swal({
+                    icon: 'error',
+                    title: "No pudimos procesar tu solicitud",
+                    text: 'Por favor intente mas tarde',
+                    className: 'errorSentOffer'
                 });
-        },
-        complete: function () {
-            console.log("complete");
-            swal.stopLoading();
+
+            },
+            success: function (response) {
+                console.log("exito", response);
+
+                swal({
+                    icon: 'success',
+                    title: '¡Exito!',
+                    text: "Comprobaremos la transacción",
+                    className: 'successSendOffer'
+                }).then(
+                    function (retorno) {
+                        // window.location.href = url;
+                        location.reload();
+                    });
+            },
+            complete: function () {
+                console.log("complete");
+                swal.stopLoading();
 
 
-            // window.location = pagina;
-            // jQuery("#spinnerPro").css('visibility', 'hidden');
-        },
-    });
+                // window.location = pagina;
+                // jQuery("#spinnerPro").css('visibility', 'hidden');
+            },
+        });
 
     } else {
         swal.stopLoading();
@@ -2425,7 +2430,7 @@ function defineAdminFirma() {
     });
 
     // FirmaUsuario
-// jsonFirmaUsuario
+    // jsonFirmaUsuario
     // firmaDirectiva
     // jsonFirmaDirectiva
     jQuery('div#FirmaUsuario').signature({
@@ -2564,7 +2569,7 @@ function saveConfigAdminSettings() {
 }
 
 
-function viewReasonsCandFam(data){
+function viewReasonsCandFam(data) {
 
     console.log(data);
     console.log(viewReasonsCandContent);
@@ -2619,7 +2624,7 @@ function viewReasonsCandFam(data){
                 }
             });
 
-                jQuery("#viewReasonsCand").html(data).fadeIn('slow');
+            jQuery("#viewReasonsCand").html(data).fadeIn('slow');
         },
         complete: function () {
             console.log("complete");
@@ -2631,3 +2636,416 @@ function viewReasonsCandFam(data){
     });
 
 }
+
+
+var controlPaginator = [];
+
+function refreshInfo(data) {
+
+
+    configValidatorType(controlPag);
+    var destiny = '';
+    if (data == 'myVacants') {
+        var info = jQuery('#formpagControl1');
+
+        destiny = '#content1';
+        // -----
+        var error = false;
+        var values = [];
+        // extraer cada campo
+        jQuery.each(info[0], function (indexInArray, valueOfElement) {
+
+            var name = jQuery(valueOfElement).attr('name');
+            var val = jQuery(valueOfElement).val();
+            if (val == '') {
+                val = null;
+            }
+
+            values[name] = val;
+            // simular click para que salgan los validate message
+            var parent = jQuery(valueOfElement).parent();
+
+            parent.click();
+            if (jQuery('.validateMessage', parent).is("[error='true']")) {
+                error = true;
+            }
+
+        });
+
+        if (values['porPagina'] == null || values['porPagina'] == '') {
+            values['porPagina'] = 9;
+        }
+
+    }
+
+    if (data == 'postInterviews') {
+        var info = jQuery('#formpagControl2');
+
+        destiny = '#content2';
+        // -----
+        var error = false;
+        var values = [];
+        // extraer cada campo
+        jQuery.each(info[0], function (indexInArray, valueOfElement) {
+
+            var name = jQuery(valueOfElement).attr('name');
+            var val = jQuery(valueOfElement).val();
+            if (val == '') {
+                val = null;
+            }
+
+            values[name] = val;
+            // simular click para que salgan los validate message
+            var parent = jQuery(valueOfElement).parent();
+
+            parent.click();
+            if (jQuery('.validateMessage', parent).is("[error='true']")) {
+                error = true;
+            }
+
+        });
+
+        if (values['porPagina'] == null || values['porPagina'] == '') {
+            values['porPagina'] = 5;
+        }
+
+    }
+    if (data == 'contractList') {
+        var info = jQuery('#formpagControl3');
+
+        destiny = '#content3';
+        // -----
+        var error = false;
+        var values = [];
+        // extraer cada campo
+        jQuery.each(info[0], function (indexInArray, valueOfElement) {
+
+            var name = jQuery(valueOfElement).attr('name');
+            var val = jQuery(valueOfElement).val();
+            if (val == '') {
+                val = null;
+            }
+
+            values[name] = val;
+            // simular click para que salgan los validate message
+            var parent = jQuery(valueOfElement).parent();
+
+            parent.click();
+            if (jQuery('.validateMessage', parent).is("[error='true']")) {
+                error = true;
+            }
+
+        });
+
+        if (values['porPagina'] == null || values['porPagina'] == '') {
+            values['porPagina'] = 5;
+        }
+
+    }
+    if (data == 'notifList') {
+        var info = jQuery('#formpagControl4');
+
+        destiny = '#content4';
+        // -----
+        var error = false;
+        var values = [];
+        // extraer cada campo
+        jQuery.each(info[0], function (indexInArray, valueOfElement) {
+
+            var name = jQuery(valueOfElement).attr('name');
+            var val = jQuery(valueOfElement).val();
+            if (val == '') {
+                val = null;
+            }
+
+            values[name] = val;
+            // simular click para que salgan los validate message
+            var parent = jQuery(valueOfElement).parent();
+
+            parent.click();
+            if (jQuery('.validateMessage', parent).is("[error='true']")) {
+                error = true;
+            }
+
+        });
+
+        if (values['porPagina'] == null || values['porPagina'] == '') {
+            values['porPagina'] = 10;
+        }
+
+    }
+    if (data == 'factList') {
+
+        var info = jQuery('#formpagControl5');
+
+        destiny = '#content5';
+        // -----
+        var error = false;
+        var values = [];
+        // extraer cada campo
+        jQuery.each(info[0], function (indexInArray, valueOfElement) {
+
+            var name = jQuery(valueOfElement).attr('name');
+            var val = jQuery(valueOfElement).val();
+            if (val == '') {
+                val = null;
+            }
+
+            values[name] = val;
+            // simular click para que salgan los validate message
+            var parent = jQuery(valueOfElement).parent();
+
+            parent.click();
+            if (jQuery('.validateMessage', parent).is("[error='true']")) {
+                error = true;
+            }
+
+        });
+
+        if (values['porPagina'] == null || values['porPagina'] == '') {
+            values['porPagina'] = 10;
+        }
+
+    }
+    values['data'] = data;
+
+    controlPaginator = values;
+    values = _.extend({}, values);
+
+    var valJson = JSON.stringify(values);
+
+    // console.log('destiny',destiny);
+    // console.log('valjson',valJson);
+    console.log('control refresh', controlPaginator);
+
+    // return;
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'datarefreshInfo',
+            datarefreshInfo: valJson
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+            swal.stopLoading();
+
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (data) {
+
+            // console.log("exito", data);
+            data = data.slice(0, -1);
+
+
+            jQuery(destiny).html(data).fadeIn('slow');
+
+            enlaces();
+
+            destiny = '';
+
+            // console.log('control global ', controlPaginator);
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+            jQuery("#spinnerLoad").css('display', 'none');
+
+        },
+    });
+
+}
+
+
+// data: "myVacants"
+// ​
+// length: 0
+// ​
+// pg: 2
+// ​
+// porPagina: "1"
+function load(page, panel) {
+
+    var destiny = '';
+    var p = panel;
+    var pg = page;
+
+    console.log('load control', controlPaginator);
+    // console.log('load control', controlPaginator.length);
+    // return;
+
+    if (destiny == '' && panel != '') {
+        if (panel == 'famTab1') {
+            destiny = '#content1';
+            // valJson {"porPagina":1,"undefined":null,"data":controlPaginator['data']!= 'myVacants'
+            if (!controlPaginator.data) {
+
+                controlPaginator['data'] = 'myVacants';
+                controlPaginator['porPagina'] = 9;
+                controlPaginator['pg'] = 1;
+            }
+        }
+
+
+        if (panel == 'famTab2') {
+            destiny = '#content2';
+            // valJson {"porPagina":1,"undefined":null,"data":"myVacants","pg":2}
+            if (controlPaginator['data']!= 'postInterviews') {
+
+                console.log('sin control js');
+                controlPaginator['data'] = 'postInterviews';
+                controlPaginator['porPagina'] = 5;
+                controlPaginator['pg'] = 1;
+                controlPaginator['filterBy'] = 'todos';
+
+            }
+        }
+
+
+        if (panel == 'famTab3') {
+            destiny = '#content3';
+            // valJson {"porPagina":1,"undefined":null,"data":"myVacants","pg":2}
+            if (controlPaginator['data']!= 'postInterviews') {
+
+                console.log('sin control js');
+                controlPaginator['data'] = 'postInterviews';
+                controlPaginator['porPagina'] = 5;
+                controlPaginator['pg'] = 1;
+                controlPaginator['filterBy'] = 'todos';
+
+            }
+        }
+
+
+        if (panel == 'famTab4') {
+            destiny = '#content4';
+            // valJson {"porPagina":1,"undefined":null,"data":"myVacants","pg":2}
+            if (controlPaginator['data']!= 'notifList') {
+
+                console.log('sin control js');
+                controlPaginator['data'] = 'notifList';
+                controlPaginator['porPagina'] = 10;
+                controlPaginator['pg'] = 1;
+                controlPaginator['filterBy'] = 'todos';
+
+            }
+        }
+        if (panel == 'famTab5') {
+            destiny = '#content5';
+            // valJson {"porPagina":1,"undefined":null,"data":"myVacants","pg":2}
+            if (controlPaginator['data']!= 'factList') {
+
+                console.log('sin control js');
+                controlPaginator['data'] = 'factList';
+                controlPaginator['porPagina'] = 10;
+                controlPaginator['pg'] = 1;
+                controlPaginator['filterBy'] = 'todos';
+
+            }
+        }
+        if (panel == 'canTab1') {
+            destiny = '#content1';
+            // valJson {"porPagina":1,"undefined":null,"data":"myVacants","pg":2}
+            if (controlPaginator['data']!= 'myVacants') {
+
+                console.log('sin control js');
+                controlPaginator['data'] = 'myVacants';
+                controlPaginator['porPagina'] = 1;
+                controlPaginator['pg'] = 1;
+                controlPaginator['filterBy'] = 'todos';
+
+            }
+        }
+        if (panel == 'canTab2') {
+            destiny = '#content2';
+            // valJson {"porPagina":1,"undefined":null,"data":"myVacants","pg":2}
+            if (controlPaginator['data']!= 'postInterviews') {
+
+                console.log('sin control js');
+                controlPaginator['data'] = 'postInterviews';
+                controlPaginator['porPagina'] = 1;
+                controlPaginator['pg'] = 1;
+                controlPaginator['filterBy'] = 'todos';
+
+            }
+        }
+
+    }
+
+    // console.log("llamada ajax", tipo);
+    var v = controlPaginator;
+    v['pg'] = pg;
+
+    values = _.extend({}, v);
+    var valJson = JSON.stringify(values);
+
+    console.log('load valjson', valJson);
+    //
+
+    // return;
+
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'datarefreshInfo',
+            datarefreshInfo: valJson
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+            swal.stopLoading();
+
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (data) {
+
+            console.log("exito", data);
+            data = data.slice(0, -1);
+
+
+            jQuery(destiny).html(data).fadeIn('slow');
+
+            enlaces();
+
+            destiny = '';
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+            jQuery("#spinnerLoad").css('display', 'none');
+
+        },
+    });
+
+}
+
+
+jQuery(document).ready(function () {
+
+    configValidatorType(controlPag);
+
+});

@@ -322,6 +322,14 @@ function dbEditOfferInfo($data)
 
 function dbSelectPostulantContrat($data)
 {
+
+
+
+    // $tablaOferta = $wpdb->prefix . 'ofertalaboral';
+    // $idOferta = $dataEntrada['ofertaId'];
+    // $gg = $wpdb->get_results("SELECT serialOferta FROM $tablaOferta WHERE id = '$idOferta'", ARRAY_A);
+    // $serial = $gg[0]['serialOferta'];
+
     global $wpdb;
 
     $tablaOferta = $wpdb->prefix . 'ofertalaboral';
@@ -362,61 +370,61 @@ function dbSelectPostulantContrat($data)
 
 
 
-            $procesoContrato = $wpdb->get_results("SELECT * from $tablaProcesoContrato where ofertaId = '$idOferta' and candidataId = $postuladoID", ARRAY_A);
-            $candidatoId = $procesoContrato[0]['candidataId'];
-            $contratistaId = $procesoContrato[0]['contratistaId'];
-            $can = $candidatoId;
-            $fam = $contratistaId;
-            $ofertaId = $idOferta;
+            // $procesoContrato = $wpdb->get_results("SELECT * from $tablaProcesoContrato where ofertaId = '$idOferta' and candidataId = $postuladoID", ARRAY_A);
+            // $candidatoId = $procesoContrato[0]['candidataId'];
+            // $contratistaId = $procesoContrato[0]['contratistaId'];
+            // $can = $candidatoId;
+            // $fam = $contratistaId;
+            // $ofertaId = $idOferta;
 
             // print_r($procesoContrato);
 
-            $infoOferta = $wpdb->get_results("SELECT * from $tablaOferta where id = '$ofertaId'", ARRAY_A);
-            $tipoServicio = $infoOferta[0]['tipoServicio'];
-            $nombreVacante = $infoOferta[0]['nombreTrabajo'];
-            $serialVacante = $infoOferta[0]['serialOferta'];
-            $vacanteUrl = esc_url(get_permalink(get_page_by_title('Información de vacante'))).'?serial='.$serialVacante;
+        //     $infoOferta = $wpdb->get_results("SELECT * from $tablaOferta where id = '$ofertaId'", ARRAY_A);
+        //     $tipoServicio = $infoOferta[0]['tipoServicio'];
+        //     $nombreVacante = $infoOferta[0]['nombreTrabajo'];
+        //     $serialVacante = $infoOferta[0]['serialOferta'];
+        //     $vacanteUrl = esc_url(get_permalink(get_page_by_title('Información de vacante'))).'?serial='.$serialVacante;
 
-            $candidatoInfo = getInfoNameEmailUsers($can);
-            $familiaInfo = getInfoNameEmailUsers($fam);
+        //     $candidatoInfo = getInfoNameEmailUsers($can);
+        //     $familiaInfo = getInfoNameEmailUsers($fam);
 
-                        // parte candidato
-           $msj = 'Felicidades has recibido una propuesta de contrato por la vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Lee atentamente el contrato <a href="#" class="resalte1">AQUI</a>.';
-           $mensaje = array(
-               'mensaje' => $msj,
-               'subject' => 'Felicidades has recibido una propuesta de contrato por la vacante: '.$nombreVacante,
-               'estado' => 0,
-            // 'fecha' => ,
-               'tipo' => 'sendContractProposal',
-               'email' => $candidatoInfo['email'],
-               'usuarioMuestra' => $candidatoInfo['id']
-           );
-           saveNotification($mensaje);
-                        // parte candidato
-           $msj = 'Administración ha enviado una propuesta de contrato al candidato <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> por tu vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Te mantendremos informado. ';
-           $mensaje = array(
-               'mensaje' => $msj,
-               'subject' => 'Propuesta de contrato enviada para <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> la vacante: '.$nombreVacante,
-               'estado' => 0,
-            // 'fecha' => ,
-               'tipo' => 'sendContractProposal',
-               'email' => $familiaInfo['email'],
-               'usuarioMuestra' => $familiaInfo['id']
-           );
-           saveNotification($mensaje);
-           // parte Administracion
-           $msj = 'Hemos enviado una propuesta de contrato al candidato <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> por la vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>.';
+        //                 // parte candidato
+        //    $msj = 'Felicidades has recibido una propuesta de contrato por la vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Lee atentamente el contrato <a href="#" class="resalte1">AQUI</a>.';
+        //    $mensaje = array(
+        //        'mensaje' => $msj,
+        //        'subject' => 'Felicidades has recibido una propuesta de contrato por la vacante: '.$nombreVacante,
+        //        'estado' => 0,
+        //     // 'fecha' => ,
+        //        'tipo' => 'sendContractProposal',
+        //        'email' => $candidatoInfo['email'],
+        //        'usuarioMuestra' => $candidatoInfo['id']
+        //    );
+        //    saveNotification($mensaje);
+        //                 // parte candidato
+        //    $msj = 'Administración ha enviado una propuesta de contrato al candidato <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> por tu vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Te mantendremos informado. ';
+        //    $mensaje = array(
+        //        'mensaje' => $msj,
+        //        'subject' => 'Propuesta de contrato enviada para <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> la vacante: '.$nombreVacante,
+        //        'estado' => 0,
+        //     // 'fecha' => ,
+        //        'tipo' => 'sendContractProposal',
+        //        'email' => $familiaInfo['email'],
+        //        'usuarioMuestra' => $familiaInfo['id']
+        //    );
+        //    saveNotification($mensaje);
+        //    // parte Administracion
+        //    $msj = 'Hemos enviado una propuesta de contrato al candidato <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> por la vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>.';
 
-           $mensaje = array(
-               'mensaje' => $msj,
-               'subject' => 'Enviamos una propuesta de contrato a <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> por la vacante  publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>',
-               'estado' => 0,
-            // 'fecha' => ,
-               'tipo' => 'sendContractProposal',
-               'email' => '',
-               'usuarioMuestra' => 'Tsoluciono'
-           );
-           saveNotification($mensaje);
+        //    $mensaje = array(
+        //        'mensaje' => $msj,
+        //        'subject' => 'Enviamos una propuesta de contrato a <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> por la vacante  publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>',
+        //        'estado' => 0,
+        //     // 'fecha' => ,
+        //        'tipo' => 'sendContractProposal',
+        //        'email' => '',
+        //        'usuarioMuestra' => 'Tsoluciono'
+        //    );
+        //    saveNotification($mensaje);
 
 
     } catch (Exception $e) {
@@ -604,14 +612,19 @@ function dbGetInfoMyVacantTab2($data, $pagController = '')
 
         }
 
+
+
         foreach ($seriales as $r) {
 
             $a = $r['serialOferta'];
             $b = $r['id'];
             $c = $r['contratistaId'];
 
-            $info = $wpdb->get_results("SELECT postulantes.* from $tablaOfertaPostulantes as postulantes inner join $procesoEntrevistas as entrevista on (postulantes.ofertaId = entrevista.ofertaId) WHERE postulantes.ofertaId='$b'", ARRAY_A);
+            // $info = $wpdb->get_results("SELECT postulantes.* from $tablaOfertaPostulantes as postulantes inner join $procesoEntrevistas as entrevista on (postulantes.ofertaId = entrevista.ofertaId) WHERE postulantes.ofertaId='$b'", ARRAY_A);
+            // $wpdb->flush();
+            $info = $wpdb->get_results("SELECT entrevista.* from $procesoEntrevistas as entrevista WHERE entrevista.ofertaId='$b'", ARRAY_A);
             $wpdb->flush();
+
 
             if (count($info) > 0) {
                 $p = array();
@@ -628,6 +641,9 @@ function dbGetInfoMyVacantTab2($data, $pagController = '')
                 array_push($datos, $d);
             }
         }
+
+
+
         return $datos;
     }
     if (validateUserProfileOwner($currentId, $currentId, 'candidata')) {
@@ -2531,6 +2547,17 @@ function createAndPayBill($data){
     $formato = explode('/', $formato);
     $formato = $formato[1];
 
+    // $video[0] = $archivos['video'];
+    // $video = imagesToArray($video);
+    // $iii = array(
+    //     'imagenes' => $video,
+    //     'carpeta' => '/pubprofesional',
+    //     'serial' => $idPublicacion,
+    // );
+    // $videoJson = cargarImagenes($iii);
+    // $videoJson = json_decode($videoJson, true);
+    // $newMedia['video'] = $videoJson;
+
 
     // print_r($mensaje);
     // return;
@@ -3111,8 +3138,8 @@ function pagoProfesional($dataReturned) {
     // archivos
     $logo[0] = $archivos['logo'];
     $video[0] = $archivos['video'];
-    $imagesProfeshional = $archivos['imagesProfeshional'];
     $comprobanteImagen[0] = $archivos['comprobante'];
+    $imagesProfeshional = $archivos['imagesProfeshional'];
 
     if(isset($imagesProfeshional) && ($imagesProfeshional != null)){
         $imgAjustadas = array();

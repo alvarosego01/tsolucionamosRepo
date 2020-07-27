@@ -27,8 +27,5 @@
     "pump": "^3.0.0",
     "sweetalert2": "^8.0.7",
     "typescript": "^3.3.3"
-  },
-  "resolutions": {
-    "graceful-fs": "4.2.3"
   }
 }

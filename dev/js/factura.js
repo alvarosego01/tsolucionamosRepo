@@ -57,7 +57,7 @@ var refusePayData = {
 
 function refusePay(data){
 
-    
+
     swal({
         icon: 'info',
         title: "Rechazar comprobante de pago",
@@ -81,13 +81,13 @@ function refusePay(data){
             }
         }
     });
-    
+
     data = JSON.stringify(data);
     // colocado de la función de efecto click
     jQuery('.swal-modal.formRefusePay button.swal-button.swal-button--confirm.formRefuseAccept').attr('onclick',"sendrefusePay(" + data + ")");
-    
+
     configValidatorType(refusePayData);
-    
+
 
 }
 
@@ -122,7 +122,7 @@ function sendrefusePay($data){
 
     var obj = _.extend({}, values);
     var valJson = JSON.stringify(obj);
-    
+
     console.log(valJson);
     jQuery.ajax({
         url: s.ajaxurl,
@@ -202,6 +202,7 @@ function acceptPay(data){
     });
 
         data = JSON.stringify(data);
+        console.log(data);
         // colocado de la función de efecto click
         jQuery('.swal-modal.formAcceptPay button.swal-button.swal-button--confirm.formAcceptPay').attr('onclick',"sendacceptPay(" + data + ")");
 
@@ -226,9 +227,9 @@ function sendacceptPay(data){
         error: function () {
             console.log("error");
             swal.stopLoading();
-           
 
-            
+
+
             swal({
                 icon: 'error',
                 title: "No pudimos procesar tu solicitud",
@@ -239,8 +240,8 @@ function sendacceptPay(data){
         },
         success: function (response) {
             console.log("exito", response);
-           
-          
+
+
             swal({
                 icon: 'success',
                 title: '¡Exito!',
@@ -316,7 +317,7 @@ function senddeletePay(data){
         error: function () {
             console.log("error");
             swal.stopLoading();
-        
+
             swal({
                 icon: 'error',
                 title: "No pudimos procesar tu solicitud",
@@ -327,8 +328,8 @@ function senddeletePay(data){
         },
         success: function (response) {
             console.log("exito", response);
-           
-          
+
+
             swal({
                 icon: 'success',
                 title: '¡Exito!',
@@ -381,8 +382,14 @@ function payService(data) {
         }
     });
 
+
+     jQuery('.swal-icon.swal-icon--info').html(icoMoney);
+    jQuery('.swal-icon.swal-icon--info').addClass('noAfterBefore');
+
+
+
     data = JSON.stringify(data);
-   
+
     configValidatorType(dataPago);
 
     jQuery('.swal-modal.formPayNow button.swal-button.swal-button--confirm.formSubmitConfirm').attr('onclick', "processpayService(" + data + ")");
@@ -399,7 +406,7 @@ function processpayService(data) {
     var values = [];
 
     var imagen = '';
-   
+
     // extraer cada campo
     jQuery.each(info[0], function (indexInArray, valueOfElement) {
 
@@ -427,7 +434,7 @@ function processpayService(data) {
             if (val == '') {
                 val = null;
             }
-            
+
             values[name] = val;
 
             imagen = val;
@@ -447,11 +454,11 @@ function processpayService(data) {
     console.log(data);
 
     if (error != true) {
-     
+
     var formData1 = new FormData(jQuery('.swal-modal.formPayNow form.formData')[0]);
- 
-    formData1.append( 'serial', data); 
-    formData1.append( 'action', 'afterPayBill'); 
+
+    formData1.append( 'serial', data);
+    formData1.append( 'action', 'afterPayBill');
 
     // console.log(terminosCompleto);
 

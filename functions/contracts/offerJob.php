@@ -367,16 +367,7 @@ function stepNewVacant(){
                     <h6>Oferta laboral</h6>
                 </div>
             </div>
-            <?php
-            // <div class="col-4">
-                // <div class="stp">
-                    // <div class="icono">
-                        // <?php echo iconosPublic('trato');?>
-                    // </div>
-                    // <h6>Contrato de términos</h6>
-                // </div>
-            // </div>
-            ?>
+
             <div class="col-6">
                 <div class="stp">
                     <div class="icono">
@@ -819,16 +810,7 @@ function stepNewVacant(){
                     <h6>Oferta laboral</h6>
                 </div>
             </div>
-            <?php
-            // <div class="col-4">
-                // <div class="stp active">
-                    // <div class="icono">
-                        // <?php echo iconosPublic('trato');?>
-                    // </div>
-                        // <h6>Contrato de términos</h6>
-                // </div>
-            // </div>
-            ?>
+
             <div class="col-6">
                 <div class="stp">
                     <div class="icono">
@@ -886,16 +868,7 @@ function stepNewVacant(){
                     <h6>Oferta laboral</h6>
                 </div>
             </div>
-            <?php
-            // <div class="col-4">
-                // <div class="stp">
-                    // <div class="icono">
-                        // <?php echo iconosPublic('trato');?>
-                    // </div>
-                        // <h6>Contrato de términos</h6>
-                // </div>
-            // </div>
-            ?>
+
             <div class="col-6">
                 <div class="stp active">
                     <div class="icono">

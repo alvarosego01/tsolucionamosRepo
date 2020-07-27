@@ -51,7 +51,7 @@
             show: null,
             clearable: false,
             closeOnClickOutside: true,
-            onClickOutside: function() {},
+            onClickOutside: function () { },
         };
 
     /*
@@ -103,7 +103,7 @@
             }
             var timepickerPos = $(element).offset();
 
-            $(element).attr({'aria-showingpicker': 'true', 'tabindex': -1});
+            $(element).attr({ 'aria-showingpicker': 'true', 'tabindex': -1 });
             this.setText(element);
             this.showHideMeridiemControl();
             if (this.getText(element) !== this.getTime()) {
@@ -221,9 +221,9 @@
             $(element).on('click focus', function (event) {
                 //Prevent multiple firings
                 if ($(self.timepicker).is(':hidden')) {
-                  self.showPicker($(this));
-                  window.lastTimePickerControl = $(this); //Put the reference on this timepicker into global scope for unsing that in afterShow function
-                  $(self.hoursElem).focus();
+                    self.showPicker($(this));
+                    window.lastTimePickerControl = $(this); //Put the reference on this timepicker into global scope for unsing that in afterShow function
+                    $(self.hoursElem).focus();
                 }
             });
 
@@ -234,21 +234,21 @@
                 if ($(self.timepicker).is(':visible')) {
                     //Clicking the X
                     if ($(event.target).is(self.close)) {
-                      self.hideTimepicker(window.lastTimePickerControl);
+                        self.hideTimepicker(window.lastTimePickerControl);
                     } else if ($(event.target).closest(self.timepicker).length || $(event.target).closest($('.hasWickedpicker')).length) { //Clicking the Wickedpicker or one of it's inputs
-                      event.stopPropagation();
+                        event.stopPropagation();
                     } else {   //Everything else
-                      if (typeof self.options.onClickOutside === 'function') {
-                        self.options.onClickOutside();
-                      }
-                      else {
-                        console.warn("Type of onClickOutside must be a function");
-                      }
+                        if (typeof self.options.onClickOutside === 'function') {
+                            self.options.onClickOutside();
+                        }
+                        else {
+                            console.warn("Type of onClickOutside must be a function");
+                        }
 
-                      if (!self.options.closeOnClickOutside) {
-                        return;
-                      }
-                      self.hideTimepicker(window.lastTimePickerControl);
+                        if (!self.options.closeOnClickOutside) {
+                            return;
+                        }
+                        self.hideTimepicker(window.lastTimePickerControl);
                     }
                     window.lastTimePickerControl = null;
                 }
@@ -465,13 +465,13 @@
                 'Wickedpicker': this,
                 'input': element
             }, function (event) {
-                if(event.which!=1) return false;
+                if (event.which != 1) return false;
                 var operator = (this.className.indexOf('up') > -1) ? '+' : '-';
                 var passedData = event.data;
                 if (event.type == 'mousedown') {
                     timeOut = setInterval($.proxy(function (args) {
                         args.Wickedpicker.changeValue(operator, args.input, this);
-                    }, this, {'Wickedpicker': passedData.Wickedpicker, 'input': passedData.input}), 200);
+                    }, this, { 'Wickedpicker': passedData.Wickedpicker, 'input': passedData.input }), 200);
                 } else {
                     passedData.Wickedpicker.changeValue(operator, passedData.input, this);
                 }
@@ -536,7 +536,7 @@
         formatTime: function (hour, min, meridiem, seconds) {
             var formattedTime = hour + this.options.timeSeparator + min;
             if (this.options.showSeconds) {
-                formattedTime += this.options.timeSeparator  + seconds;
+                formattedTime += this.options.timeSeparator + seconds;
             }
             if (this.options.twentyFour === false) {
                 formattedTime += ' ' + meridiem;
@@ -563,12 +563,12 @@
          *
          * @param input
          */
-        makePickerInputClearable: function(input) {
+        makePickerInputClearable: function (input) {
             $(input).wrap('<div class="clearable-picker"></div>').after('<span data-clear-picker>&times;</span>');
 
             //When the x is clicked, clear its sibling input field
-            $('[data-clear-picker]').on('click', function(event) {
-               $(this).siblings('.hasWickedpicker').val('');
+            $('[data-clear-picker]').on('click', function (event) {
+                $(this).siblings('.hasWickedpicker').val('');
             });
         },
 
@@ -598,7 +598,7 @@
             var inputValue = $(this.element).val();
             return (inputValue === '') ? this.formatTime(this.selectedHour, this.selectedMin, this.selectedMeridiem, this.selectedSec) : inputValue;
         },
-        _hide: function() {
+        _hide: function () {
             this.hideTimepicker(this.element);
         }
     });
@@ -662,9 +662,20 @@ var formFirma = jQuery('#formFirma > form').clone()[0];
 jQuery('#formFirma').remove();
 
 
-var formSelectPostulate = jQuery('#formTipoEntrevista > form').clone()[0];
+var formCalifEntrevistaFamiliaResolv = jQuery('#formCalifEntrevistaFamiliaResolv > form').clone()[0];
+jQuery('#formCalifEntrevistaFamiliaResolv').remove();
 
+var formCalificarEntrevistaCandidato = jQuery('#formCalificarEntrevistaCandidato > form').clone()[0];
+jQuery('#formCalificarEntrevistaCandidato').remove();
+
+var formSelectPostulate = jQuery('#formTipoEntrevista > form').clone()[0];
 jQuery('#formTipoEntrevista').remove();
+
+var formSelectPostulateinicio = jQuery('#formTipoEntrevistainicio > form').clone()[0];
+jQuery('#formTipoEntrevistainicio').remove();
+
+var formSetInterviewStep1 = jQuery('#formSetInterviewStep1 > form').clone()[0];
+jQuery('#formSetInterviewStep1').remove();
 
 var templateVerifVacantAdmin = jQuery('#templateVerifVacantAdmin .info').clone()[0];
 
@@ -677,17 +688,30 @@ jQuery('#templateOptionsVacantAdmin').remove();
 var formDetailsChangeDateAdmin = jQuery('#formDetailsChangeDateAdmin > form').clone()[0];
 jQuery('#formDetailsChangeDateAdmin').remove();
 
+var formDetailsCalifTests = jQuery('#formDetailsCalifTests > form').clone()[0];
+jQuery('#formDetailsCalifTests').remove();
 
+var formSchemabyAnounce = jQuery('#formSchemabyAnounce').clone()[0];
+jQuery('#formSchemabyAnounce').remove();
+
+
+var formDetailsBalancOfert = jQuery('#formDetailsBalancOfert > .internalformDetailsBalancOfert').clone()[0];
+jQuery('#formDetailsBalancOfert').remove();
+
+
+
+var modifyAnounce = jQuery('#modifyAnounce > form').clone()[0];
+jQuery('#modifyAnounce').remove();
 
 
 
 if (jQuery('div#formDetailsIntegrateCand').length > 0) {
     console.log('existe esto');
 
-    var formDetailsIntegrateCand = jQuery('#formDetailsIntegrateCand > form').clone()[0];
+    var formDetailsIntegrateCand = jQuery('#formDetailsIntegrateCand').clone()[0];
     jQuery('#formDetailsIntegrateCand').remove();
 
-    console.log(formDetailsIntegrateCand)
+    console.log('forma', formDetailsIntegrateCand);
 
 }
 
@@ -703,7 +727,7 @@ var dataSelectPostulant = {
         }
     },
     "datoEntrevista": {
-        field: 'textfield',
+        field: 'select',
         required: true,
         valid: {
             null: {
@@ -815,11 +839,45 @@ var configAdmin = {
     }
 }
 
+var filesPruebas = {
+    "prueba1": {
+        field: 'imagen',
+        required: true,
+        valid: {
+            formatImages: {
+                message: 'Tipo de archivo inválido, solo se permite JPG/JPEG/PNG'
+            },
+            nullImage: {
+                message: 'Debes subir una prueba'
+            }
+        }
+    }
+    // "prueba2": {
+    //     field: 'imagen',
+    //     required: true,
+    //     valid: {
+    //         formatImages: {
+    //             message: 'Tipo de archivo inválido, solo se permite JPG/JPEG/PNG'
+    //         },
+    //         nullImage: {
+    //             message: 'Debes subir una prueba'
+    //         }
+    //     }
+    // },
+}
+
 var postuladosElegidos = [];
 var serialpEntrevistas = '';
 
 var boton = '';
 
+var selectorAnio = 0;
+
+if (window.location.href.includes('informacion-de-entrevista')) {
+
+    console.log('validacion');
+    configValidatorType(filesPruebas);
+}
 
 // acomodando
 // Ejecución de selección al proceso de entrevistas de un postulante
@@ -866,9 +924,9 @@ function AdminAddPostulant(idpostulant, serial) {
         console.log(obj);
 
         //window.location.href
-var url = new URL(window.location.href);
-var c = url.searchParams.get("serial");
-// console.log(c);
+        var url = new URL(window.location.href);
+        var c = url.searchParams.get("serial");
+        // console.log(c);
 
 
         var valJson = JSON.stringify(p);
@@ -906,11 +964,11 @@ var c = url.searchParams.get("serial");
                     text: "El proceso de entrevista creado para este usuario",
                     className: 'successSendOffer'
                 }).then(
-                    function (retorno) {
+                    function (response) {
                         // location.reload();
                     });
 
-                    jQuery("#state").html(data).fadeIn('slow');
+                jQuery("#state").html(data).fadeIn('slow');
             },
             complete: function () {
                 console.log("complete");
@@ -998,7 +1056,7 @@ function sendAdminSelectPostulant(idpostulant, serial) {
     swal({
         title: "Datos de selección del postulante",
         text: 'Carga los siguientes datos',
-        content: formSelectPostulate,
+        content: formSelectPostulateinicio,
         className: 'formSelectPostulate',
         buttons: {
             cancel: {
@@ -1018,7 +1076,7 @@ function sendAdminSelectPostulant(idpostulant, serial) {
         }
     });
     // activacion datepicker
-    jQuery("#date").datepicker({ minDate: 2 });
+    jQuery("#date").datepicker({ minDate: 2, dateFormat: 'dd/mm/yy' });
     jQuery("#anim").on("change", function () {
         jQuery("#date").datepicker("option", "showAnim", jQuery(this).val());
     });
@@ -1053,7 +1111,7 @@ function sendAdminSelectPostulant(idpostulant, serial) {
 
     // validaciones
 
-    // configValidatorType(dataSelectPostulant);
+    configValidatorType(dataSelectPostulant);
 
 
 }
@@ -1075,7 +1133,7 @@ function AdminDeleteSelectPostulant(idpostulant, serial) {
     var valJson = JSON.stringify(obj);
 
     var url = new URL(window.location.href);
-var c = url.searchParams.get("serial");
+    var c = url.searchParams.get("serial");
 
     // console.log(values);
     // return;
@@ -1481,10 +1539,12 @@ function adminAddNewInterview(datos) {
 function sendEvaluateInterview3(datos) {
 
 
+    console.log('prueba', formCalifEntrevistaFamiliaResolv);
+
     swal({
         title: 'Califica la entrevista actual',
         text: 'Carga los siguientes datos',
-        content: formSelectPostulate,
+        content: formCalifEntrevistaFamiliaResolv,
         className: 'sendCreateFamilyPostulantSelectionStep',
         buttons: {
             cancel: {
@@ -1504,7 +1564,7 @@ function sendEvaluateInterview3(datos) {
         }
     });
     // activacion datepicker
-    jQuery("#date").datepicker();
+    jQuery("#date").datepicker({ dateFormat: 'dd/mm/yy' });
     jQuery("#anim").on("change", function () {
         jQuery("#date").datepicker("option", "showAnim", jQuery(this).val());
     });
@@ -1519,12 +1579,12 @@ function sendEvaluateInterview3(datos) {
 }
 function sendEvaluateInterview2(datos) {
 
-    console.log('este es');
+
 
     swal({
         title: 'Califica la  entrevista actual',
         text: 'Carga los siguientes datos',
-        content: formSelectPostulate,
+        content: formCalificarEntrevistaCandidato,
         className: 'formDesignNewInterview',
         buttons: {
             cancel: {
@@ -1550,7 +1610,7 @@ function sendEvaluateInterview2(datos) {
 
 
     // activacion datepicker
-    jQuery("#date").datepicker();
+    jQuery("#date").datepicker({ dateFormat: 'dd/mm/yy' });
     jQuery("#anim").on("change", function () {
         jQuery("#date").datepicker("option", "showAnim", jQuery(this).val());
     });
@@ -1625,6 +1685,8 @@ function sendEvaluateInterview3Final(datos) {
 
 function sendEvaluateInterview(datos) {
 
+    console.log('etapa', datos['etapa']);
+
     swal({
         icon: 'success',
         title: "Aprueba la entrevista ",
@@ -1651,16 +1713,16 @@ function sendEvaluateInterview(datos) {
     // colocado de la función de efecto click
     // console.log(datos['etapa']);
     // return;
-    if (datos['etapa'] == 2) {
+    if (datos['etapa'] == 1) {
         datos = JSON.stringify(datos);
         jQuery(".swal-modal.deleteProcessInterview button.swal-button.swal-button--confirm.formSubmitButton").attr("onclick", "sendEvaluateInterview3('" + datos + "')");
     }
 
-    if (datos['etapa'] == 3) {
+    if (datos['etapa'] == 2) {
         datos = JSON.stringify(datos);
         jQuery(".swal-modal.deleteProcessInterview button.swal-button.swal-button--confirm.formSubmitButton").attr("onclick", "sendEvaluateInterview3Final('" + datos + "')");
     }
-    if (datos['etapa'] == 1) {
+    if (datos['etapa'] == 0) {
         datos = JSON.stringify(datos);
         jQuery(".swal-modal.deleteProcessInterview button.swal-button.swal-button--confirm.formSubmitButton").attr("onclick", "sendEvaluateInterview2('" + datos + "')");
     }
@@ -1779,7 +1841,7 @@ function sendModifyInterview(datos) {
     });
     datos = JSON.stringify(datos);
     // activacion datepicker
-    jQuery("#date").datepicker();
+    jQuery("#date").datepicker({ dateFormat: 'dd/mm/yy' });
     jQuery("#anim").on("change", function () {
         jQuery("#date").datepicker("option", "showAnim", jQuery(this).val());
     });
@@ -2167,6 +2229,109 @@ function opcionesVacante(data) {
 
 
 
+function omitirFamilyInterview(datos){
+
+
+
+    swal({
+        icon: 'warning',
+        title: "Omitir entrevista con la familia ",
+        text: 'Se procederá a omitir la entrevista con la familia, dejando el proceso hasta su etapa final',
+        className: 'createFamilyInterview',
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: false,
+                visible: true,
+                className: "formCancelButton",
+                closeModal: true
+            },
+            confirm: {
+                text: "Aceptar",
+                value: true,
+                visible: true,
+                className: "formSubmitButton",
+                closeModal: false
+            }
+        }
+    });
+
+    datos = JSON.stringify(datos);
+    console.log('ee', datos);
+    jQuery(".swal-modal.createFamilyInterview button.swal-button.swal-button--confirm.formSubmitButton").attr("onclick", "goomitirFamilyInterview('" + datos + "')");
+
+}
+
+function goomitirFamilyInterview(datos){
+    // console.log('en principio que llega', datos);
+    // datos = JSON.stringify(datos);
+
+
+    // pasar de array a objeto para que los datos sean mas faciles de manejar
+    // values = jQuery.extend({}, values);
+    // datos = JSON.parse(datos);
+
+    var d = {
+        'familia': datos,
+        'info': ''
+    };
+
+
+    var obj = _.extend({}, d);
+    // console.log('obj', obj);
+    var valJson = JSON.stringify(obj);
+
+    // console.log('d',d);
+    // console.log('valJson',valJson);
+    // return;
+
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'goomitirFamilyInterview',
+            goomitirFamilyInterview: valJson
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            // jQuery("#spinnerPro").css('visibility', 'visible');
+        },
+        error: function () {
+            console.log("error");
+            swal.stopLoading();
+
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (data) {
+            console.log("exito", data);
+
+            swal({
+                icon: 'success',
+                title: '¡Listo!',
+                text: 'Entrevista con la familia omitida',
+                className: 'successSendOffer'
+            }).then(
+                function (retorno) {
+                    location.reload();
+                });
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+        },
+    });
+
+
+}
+
 
 function CreateFamilyInterview(datos) {
 
@@ -2232,9 +2397,9 @@ function sendCreateFamilyInterview(datos) {
     });
     // activacion datepicker
 
-    // jQuery('.swal-modal.formSelectFamilyInterview .date input').datepicker({ minDate: 2 });
+    // jQuery('.swal-modal.formSelectFamilyInterview .date input').datepicker({ minDate: 2, dateFormat: 'dd/mm/yy' });
 
-    jQuery("#date").datepicker({ minDate: 2, language: 'es' });
+    jQuery("#date").datepicker({ minDate: 2, language: 'es', dateFormat: 'dd/mm/yy' });
 
     var options = {
         now: "12:35", //hh:mm 24 hour format only, defaults to current time
@@ -2550,7 +2715,7 @@ function preSendAdminSolChangeDate(data) {
         }
     });
     // jQuery(".formSendChangeDate #date").datepicker({ minDate: 2, });
-    jQuery("#date").datepicker({ minDate: 2 });
+    jQuery("#date").datepicker({ minDate: 2, language: 'he', dateFormat: 'dd/mm/yy' });
 
     var options = {
         now: "12:35", //hh:mm 24 hour format only, defaults to current time
@@ -2787,6 +2952,10 @@ function integrateNewPostulate() {
         }
     });
 
+    var stars = jQuery('.recomendabilidad .star-rating');
+    setStars(stars);
+
+
     jQuery('.swal-modal.formSendIntegrateCand button.swal-button.swal-button--confirm.formSubmitConfirm').attr('onclick', "sendIntegrateNewPostulate()");
 
     configValidatorType(newIntegrateCand);
@@ -2976,8 +3145,10 @@ jQuery('.tabsAdminTsoluciono').ready(function () {
 
 
 function saveConfigAdminSettings() {
+
     var info = jQuery('.adminConfig form.formData');
     var infoBancarios = jQuery('.adminConfig form.datosBancarios');
+    var infoOtros = jQuery('form.otrosDatos');
     configValidatorType(configAdmin);
     // -----
     var error = false;
@@ -3005,6 +3176,8 @@ function saveConfigAdminSettings() {
     values = JSON.stringify(values);
     var c = values;
     values = [];
+
+    // return;
     jQuery.each(infoBancarios[0], function (indexInArray, valueOfElement) {
 
         var name = jQuery(valueOfElement).attr('name');
@@ -3021,21 +3194,50 @@ function saveConfigAdminSettings() {
         }
 
     });
+
     values = _.extend({}, values);
     values = JSON.stringify(values);
     var b = values;
+    values = [];
+    // return;
+    jQuery.each(infoOtros[0], function (indexInArray, valueOfElement) {
+
+        var name = jQuery(valueOfElement).attr('name');
+        var val = jQuery(valueOfElement).val();
+        if (val == '') {
+            val = null;
+        }
+        values[name] = val;
+        // simular click para que salgan los validate message
+        var parent = jQuery(valueOfElement).parent();
+        parent.click();
+        if (jQuery('.validateMessage', parent).is("[error='true']")) {
+            error = true;
+        }
+
+    });
+
+    values = _.extend({}, values);
+    values = JSON.stringify(values);
+    var otros = values;
+    values = [];
+
+    // console.log(infoOtros);
+    // console.log('datos', otros);
+
+    // return;
 
     if ((error != true)) {
         // var obj = _.extend({}, l);
         // var valJson = JSON.stringify(obj);
-
         jQuery.ajax({
             url: s.ajaxurl,
             type: 'post',
             data: {
                 action: 'saveConfigAdminSettings',
                 cargosConfig: c,
-                bancosConfig: b
+                bancosConfig: b,
+                otrosConfig: otros
             },
             beforeSend: function () {
                 console.log("before");
@@ -3086,7 +3288,7 @@ function saveConfigAdminSettings() {
 
 
 
-function viewReasonsCand(data){
+function viewReasonsCand(data) {
 
     console.log(data);
     console.log(viewReasonsCandContent);
@@ -3138,7 +3340,7 @@ function viewReasonsCand(data){
                 }
             });
 
-                jQuery("#viewReasonsCand").html(data).fadeIn('slow');
+            jQuery("#viewReasonsCand").html(data).fadeIn('slow');
         },
         complete: function () {
             console.log("complete");
@@ -3150,3 +3352,1473 @@ function viewReasonsCand(data){
     });
 
 }
+
+var psicoTestInfo = {};
+
+function sendEvaluatePsicoTest(data) {
+
+
+    var info = jQuery('.psicoTestsFields form.formData');
+    // -----
+    var error = false;
+    var values = [];
+
+    var l = [];
+    // extraer cada campo
+    jQuery.each(info[0], function (indexInArray, valueOfElement) {
+
+        var name = jQuery(valueOfElement).attr('name');
+        var val = jQuery(valueOfElement).val();
+        if (val == '') {
+            val = null;
+        }
+        values[name] = val;
+        // simular click para que salgan los validate message
+        var parent = jQuery(valueOfElement).parent();
+        parent.click();
+        if (jQuery('.validateMessage', parent).is("[error='true']")) {
+            error = true;
+        }
+
+    });
+
+    if (error != true) {
+
+        values = _.extend({}, data);
+        values = JSON.stringify(values);
+        data = values;
+
+        var formData1 = new FormData(jQuery('.psicoTestsFields form.formData')[0]);
+        formData1.append('data', data);
+        formData1.append('action', 'sendEvaluatePsicoTest');
+
+        jQuery.ajax({
+            url: s.ajaxurl,
+            type: 'post',
+            data: formData1,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                console.log("before");
+                // setting a timeout
+                jQuery("#spinnerLoad").css('display', 'flex');
+            },
+            error: function () {
+                console.log("error");
+
+                jQuery('.swal-modal.formSelectForContract').remove();
+                swal({
+                    icon: 'error',
+                    title: "No pudimos procesar tu solicitud",
+                    text: 'Por favor intente mas tarde',
+                    className: 'errorSentOffer'
+                });
+
+            },
+            success: function (response) {
+                console.log("exito", response);
+
+                swal({
+                    icon: 'success',
+                    title: '¡Exito!',
+                    text: "Las Pruebas Psico laborales se han cargado",
+                    className: 'successSendOffer'
+                }).then(
+                    function (retorno) {
+                        // window.location.href = url;
+                        location.reload();
+                    });
+            },
+            complete: function () {
+                console.log("complete");
+                swal.stopLoading();
+
+
+                // window.location = pagina;
+                jQuery("#spinnerLoad").css('display', 'none');
+            },
+        });
+
+
+    }
+
+
+
+
+}
+
+
+function sendCalifEvaluateTests(data) {
+
+    swal({
+        icon: 'info',
+        title: "Calificación de las pruebas",
+        text: 'Especifica un resultado',
+        content: formDetailsCalifTests,
+        className: 'formSendResultTest',
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: false,
+                visible: true,
+                className: "formOfferCloseButton",
+                closeModal: true
+            },
+            confirm: {
+                text: "Enviar",
+                value: true,
+                visible: true,
+                className: "formSubmitConfirm",
+                closeModal: false
+            }
+        }
+    });
+
+    var stars = jQuery('.calificacion .star-rating');
+    setStars(stars);
+
+    data = JSON.stringify(data);
+
+    jQuery('.swal-modal.formSendResultTest button.swal-button.swal-button--confirm.formSubmitConfirm').attr('onclick', "sendCalifEvaluateTests2(" + data + ")");
+
+    // configValidatorType(newIntegrateCand);
+
+}
+
+function setInterviewCalificate(data) {
+
+    console.log(data);
+
+    swal({
+        icon: "success",
+        title: "Próximo paso, la entrevista",
+        text: 'Carga los siguientes datos',
+        content: formSetInterviewStep1,
+        className: 'formSelectPostulate',
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: false,
+                visible: true,
+                className: "formCancelButton",
+                closeModal: true
+            },
+            add: {
+                text: "Aceptar",
+                value: true,
+                visible: true,
+                className: "formAddButton",
+                closeModal: false
+            }
+        }
+    });
+    // activacion datepicker
+    jQuery("#date").datepicker({ minDate: 2, dateFormat: 'dd/mm/yy' });
+    jQuery("#anim").on("change", function () {
+        jQuery("#date").datepicker("option", "showAnim", jQuery(this).val());
+    });
+
+    var options = {
+        now: "12:35", //hh:mm 24 hour format only, defaults to current time
+        twentyFour: false, //Display 24 hour format, defaults to false
+        upArrow: 'wickedpicker__controls__control-up', //The up arrow class selector to use, for custom CSS
+        downArrow: 'wickedpicker__controls__control-down', //The down arrow class selector to use, for custom CSS
+        close: 'wickedpicker__close', //The close class selector to use, for custom CSS
+        hoverState: 'hover-state', //The hover state class to use, for custom CSS
+        title: 'Selector de hora', //The Wickedpicker's title,
+        showSeconds: false, //Whether or not to show seconds,
+        secondsInterval: 1, //Change interval for seconds, defaults to 1 ,
+        minutesInterval: 1, //Change interval for minutes, defaults to 1
+        beforeShow: null, //A function to be called before the Wickedpicker is shown
+        show: null, //A function to be called when the Wickedpicker is shown
+        clearable: false, //Make the picker's input clearable (has clickable "x")
+    };
+
+    jQuery('input#hora').wickedpicker(options);
+    flechasHoraPicker();
+
+    configValidatorType(dataSelectPostulant);
+
+    data = JSON.stringify(data);
+
+    jQuery(".swal-modal.formSelectPostulate button.swal-button.swal-button--add.formAddButton").attr("onclick", "sendsetInterviewCalificate(" + data + ")");
+
+
+}
+
+function sendCalifEvaluateTests2(data) {
+
+    var info = jQuery('.formSendResultTest form.formData');
+
+    var error = false;
+    var values = [];
+
+    var l = [];
+    // extraer cada campo
+    jQuery.each(info[0], function (indexInArray, valueOfElement) {
+
+        var name = jQuery(valueOfElement).attr('name');
+        var val = jQuery(valueOfElement).val();
+        if (val == '') {
+            val = null;
+        }
+        values[name] = val;
+        // simular click para que salgan los validate message
+        var parent = jQuery(valueOfElement).parent();
+        parent.click();
+        if (jQuery('.validateMessage', parent).is("[error='true']")) {
+            error = true;
+        }
+
+    });
+
+    if (error != true) {
+
+        console.log(values);
+        // return;
+        values = _.extend({}, values);
+        psicoTestInfo['info'] = values;
+        psicoTestInfo['data'] = data;
+
+
+        psicoTestInfo['entrevista'] = 'No';
+        obj = _.extend({}, psicoTestInfo);
+        var valJson = JSON.stringify(obj);
+
+        // console.log(valJson);
+        // return;
+
+
+        jQuery.ajax({
+            url: s.ajaxurl,
+            type: 'post',
+            data: {
+                action: 'FinalResultTest',
+                FinalResultTest: valJson
+            },
+            beforeSend: function () {
+                console.log("before");
+                // setting a timeout
+                jQuery("#spinnerLoad").css('display', 'flex');
+            },
+            error: function () {
+                console.log("error");
+
+                jQuery('.swal-modal.formSelectForContract').remove();
+                swal({
+                    icon: 'error',
+                    title: "No pudimos procesar tu solicitud",
+                    text: 'Por favor intente mas tarde',
+                    className: 'errorSentOffer'
+                });
+
+            },
+            success: function (response) {
+                console.log("exito", response);
+
+                swal({
+                    icon: 'success',
+                    title: '¡Exito!',
+                    text: "Las Pruebas Psico laborales se han calificado",
+                    className: 'successSendOffer'
+                }).then(
+                    function (retorno) {
+                        // window.location.href = url;
+                        location.reload();
+                    });
+            },
+            complete: function () {
+                console.log("complete");
+                swal.stopLoading();
+
+
+                // window.location = pagina;
+                jQuery("#spinnerLoad").css('display', 'none');
+            },
+        });
+
+
+
+
+    }
+
+}
+
+
+
+function sendsetInterviewCalificate(data) {
+
+    var info = jQuery('.formSelectPostulate form.formData');
+    // -----
+    var error = false;
+    var values = [];
+
+    var l = [];
+    // extraer cada campo
+    jQuery.each(info[0], function (indexInArray, valueOfElement) {
+
+        var name = jQuery(valueOfElement).attr('name');
+        var val = jQuery(valueOfElement).val();
+        if (val == '') {
+            val = null;
+        }
+        values[name] = val;
+        // simular click para que salgan los validate message
+        var parent = jQuery(valueOfElement).parent();
+        parent.click();
+        if (jQuery('.validateMessage', parent).is("[error='true']")) {
+            error = true;
+        }
+
+    });
+
+
+
+    if (error != true) {
+
+        values['entrevistaId'] = data;
+        values = _.extend({}, values);
+        obj = _.extend({}, values);
+        var valJson = JSON.stringify(obj);
+
+        console.log(valJson);
+
+        // return;
+
+
+        jQuery.ajax({
+            url: s.ajaxurl,
+            type: 'post',
+            data: {
+                action: 'processsendsetInterviewCalificate',
+                processsendsetInterviewCalificate: valJson
+            },
+            beforeSend: function () {
+                console.log("before");
+                // setting a timeout
+                jQuery("#spinnerLoad").css('display', 'flex');
+            },
+            error: function () {
+                console.log("error");
+
+                jQuery('.swal-modal.formSelectForContract').remove();
+                swal({
+                    icon: 'error',
+                    title: "No pudimos procesar tu solicitud",
+                    text: 'Por favor intente mas tarde',
+                    className: 'errorSentOffer'
+                });
+
+            },
+            success: function (response) {
+                console.log("exito", response);
+
+                swal({
+                    icon: 'success',
+                    title: '¡Exito!',
+                    text: "Entrevista programada",
+                    className: 'successSendOffer'
+                }).then(
+                    function (retorno) {
+                        // window.location.href = url;
+                        location.reload();
+                    });
+            },
+            complete: function () {
+                console.log("complete");
+                swal.stopLoading();
+
+
+                // window.location = pagina;
+                jQuery("#spinnerLoad").css('display', 'none');
+            },
+        });
+
+    }
+}
+
+
+function beginInterviewCycle(data) {
+
+    values = _.extend({}, data);
+    obj = _.extend({}, values);
+    var valJson = JSON.stringify(obj);
+
+
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'processbeginInterviewCycle',
+            processbeginInterviewCycle: valJson
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+
+            jQuery('.swal-modal.formSelectForContract').remove();
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (response) {
+            console.log("exito", response);
+
+            swal({
+                icon: 'success',
+                title: '¡Exito!',
+                text: "La etapa de entrevistas ha empezado, programa las entrevistas para cada candidato",
+                className: 'successSendOffer'
+            }).then(
+                function (retorno) {
+                    // window.location.href = url;
+                    location.reload();
+                });
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+
+            // window.location = pagina;
+            jQuery("#spinnerLoad").css('display', 'none');
+        },
+    });
+
+}
+
+
+
+function refreshInfoAddCands(data) {
+
+    var info = jQuery('.formDetailsIntegrateCand form.optionsFilter');
+    // -----
+    var error = false;
+    var values = [];
+    var contador = 0;
+    var l = [];
+    // extraer cada campo
+
+    console.log(data['tipo']);
+
+
+    if (data['tipo'] != 'todos') {
+
+        jQuery.each(info[0], function (indexInArray, valueOfElement) {
+
+            var name = jQuery(valueOfElement).attr('name');
+            var val = jQuery(valueOfElement).val();
+
+            if (val == '') {
+                val = null;
+            }
+            if ((val != '' && val != null) && (val != 0)) {
+                values[name] = val;
+                contador++;
+            }
+            // simular click para que salgan los validate message
+            var parent = jQuery(valueOfElement).parent();
+            parent.click();
+            if (jQuery('.validateMessage', parent).is("[error='true']")) {
+                error = true;
+            }
+
+        });
+
+    } else {
+        contador++;
+    }
+
+    if (contador > 0) {
+        if (data['tipo'] == 'todos') {
+            values['ofertaId'] = data['ofertaId'];
+            values['tipo'] = data['tipo'];
+        } else {
+            values['ofertaId'] = data;
+
+        }
+        values = _.extend({}, values);
+        obj = _.extend({}, values);
+        var valJson = JSON.stringify(obj);
+
+        console.log(valJson);
+
+
+        jQuery.ajax({
+            url: s.ajaxurl,
+            type: 'post',
+            data: {
+                action: 'processrefreshInfoAddCands',
+                processrefreshInfoAddCands: valJson
+            },
+            beforeSend: function () {
+                console.log("before");
+                // setting a timeout
+                jQuery("#spinnerLoad").css('display', 'flex');
+            },
+            error: function () {
+                console.log("error");
+
+                jQuery('.swal-modal.formSelectForContract').remove();
+                swal({
+                    icon: 'error',
+                    title: "No pudimos procesar tu solicitud",
+                    text: 'Por favor intente mas tarde',
+                    className: 'errorSentOffer'
+                });
+
+            },
+            success: function (response) {
+                console.log("exito", response);
+
+                // alert(data);
+                response = response.slice(0, -1);
+                // tipo = '';
+                jQuery("#formDetailsIntegrateCand > form.formData").html(response).fadeIn('slow');
+                configValidatorType(newIntegrateCand);
+
+            },
+            complete: function () {
+                console.log("complete");
+                swal.stopLoading();
+
+
+                // window.location = pagina;
+
+                jQuery("#spinnerLoad").css('display', 'none');
+            },
+        });
+
+    } else {
+        console.log('error');
+        swal.stopLoading();
+        return;
+    }
+
+}
+
+
+
+function detailsBalancOfferInfo(data) {
+
+
+    swal({
+        icon: "info",
+        title: "Información adicional",
+        // text: 'Carga los siguientes datos',
+        content: formDetailsBalancOfert,
+        className: 'alertformDetailsBalancOfert',
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: false,
+                visible: true,
+                className: "formCancelButton",
+                closeModal: true
+            }
+        }
+    });
+
+    var values = [];
+    values['idOferta'] = data;
+    obj = _.extend({}, values);
+    var valJson = JSON.stringify(obj);
+
+
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'processdetailsBalancOfferInfo',
+            processdetailsBalancOfferInfo: valJson
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+
+            jQuery('.swal-modal.formSelectForContract').remove();
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (response) {
+            console.log("exito", response);
+
+            // alert(data);
+            response = response.slice(0, -1);
+            // tipo = '';
+            jQuery("#internalformDetailsBalancOfert").html(response).fadeIn('slow');
+
+
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+
+            // window.location = pagina;
+
+            jQuery("#spinnerLoad").css('display', 'none');
+        },
+    });
+
+
+
+}
+
+function sendFilterBolsaTrabajo(data) {
+
+    if (data != 'departamento') {
+        var values = []
+        values['tipo'] = data;
+
+    } else {
+        var i = jQuery('.listaFiltro select').val();
+
+        var values = []
+        values['tipo'] = data;
+        values['lugar'] = i;
+
+    }
+
+    obj = _.extend({}, values);
+    var valJson = JSON.stringify(obj);
+
+    console.log(valJson);
+
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'processsendFilterBolsaTrabajo',
+            processsendFilterBolsaTrabajo: valJson
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+
+            jQuery('.swal-modal.formSelectForContract').remove();
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (response) {
+            console.log("exito", response);
+
+            // alert(data);
+            response = response.slice(0, -1);
+            // tipo = '';
+            jQuery("section#content10").html(response).fadeIn('slow');
+
+
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+
+            // window.location = pagina;
+
+            jQuery("#spinnerLoad").css('display', 'none');
+        },
+    });
+
+
+}
+
+function sendFilterInterviewByAnounce(data) {
+
+    if (data != 'departamento') {
+        var values = []
+        values['tipo'] = data;
+
+    } else {
+        var i = jQuery('.listaFiltroAnounce select').val();
+
+        var values = []
+        values['tipo'] = data;
+        values['lugar'] = i;
+    }
+    obj = _.extend({}, values);
+    var valJson = JSON.stringify(obj);
+
+
+    console.log(valJson);
+
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'sendFilterInterviewByAnounce',
+            sendFilterInterviewByAnounce: valJson
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+
+            jQuery('.swal-modal.formSelectForContract').remove();
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (response) {
+            console.log("exito", response);
+
+            // alert(data);
+            response = response.slice(0, -1);
+            // tipo = '';
+            jQuery("#interviewByAnounce .container").html(response).fadeIn('slow');
+
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+            // window.location = pagina;
+
+            jQuery("#spinnerLoad").css('display', 'none');
+        },
+    });
+
+}
+
+function integrateNewPostulateByAnounce(data) {
+
+    var copySchema = formSchemabyAnounce;
+    var idEntrevista = data['idEntrevista'];
+    idEntrevista = JSON.stringify(idEntrevista);
+
+    var candidatoId = data['candidatoId'];
+    candidatoId = JSON.stringify(candidatoId);
+
+    swal({
+        icon: 'info',
+        title: "Inyección de candidato entrevistado por anuncio",
+        text: 'Selecciona una vacante laboral donde sea posible inyectar al candidato',
+        content: copySchema,
+        className: 'formSendIntegrateCandAnounce',
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: false,
+                visible: true,
+                className: "formOfferCloseButton",
+                closeModal: true
+            },
+            confirm: {
+                text: "Enviar",
+                value: true,
+                visible: true,
+                className: "formSubmitConfirm",
+                closeModal: false
+            }
+        }
+    });
+
+    obj = _.extend({}, data);
+    var valJson = JSON.stringify(obj);
+
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'integrateNewPostulateByAnounce',
+            integrateNewPostulateByAnounce: valJson
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+
+            jQuery('.swal-modal.formSelectForContract').remove();
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (response) {
+            console.log("exito", response);
+
+            // alert(data);
+            response = response.slice(0, -1);
+            // tipo = '';
+            jQuery("#formSchemabyAnounce form").html(response).fadeIn('slow');
+            jQuery('#formSchemabyAnounce').css({
+                display: 'block',
+            });
+
+
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+
+            // window.location = pagina;
+
+            jQuery("#spinnerLoad").css('display', 'none');
+        },
+    });
+
+
+    jQuery('.swal-modal.formSendIntegrateCandAnounce button.swal-button.swal-button--confirm.formSubmitConfirm').attr('onclick', "sendintegrateNewPostulateByAnounce(" + idEntrevista + ", " + candidatoId + ")");
+
+    // configValidatorType(newIntegrateCand);
+
+}
+
+
+function sendintegrateNewPostulateByAnounce(idEntrevista, candidatoId) {
+
+
+    var info = jQuery('#formSchemabyAnounce form');
+    var values = [];
+
+    jQuery.each(info[0], function (indexInArray, valueOfElement) {
+        var name = jQuery(valueOfElement).attr('name');
+        var val = jQuery(valueOfElement).val();
+        if (val == '') {
+            val = null;
+        }
+        values[name] = val;
+        // simular click para que salgan los validate message
+        var parent = jQuery(valueOfElement).parent();
+        parent.click();
+        if (jQuery('.validateMessage', parent).is("[error='true']")) {
+            error = true;
+        }
+    });
+
+    values['idEntrevistaInyect'] = idEntrevista;
+    values['candidatoId'] = candidatoId;
+
+    obj = _.extend({}, values);
+    var valJson = JSON.stringify(obj);
+
+
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'processsendintegrateNewPostulateByAnounce',
+            processsendintegrateNewPostulateByAnounce: valJson
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+
+            jQuery('.swal-modal.formSelectForContract').remove();
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (response) {
+            console.log("exito", response);
+
+            swal({
+                icon: 'success',
+                title: '¡Exito!',
+                text: "El candidato fue inyectado con exito",
+                className: 'successSendOffer'
+            })
+
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+            jQuery("#spinnerLoad").css('display', 'none');
+        },
+    });
+
+
+}
+
+
+
+function filterStatics(data) {
+
+    var dtselecc = '';
+    if (data == 'difusion') {
+        dtselecc = jQuery('#selectorYearStatics').val();
+
+
+        console.log(data, dtselecc);
+
+    }
+    if (data == 'transacciones') {
+
+        dtselecc = jQuery('#selectorYearTransacs').val();
+    }
+
+}
+
+
+function stateAnounce(data, estado) {
+
+
+    var e = (estado == 1)? 'Ocultar al publico': 'Mostrar al publico';
+
+    swal({
+        icon: 'info',
+        title: "Modificar parametros del anuncio",
+        // text: 'Selecciona una vacante laboral donde sea posible inyectar al candidato',
+        content: modifyAnounce,
+        className: 'formSendIntegrateCandAnounce',
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: false,
+                visible: true,
+                className: "formOfferCloseButton",
+                closeModal: true
+            },
+            changeState: {
+                text: e,
+                value: true,
+                visible: true,
+                className: "formchangeState",
+                closeModal: false
+            },
+            confirm: {
+                text: "Enviar",
+                value: true,
+                visible: true,
+                className: "formSubmitConfirm",
+                closeModal: false
+            }
+        }
+    });
+
+    var dateFormat = "dd/mm/yy",
+    from = jQuery("#fechaInicio")
+        .datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            dateFormat: 'dd/mm/yy',
+            minDate: 7
+
+
+        })
+        .on("change", function () {
+            to.datepicker("option", "minDate", getDate(this));
+            jQuery('#fechaFin').val('');
+        }),
+    to = jQuery("#fechaFin").datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        dateFormat: 'dd/mm/yy'
+        // minDate: 90
+
+    })
+        .on("change", function () {
+            from.datepicker("option", "maxDate", getDate(this));
+        });
+jQuery("#anim").on("change", function () {
+    jQuery("#fechaInicio").datepicker("option", "showAnim", jQuery(this).val());
+});
+jQuery("#anim").on("change", function () {
+    jQuery("#fechaFin").datepicker("option", "showAnim", jQuery(this).val());
+});
+
+var l = {
+    'id': data,
+    'estado': estado
+}
+
+data = JSON.stringify(data);
+estado = JSON.stringify(l);
+
+  jQuery('.swal-modal.formSendIntegrateCandAnounce button.swal-button.swal-button--changeState.formchangeState').attr('onclick', "sendchangeState('" + estado + "')");
+
+  jQuery('.swal-modal.formSendIntegrateCandAnounce button.swal-button.swal-button--confirm.formSubmitConfirm').attr('onclick', "sendstateAnounce(" + data + ")");
+
+}
+
+function sendchangeState(data){
+
+
+    // sendchangeState('{"id":"O-5e7f6fa5334343.72206067","estado":"Ocultar al publico"}')
+    var l = JSON.parse(data);
+
+    var e = (l.estado == 1)? 'El anuncio ya no está visible': 'El anuncio está visible';
+
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'processsendchangeState',
+            processsendchangeState: data
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+
+            jQuery('.swal-modal.formSelectForContract').remove();
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (response) {
+            console.log("exito", response);
+
+            swal({
+                icon: 'success',
+                title: '¡Exito!',
+                text: e,
+                className: 'successSendOffer'
+            }).then(
+                function () {
+                    location.reload();
+                });
+
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+            jQuery("#spinnerLoad").css('display', 'none');
+        },
+    });
+}
+
+function sendstateAnounce(data){
+
+
+    var info = jQuery('.formSendIntegrateCandAnounce form.formData');
+    var values = [];
+
+    jQuery.each(info[0], function (indexInArray, valueOfElement) {
+        var name = jQuery(valueOfElement).attr('name');
+        var val = jQuery(valueOfElement).val();
+        if (val == '') {
+            val = null;
+        }
+        values[name] = val;
+        // simular click para que salgan los validate message
+        var parent = jQuery(valueOfElement).parent();
+        parent.click();
+        if (jQuery('.validateMessage', parent).is("[error='true']")) {
+            error = true;
+        }
+    });
+
+
+
+    var formData1 = new FormData(jQuery('.formSendIntegrateCandAnounce form.formData')[0]);
+    formData1.append('action', 'sendstateAnounce');
+    formData1.append('idAnuncio', data);
+
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: formData1,
+            processData: false,
+            contentType: false,
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+
+            jQuery('.swal-modal.formSelectForContract').remove();
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (response) {
+            console.log("exito", response);
+
+            swal({
+                icon: 'success',
+                title: '¡Exito!',
+                text: "El candidato fue inyectado con exito",
+                className: 'successSendOffer'
+            }).then(
+                function () {
+                    location.reload();
+                });
+
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+            jQuery("#spinnerLoad").css('display', 'none');
+        },
+    });
+
+}
+
+
+
+
+
+function getDate(element) {
+    var date;
+    try {
+        date = jQuery.datepicker.parseDate(dateFormat, element.value);
+    } catch (error) {
+        date = null;
+    }
+
+    return date;
+}
+
+function downloadCSV(csv, filename) {
+    var csvFile;
+    var downloadLink;
+
+    // CSV file
+    csvFile = new Blob([csv], {type: "text/csv"});
+
+    // Download link
+    downloadLink = document.createElement("a");
+
+    // File name
+    downloadLink.download = filename;
+
+    // Create a link to the file
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+
+    // Hide download link
+    downloadLink.style.display = "none";
+
+    // Add the link to DOM
+    document.body.appendChild(downloadLink);
+
+    // Click download link
+    downloadLink.click();
+}
+
+function exportTableToCSV(filename) {
+
+    jQuery("#tablaBolsa").table2csv();
+
+    var csv = [];
+    var rows = document.querySelectorAll("#tablaBolsa tr");
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("th, td");
+
+        for (var j = 0; j < cols.length; j++)
+            row.push(cols[j].innerText);
+
+        csv.push(row.join(","));
+    }
+
+    // Download CSV file
+    downloadCSV(csv, filename);
+}
+
+
+
+
+function forzarAsistencia(data){
+
+    var data = JSON.stringify(data);
+    // estado = JSON.stringify(l);
+
+swal({
+    icon: 'info',
+    title: "Confirmar asistencia",
+    // text: 'Se forzará la asistencia',
+    // content: auxForm,
+    className: 'formUpdatePublicacion',
+    buttons: {
+        cancel: {
+            text: "Cancelar",
+            value: false,
+            visible: true,
+            className: "formOfferCloseButton",
+            closeModal: true
+        },
+
+        confirm: {
+            text: "Aceptar",
+            value: true,
+            visible: true,
+            className: "formSubmitConfirm",
+            closeModal: false
+        }
+    }
+});
+
+
+jQuery('.swal-modal.formUpdatePublicacion button.swal-button.swal-button--confirm.formSubmitConfirm').attr('onclick', "continueforzarAsistencia(" + data + ")");
+
+
+}
+
+
+function continueforzarAsistencia(data){
+
+    var data = JSON.stringify(data);
+    console.log('aceptar entrevista asistencia', data);
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'continueforzarAsistencia',
+            continueforzarAsistencia: data
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            jQuery("#spinnerLoad").css('display', 'flex');
+        },
+        error: function () {
+            console.log("error");
+
+            jQuery('.swal-modal.formSelectForContract').remove();
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (response) {
+            console.log("exito", response);
+
+            swal({
+                icon: 'success',
+                title: '¡Exito!',
+                text: "La asistencia se confirmó",
+                className: 'successSendOffer'
+            }).then(
+                function (response) {
+                    location.reload();
+                });
+
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+            jQuery("#spinnerLoad").css('display', 'none');
+        },
+    });
+
+}
+
+
+function changeResumenEntrevista(data){
+    data = JSON.stringify(data);
+    // swal({
+    //     icon: 'success',
+    //     title: "¿Deseas editar los resultados de entrevista?",
+    //     // text: 'Se procederá a calificar la entrevista actual',
+    //     className: 'deleteProcessInterview',
+    //     buttons: {
+    //         cancel: {
+    //             text: "Cancelar",
+    //             value: false,
+    //             visible: true,
+    //             className: "formCancelButton",
+    //             closeModal: true
+    //         },
+    //         confirm: {
+    //             text: "Aceptar",
+    //             value: true,
+    //             visible: true,
+    //             className: "formSubmitButton",
+    //             closeModal: false
+    //         }
+    //     }
+    // });
+
+    // console.log(data);
+    // return;
+    swal({
+        title: 'Edita la calificación de la entrevista actual',
+        text: 'Llena los datos que desees reemplazar',
+        content: formCalificarEntrevistaCandidato,
+        className: 'formDesignNewInterview',
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: false,
+                visible: true,
+                className: "formCancelButton",
+                closeModal: true
+            },
+            confirm: {
+                text: "Aceptar",
+                value: true,
+                visible: true,
+                className: "formSubmitButton",
+                closeModal: false
+            }
+        }
+    });
+
+    var stars = jQuery('.formDesignNewInterview .recomendabilidad .star-rating');
+    setStars(stars);
+    // activacion datepicker
+    jQuery("#date").datepicker({ dateFormat: 'dd/mm/yy' });
+    jQuery("#anim").on("change", function () {
+        jQuery("#date").datepicker("option", "showAnim", jQuery(this).val());
+    });
+    // colocado de la función de efecto click
+
+    jQuery(".swal-modal.formDesignNewInterview button.swal-button.swal-button--confirm.formSubmitButton").attr("onclick", "changeDataInterview('" + data + "')");
+
+    // validaciones
+
+    // configValidatorType(dataSelectPostulant);
+
+}
+
+
+function changeDataInterview(datos){
+
+
+
+    var info = jQuery('.swal-modal.formDesignNewInterview form.formData');
+    var values = [];
+    var siguienteEnt = [];
+    var error = false;
+
+    jQuery.each(info[0], function (indexInArray, valueOfElement) {
+        var name = jQuery(valueOfElement).attr('name');
+        var val = jQuery(valueOfElement).val();
+        if (val == '') {
+            val = null;
+        }
+        values[name] = val;
+        // simular click para que salgan los validate message
+        var parent = jQuery(valueOfElement).parent();
+        parent.click();
+        if (jQuery('.validateMessage', parent).is("[error='true']")) {
+            error = true;
+        }
+    });
+    // console.log(values);
+    // return;
+    if (error != true) {
+        info[0].reset();
+        // pasar de array a objeto para que los datos sean mas faciles de manejar
+        values = jQuery.extend({}, values);
+        datos = JSON.parse(datos);
+        var d = {
+            'entrevista': datos,
+            'info': values
+        };
+
+        var obj = _.extend({}, d);
+        var valJson = JSON.stringify(obj);
+
+        jQuery.ajax({
+            url: s.ajaxurl,
+            type: 'post',
+            data: {
+                action: 'changeDataInterview',
+                dataNew: valJson
+            },
+            beforeSend: function () {
+                console.log("before");
+                // setting a timeout
+                // jQuery("#spinnerPro").css('visibility', 'visible');
+            },
+            error: function () {
+                console.log("error");
+                swal.stopLoading();
+
+                swal({
+                    icon: 'error',
+                    title: "No pudimos procesar tu solicitud",
+                    text: 'Por favor intente mas tarde',
+                    className: 'errorSentOffer'
+                });
+
+            },
+            success: function (data) {
+                console.log("exito", data);
+
+                swal({
+                    icon: 'success',
+                    title: '¡Felicidades!',
+                    text: 'Entrevista aprobada, siguiente entrevista programada',
+                    className: 'successSendOffer'
+                }).then(
+                    function (retorno) {
+                        location.reload();
+                    });
+            },
+            complete: function () {
+                console.log("complete");
+                swal.stopLoading();
+
+            },
+        });
+
+
+
+    } else {
+        swal.stopLoading();
+    }
+
+}
+
+

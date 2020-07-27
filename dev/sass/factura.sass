@@ -86,7 +86,60 @@
                         font-size: 18px
                     .buttonCustom
                         margin-top: 10px
-                .details
+                // .details
+                // .bill
+
+        @include responsivo(telefonoTable)
+            width: 90%!important
+            max-width: unset!important
+            h3.tituloBase
+                display: flex
+                flex-direction: column
+                text-align: center
+                // margin-bottom: 15px
+                small
+                    display: block
+                    width: 100%
+                    text-align: center
+                    margin-top: 15px
+            .row.info1
+                display: flex
+                flex-direction: column
+                .opc,
+                .details,
                 .bill
+                    flex: unset!important
+                    min-width: 100%!important
+                .opc
+                .details
+                    display: flex
+                    flex-direction: column
+                    .col-4
+                        flex: unset!important
+                        min-width: 100%
+                .bill
+                    padding: 0!important
+                    .card
+                        padding: 15px
+                        p.tituloContrato
+                            font-size: 14px
+        @include responsivo(pcMedio)
+            width: 90%!important
+            max-width: unset!important
+            .row.info1
+                .opc
+                .details
+                    display: flex
+                    flex-direction: column
+                    .col-4
+                        flex: unset!important
+                        min-width: 100%
+                .bill
+                    padding: 0!important
+                    .card
+                        padding: 15px
+                        p.tituloContrato
+                            font-size: 14px
+            // display: none
 
 

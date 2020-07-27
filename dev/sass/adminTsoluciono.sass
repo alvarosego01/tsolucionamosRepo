@@ -33,7 +33,11 @@ div.tabsAdminTsoluciono
     section#content4,
     section#content5,
     section#content6,
-    section#content7
+    section#content7,
+    section#content8,
+    section#content9,
+    section#content10,
+    section#content11
         display: none
         padding: 20px 0 0
         border-top: 1px solid $color_alto_approx
@@ -154,11 +158,28 @@ div.tabsAdminTsoluciono
                         color: black
                     p
                         color: black
+        .helpVacants
+            margin: 50px 0
+            // display: flex
+            .buttonCustom
+                // margin: 0 auto!important
+                // display: block
+                display: flex
+                justify-content: center
+                form
+                    margin: 0 10px
+                button
+                    display: block!important
+                    margin: 0 auto!important
+        div#listOfferts
+            h4.noResults
+                text-align: left!important
+
     section#content3
         .list-group.row
             .list-group-item.list-group-item-action.flex-column.align-items-start.col-12.align-self-center
                 padding: 25px 0
-            .row.estatus
+            // .row.estatus
             .row.infoUsuarios
                 width: 100%
                 .familia,
@@ -217,6 +238,116 @@ div.tabsAdminTsoluciono
 
 
 div#adminPanel
+    .globalPanel
+        table.table.table-hover
+            overflow: hidden
+            overflow-x: scroll
+            display: block
+        @include responsivo(telefonoTable)
+            display: flex
+            flex-direction: column
+            .navOpc
+                width: 100%!important
+                min-width: 100%!important
+                flex: unset
+                border-right: 0!important
+                h5
+                    text-align: center
+                    font-size: 22px
+                ul
+                    border-left: 0
+                    // display: flex
+                    // flex-wrap: wrap
+                    text-align: center
+                    padding: 25px 0!important
+                    border-top: 1.5px solid $azulOscuro
+                    border-bottom: 1.5px solid $azulOscuro
+                    margin-bottom: 25px
+            .mainSections
+                width: 100%!important
+                min-width: 100%!important
+                flex: unset!important
+                padding-left: 0!important
+                padding-right: 0!important
+                h4
+                    text-align: center
+                    display: block
+                    width: 100%
+                table.table.table-hover
+                    overflow: hidden
+                    overflow-x: scroll
+                    width: 100%!important
+                    display: block!important
+                .opcVacants
+                    .list-group
+                        display: flex!important
+                        justify-content: center!important
+                        flex-direction: column!important
+                        button
+                            border-radius: 50px!important
+                .d-flex.w-100.justify-content-between
+                    display: flex!important
+                    flex-direction: column!important
+                    *
+                        text-align: center
+                .allContracts
+                    img
+                        object-fit: contain!important
+                .row.tsolucionamosPublic,
+                .allContracts
+                    .card
+                        .row
+                            display: flex
+                            justify-content: center
+                            flex-direction: column
+                            .contratistaImg
+                                flex: unset!important
+                                width: 100%!important
+                                min-width: 100%!important
+                                img
+                                    position: relative!important
+                                    // max-height: 300px
+                                    width: 100%
+                                    object-fit: cover
+                                    object-position: top
+                                    height: 250px
+                            .info
+                                flex: unset!important
+                                width: 100%!important
+                                min-width: 100%!important
+                                h6
+                                    text-align: left!important
+                                *
+                                    text-align: left!important
+
+        @include responsivo(pcMedio)
+            display: flex
+            flex-direction: column
+            .navOpc
+                width: 100%!important
+                min-width: 100%!important
+                flex: unset
+                border-right: 0!important
+                h5
+                    text-align: center
+                    font-size: 22px
+                ul
+                    border-left: 0
+                    // display: flex
+                    // flex-wrap: wrap
+                    text-align: center
+                    padding: 25px 0!important
+                    border-top: 1.5px solid $azulOscuro
+                    border-bottom: 1.5px solid $azulOscuro
+                    margin-bottom: 25px
+            .mainSections
+                width: 100%!important
+                min-width: 100%!important
+                flex: unset!important
+                h4
+                    text-align: center
+
+div#adminPanel
     background-color: $fondoComplemento
     padding: 50px 0
     .container.global
@@ -226,12 +357,12 @@ div#adminPanel
         @include responsivo(pcMedio)
             max-width: 90%
         @include responsivo(general)
-            max-width: 80%
+            max-width: 90%
             // min-width: 1200px
         @include responsivo(resto)
-            max-width: 70%
+            max-width: 80%
             min-width: 1200px
-            width: max-content!important
+            width: 100%t!important
         .row
             margin: 0
         .tabsAdminTsoluciono
@@ -242,6 +373,12 @@ div#adminPanel
             .navOpc
                 border-right: 1px solid rgba(0,0,0,0.3)
                 padding-top: 0
+                @include responsivo(general)
+                    ul
+                        li
+                            a
+                                font-size: 1.45vw
+
             .mainSections
                 section
                     border-top: 0
@@ -276,6 +413,8 @@ section#content2
     .card.entrevista
         box-shadow: $boxShadow1
         margin-bottom: 25px
+        h6
+            font-size: 14.5px
 
 button
     margin-bottom: 10px!important
@@ -369,7 +508,167 @@ button
                 .m
                     font-size: 16px
             img
-                object-fit: cover!important
                 position: absolute
-                height: 100%
-                // height: 100%!important
+                height: 70%
+                display: block
+                left: 0
+                right: 0
+                top: 0
+                bottom: 0
+                margin: auto
+                object-position: center
+                object-fit: contain
+
+
+
+
+div#formDetailsIntegrateCand
+    display: block!important
+    form.optionsFilter
+        margin-bottom: 25px
+        box-sizing: border-box
+        display: block
+        .buttonCustom.row
+            button
+                margin: 0 auto
+                display: block
+
+
+.graficoDona
+    // height: auto!important
+    // width: 600px!important
+    margin: 0 auto
+
+
+.solicitantesTotal,
+.todosUsuariosGraficoPadre
+    max-width: 450px!important
+    margin: 0 auto!important
+    margin-bottom: 15px!important
+    display: block
+    position: relative
+    small.neto
+        position: absolute
+        left: 0
+        right: 0
+        bottom: 0
+        top: 25%
+        align-self: center
+        height: fit-content
+        width: fit-content
+        margin: auto
+        font-size: 22px
+        line-height: 22px
+
+.infoContratos,
+.infoDifusion
+    // display: none
+    margin-bottom: 25px
+    h5
+        width: 100%
+        display: flex
+        justify-content: space-between
+
+ul.listaFiltro
+    li
+        width: fit-content
+        a
+            color: grey!important
+            transition: $trans
+            text-decoration: none
+        a.active
+            color: $azulOscuro!important
+        &:hover
+            a
+                color: $azulOscuro!important
+
+
+
+#content11
+    .tsolucionamosPublic
+        .card
+            padding: 0 2.5%
+            padding-left: 0
+            box-shadow: $boxShadow1
+            margin-bottom: 25px
+            .buttonCustom
+                margin-bottom: 0
+                display: flex
+                flex-direction: row
+                justify-content: space-around
+                margin-top: 15px
+                a
+                    display: block
+            .info
+                padding: 15px 2.5%
+                .subInfo
+                    margin-top: 15px
+                    .row
+                        margin-bottom: 15px
+                        .desc
+                            p
+                                overflow: auto
+                                max-height: 100px
+            .contratistaImg
+                padding: 0
+                position: relative
+                span
+                    position: absolute
+                    left: 0
+                    right: 0
+                    display: block
+                    margin: 0 auto
+                    padding: 5px 25px
+                    text-align: center
+                    width: 100%
+                    transition: $trans
+                    z-index: 1
+                    font-weight: bold
+                    letter-spacing: 2.5px
+                span.top
+                    top: 0
+                span.bottom
+                    bottom: 0
+                span.activo
+                    background-color: $azulOscuro
+                    color: white
+                span.garantia
+                    background-color: $azulOscuro
+                    color: white
+                span.definitivo
+                    background-color: $verde
+                    color: white
+                span.inactivo,
+                span.cancelado
+                    background-color: $grisPastel
+                    color: black
+                span.cambio
+                    background-color: $amarilloPastel
+                    color: black
+                span.caducado
+                    background-color: $grisPastel
+                    color: black
+                span.eliminado
+                    background-color: $rojoSalmon
+                    color: white
+                div.sueldo
+                    position: absolute
+                    right: 0
+                    top: 0
+                    z-index: 1
+                    background-color: $azulOscuro
+                    padding: 5px 10px
+                    color: white
+                    display: flex
+                    flex-direction: row
+                    .n
+                        opacity: 1
+                        font-size: 16px
+                        margin: 0 5px
+                    .m
+                        font-size: 16px
+                img
+                    object-fit: cover!important
+                    position: absolute
+                    height: 100%
+                    // height: 100%!important

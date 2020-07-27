@@ -24,6 +24,15 @@ var validnewWork = {
             }
         }
     },
+    "otroServicio": {
+        field: 'textfield',
+        required: true,
+        valid: {
+            null: {
+                message: 'Debes especificar el tipo de servicio'
+            }
+        }
+    },
     "categoria": {
         field: 'select',
         required: true,
@@ -93,23 +102,23 @@ var validnewWork = {
         field: 'imagen',
         required: false,
         valid: {
-            formatImage: {
+            formatImages: {
                 message: 'Tipo de archivo inválido, solo se permite JPG/JPEG/PNG'
             }
         }
     },
     "imagenes": {
-        field: 'imagenes',
+        field: 'imagen',
         required: true,
         valid: {
-            formatImages: {
-                message: 'Tipo de archivo inválido, solo se permite JPG/JPEG/PNG'
-            },
             nullImage1: {
                 message: 'Debes subir al menos 1 imagen'
             },
             nullImageOver10: {
                 message: 'Solo un máximo de 10 imagenes'
+            },
+            formatImages: {
+                message: 'Tipo de archivo inválido, solo se permite JPG/JPEG/PNG'
             }
         }
     },
@@ -117,39 +126,37 @@ var validnewWork = {
         field: 'video',
         required: false,
         valid: {
-            formatVideo: {
-                message: 'Tipo de archivo inválido, solo se permite mp4/avi/MKV/WMVMOV'
+
+            nullTime15: {
+                message: 'El video debe tener máximo 1.5 minutos de duración y ser de formato mp4/avi/3gp'
             },
-            nullTime3: {
-                message: 'El video debe tener máximo 3 minutos de duración'
-            }
         }
     },
     "instagram": {
-        field: 'instagram',
+        field: 'url',
         required: false,
         valid: {
-            nullInstagram: {
+            nullUrl: {
                 message: 'Debes escribir una dirección de Instagram valida'
             }
 
         }
     },
     "facebook": {
-        field: 'facebook',
+        field: 'url',
         required: false,
         valid: {
-            nullFacebook: {
+            nullUrl: {
                 message: 'Debes escribir una dirección de Facebook valida'
             }
 
         }
     },
     "twitter": {
-        field: 'twitter',
+        field: 'url',
         required: false,
         valid: {
-            nullTwitter: {
+            nullUrl: {
                 message: 'Debes escribir una dirección de Twitter valida'
             }
 
@@ -204,6 +211,7 @@ var datos = {
 var dataPublicacionProfesional = new FormData();
 var dataPagoFields = new FormData();
 
+configValidatorType(validnewWork);
 
 function continueCreateVacant() {
 
@@ -378,7 +386,7 @@ function processStep(data) {
 
                 if (data.step == 2) {
                     console.log('valid seteado');
-                    // configValidatorType(validnewWork);
+                    configValidatorType(validnewWork);
                 }
             }
 

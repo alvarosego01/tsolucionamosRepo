@@ -222,7 +222,7 @@ if( (isset($_GET['serial'])) && ($_GET['serial'] != '')){
 
                                   <div class="col-8 buttonCustom">
 
-                                  <a href="<?php echo $listadoAdmin.'#tab11' ?>" class='btn btn-success btn-block'>Volver al listado de publicaciones</a>
+                                  <a href="/anuncios-tsolucionamos" class='btn btn-success btn-block'>Volver al listado de publicaciones</a>
 
                                 </div>
 

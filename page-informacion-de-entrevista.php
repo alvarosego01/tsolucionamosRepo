@@ -63,6 +63,9 @@ if (count($info) > 0) {
     $et = $ooo[0]['etapa'];
     $fechaAcordado = $e['fechaCreacion'];
     $aprobado = $e['aprobado'];
+
+    $aprobado = ($e['resultadosEntrevista'] != '' && $e['resultadosPruebasPsico'] != '')? 1 : $aprobado;
+
     $maprobado = 'En espera';
     $nota = $e['nota'];
     $tipoEntrevista = $e['tipoEntrevista'];
@@ -139,9 +142,7 @@ if (count($info) > 0) {
     if( confirmStep2($stepData, 'can') ){
 
         //    info adicional del candidato
-            $pd = $usuario['curriculum'][0];
-            $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$pd;
-            $curriculum = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsolucionamos'.$url : $url;
+
 
             $ft = $usuario['fotoFondoBlanco'][0];
 
@@ -167,18 +168,30 @@ if (count($info) > 0) {
             $fuma = explode('"', $fuma);
             $fuma = $fuma[1];
 
-            $referenciaslaborales = $usuario['referencialab'][0];
-            $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$referenciaslaborales;
-            $referenciaslaborales = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsolucionamos'.$url : $url;
+            $curriculum = ($usuario['curriculum'][0] != '')? $usuario['curriculum'][0] : null;
+            if($curriculum != null){
+                $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$curriculum;
+                $curriculum = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsolucionamos'.$url : $url;
+            }
 
-            $referenciaspersonales = $usuario['referenciasper'][0];
-            $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$referenciaspersonales;
-            $referenciaspersonales = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsolucionamos'.$url : $url;
+            $referenciaslaborales = ($usuario['referencialab'][0] != '')? $usuario['referencialab'][0]: null;
+            if($referenciaslaborales != null){
+                $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$referenciaslaborales;
+                $referenciaslaborales = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsolucionamos'.$url : $url;
+            }
 
-            $carnetSalud = $usuario['carnetSalud'][0];
-            $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$carnetSalud;
+            $referenciaspersonales = ($usuario['referenciasper'][0] != '')? $usuario['referenciasper'][0]: null;
+            if($referenciaspersonales != null){
+                $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$referenciaspersonales;
+                $referenciaspersonales = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsolucionamos'.$url : $url;
+            }
 
-            $carnetSalud = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsolucionamos'.$url : $url;
+            $carnetSalud = ($usuario['carnetSalud'][0] != '')? $usuario['carnetSalud'][0]: null;
+            if($carnetSalud != null){
+
+                $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$carnetSalud;
+                $carnetSalud = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsolucionamos'.$url : $url;
+            }
 
             $tratamientoMedico = $usuario['tratamiento'][0];
             $habilidadesDestacadas = $usuario['habilidadDestacada'][0];
@@ -596,6 +609,18 @@ if (count($info) > 0) {
                             <div class="container infoResultado">
                             <h6>
                                 Resumen de entrevista <small>(<?php echo $fechaPruebasRealizadasCandidato.' - '.$horaPruebasRealizadasCandidato  ?>)</small>
+
+                            <?php if(validateUserProfileOwner($currentId, $currentId, "adminTsoluciono")) { ?>
+                                    <!-- $dataEvaluate -->
+                                <button
+                                onclick='changeResumenEntrevista(<?php echo $dataEvaluate ?>)'
+                                style="padding: 1px 5px!important"
+                                name="" id="" class="btn btn-success" type="button" role="button">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                                </button>
+
+                            <?php } ?>
+
                             </h6>
                                 <div class="row">
                                     <div class="col-6">
@@ -626,7 +651,10 @@ if (count($info) > 0) {
                                 <div class="row">
                                     <div class="resultadosEntrevista">
                                         <h6>Información sobre la entrevista</h6>
-                                        <?php echo $x = (isset($infoCandidatoEntrevista) && $infoCandidatoEntrevista != '')? $infoCandidatoEntrevista: 'Sin información adicional';
+                                        <?php
+                                        $x = (isset($infoCandidatoEntrevista) && $infoCandidatoEntrevista != '')? $infoCandidatoEntrevista: 'Sin información adicional';
+                                        // echo utf8_encode($x);
+                                        echo $x = formatUTF8($x);
                                         ?>
                                     </div>
                                 </div>
@@ -639,6 +667,19 @@ if (count($info) > 0) {
                             <a href="<?php echo $volverAtras ?>" <i class="fa fa-undo" aria-hidden="true"></i> Atras
                             </a>
                                         </button>
+
+                                        <?php if(validateUserProfileOwner($currentId, $currentId, "adminTsoluciono") && ($asistencia != 'Confirmada')){ ?>
+
+                                                <?php $x = array(
+                                                    'idEntrevista' => $idEntrevista,
+                                                );
+
+                                                $x = json_encode($x);
+
+                                        ?>
+                                        <button onclick='forzarAsistencia(<?php echo $x ?>)' class='col-4 btn btn-success btn-block'>Aprobar asistencia</button>'
+                                    <?php } ?>
+
                             <?php if (($aprobado == 1) && validateUserProfileOwner($currentId, $currentId, 'adminTsoluciono') && $tipoEntrevista == 'Pruebas Psico laborales') {
                                 global $wpdb;
                                 $tabla = $wpdb->prefix . 'configuracionesadmin';
@@ -788,22 +829,28 @@ if (count($info) > 0) {
                             <div class="foto">
                                 <?php echo $xx = ($asistencia == 'Confirmada')? '<span class="etiqueta confirmada">Asistencia: Confirmada</span>': '<span class="etiqueta pendiente">Asistencia: Pendiente</span>'; ?>
                                 <img src="<?php echo $fotoBlanco ?>" alt="">
+
+
+
+
                             </div>
                             <div class="files">
 
                                 <a class="name" href="<?php echo $urlCandidata ?>">
                                     <?php echo $nombreCandidata ?>
                                 </a>
-                            <?php if(isset($curriculum) && $curriculum != ''){ ?>
+                            <?php if(isset($curriculum) && $curriculum != null){ ?>
                                 <a target="_blank" class="hiper" href="<?php echo $curriculum; ?>"><i class="fa fa-briefcase" aria-hidden="true"></i>Curriculum</a>
                             <?php } ?>
-                            <?php if(isset($referenciaslaborales) && $referenciaslaborales != ''){ ?>
+                            <?php if(isset($referenciaslaborales) && $referenciaslaborales != null){
+
+                                ?>
                                 <a target="_blank" class="hiper" href="<?php echo $referenciaslaborales; ?>"> <i class="fa fa-handshake-o" aria-hidden="true"></i> Referencias laborales</a>
                             <?php } ?>
-                            <?php if(isset($referenciaspersonales) && $referenciaspersonales != ''){ ?>
+                            <?php if(isset($referenciaspersonales) && $referenciaspersonales != null){ ?>
                                 <a target="_blank" class="hiper" href="<?php echo $referenciaspersonales; ?>"><i class="fa fa-address-card" aria-hidden="true"></i> Referencias personales</a>
                             <?php } ?>
-                            <?php if(isset($carnetSalud) && $carnetSalud != ''){ ?>
+                            <?php if(isset($carnetSalud) && $carnetSalud != null){ ?>
                                 <a target="_blank" class="hiper" href="<?php echo $carnetSalud; ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i> Carnet de salud</a>
                             <?php } ?>
 

@@ -151,6 +151,8 @@ function dbSendBeginInterviewProcess($data)
 {
     global $wpdb;
 
+
+
     $tablaprocesoEntrevistasEtapas = $wpdb->prefix . 'proceso_contrato_etapas';
     $tablaOfertaLaboral = $wpdb->prefix . 'ofertalaboral';
     $procesoContrato = $wpdb->prefix . 'proceso_contrato';
@@ -199,6 +201,8 @@ $urlReprogEntrevista .= '&drec='.$urlReprogEntrevista;
             'etapa' => sanitize_text_field('0'),
             'estado' => 'En etapa de selección',
         );
+
+
         $datos2 = array(
             'idEntrevista' => sanitize_text_field($id),
             'fechaCreacion' => sanitize_text_field($creadoEn),
@@ -212,6 +216,9 @@ $urlReprogEntrevista .= '&drec='.$urlReprogEntrevista;
             'resultadosEntrevista' => '',
             'confirmaFecha' => sanitize_text_field($confirmaFecha)
         );
+
+
+
         $formato1 = array(
             '%s',
             '%s',
@@ -240,31 +247,49 @@ $urlReprogEntrevista .= '&drec='.$urlReprogEntrevista;
         // para mensaje
 
         $candidatoInfo = getInfoNameEmailUsers($r['idpostulant']);
+        $nt = sanitize_text_field($r['info']['notaEntrevista']);
+        $donde = sanitize_text_field($r['info']['datoEntrevista']);
 
-        $msj = 'Te hemos programado la realización de Pruebas Psico laborales con nosotros por la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>, con fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.  <br><br> Confirma o solicita una reprogramación de fecha y hora <a href="'.$urlReprogEntrevista.'">AQUÍ</a>.';
+        $msj = 'Te hemos programado la realización de unas Pruebas Psico laborales para la vacante  <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a> con fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>.<br><br>Donde: <br>'.$donde.'.<br>Confirma la asistencia o solicita una reprogramación de fecha y hora <a href="'.$urlReprogEntrevista.'">AQUÍ</a><br><br>Importante: <br>'.$nt.'';
+
+        // $msj = 'Te hemos programado la realización de Pruebas Psico laborales con nosotros por la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>, con fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.  <br><br> Confirma o solicita una reprogramación de fecha y hora <a href="'.$urlReprogEntrevista.'">AQUÍ</a>.';
+
+        // $msj .= "<br> <br> Nota de Administración: <br> $nt";
         $mensaje = array(
             'mensaje' => $msj,
-            'subject' => 'Tienes Pruebas Psico laborales pendientes con administración por la vacante: '.$nombreVacante,
+            'subject' => 'Información sobre Pruebas Psico laborales',
             'estado' => 0,
          // 'fecha' => ,
             'tipo' => 'newEntrevista',
             'email' => $candidatoInfo['email'],
             'usuarioMuestra' => $candidatoInfo['id']
         );
+
+
         saveNotification($mensaje);
 
-        $msj = 'Se han programado Pruebas Psico laborales con <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>.'.' Para la vacante  <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. Se realizará en la fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>.';
+        $nt = sanitize_text_field($r['info']['notaEntrevista']);
+
+        $msj = 'Hemos programado la realización de unas Pruebas Psico laborales con <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> para la vacante  <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a> con fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>.<br><br>Donde: <br>'.$donde.'.<br><br>Importante: <br>'.$nt.'';
+
+        // $msj = 'Se han programado Pruebas Psico laborales con <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>.'.' Para la vacante  <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. Se realizará en la fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>.';
+
+        // $msj .= "<br> <br> Nota de Administración: <br> $nt";
 
         $mensaje = array(
             'mensaje' => $msj,
-            'subject' => 'Hemos programado Pruebas Psico Laborales con '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por la vacante: '.$nombreVacante,
+            'subject' => 'Información sobre Pruebas Psico laborales',
             'estado' => 0,
          // 'fecha' => ,
             'tipo' => 'newEntrevista',
             'email' => '',
             'usuarioMuestra' => 'Tsoluciono'
         );
+
+
+
         saveNotification($mensaje);
+
 
 
         // print_r($r);
@@ -481,7 +506,7 @@ function dbAdminDeleteProcessInterview($data)
         $msj = 'Se ha eliminado el proceso de la entrevista <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong> publicado por: <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>';
         $mensaje = array(
             'mensaje' => $msj,
-            'subject' => 'Se ha eliminado el proceso de: <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>. Para entrevista por la vacante: '.$nombreVacante,
+            'subject' => 'Se ha eliminado el proceso de: <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>',
             'estado' => 0,
             // 'fecha' => ,
             'tipo' => 'deleteEntrevista',
@@ -506,7 +531,7 @@ function dbAdminDeleteProcessInterview($data)
         $msj = 'Se ha eliminado el proceso de la entrevista <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong> publicado por: <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>';
         $mensaje = array(
             'mensaje' => $msj,
-            'subject' => 'Se ha eliminado el proceso de: <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>. Para entrevista por la vacante: '.$nombreVacante,
+            'subject' => 'Se ha eliminado el proceso de: <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>',
             'estado' => 0,
             // 'fecha' => ,
             'tipo' => 'deleteEntrevista',
@@ -604,7 +629,7 @@ function dbAdminAddNewInterview($data)
 
             $mensaje = array(
                 'mensaje' => $msj,
-                'subject' => 'Hemos realizado la entrevista de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por la vacante: '.$nombreVacante,
+                'subject' => 'Hemos realizado la entrevista de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')',
                 'estado' => 0,
              // 'fecha' => ,
                 'tipo' => 'completaEntrevista',
@@ -631,6 +656,112 @@ function dbAdminAddNewInterview($data)
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
     }
+
+}
+
+
+
+
+
+
+// {"cumpleCandidato":"SI","recomendabilidad":"4","infoCandidatoEntrevista":"Es una persona apta, tiene experiencia en empresas como curtiembre, casino carrasco, damar en limpieza de espacios publicos y oficinas. Actualmente trabaja para una casa de familia de dos personas, se mostro como una persona proactiva y servicial. Sabe cocinar lo basico, le intersa fijo o puntual. Le interesa sin retiro (con cama). Es soltera sin hijos. Le gusta mucho la rutina para poder organizarse y cumpklir con todo el trabajo.","fechaRealizado":"01/07/2020","horaRealizado":"3 : 30 PM"}
+
+function dbchangeDataInterview($data){
+
+    global $wpdb;
+    $tabla = $wpdb->prefix . 'proceso_contrato_etapas';
+    $procesoContrato = $wpdb->prefix . 'proceso_contrato';
+    $tablaOfertaLaboral = $wpdb->prefix . 'ofertalaboral';
+
+    $entrevista = $data['entrevista'];
+    $info = $data['info'];
+
+
+    $idEntrevista = sanitize_text_field($entrevista['idEntrevista']);
+    $estadoActualizado = sanitize_text_field($info['estado']);
+    $fechaActualizado = sanitize_text_field($entrevista['actualizado']);
+
+    $cumpleCandidato = sanitize_text_field($info['cumpleCandidato']);
+    $recomendabilidad = sanitize_text_field($info['recomendabilidad']);
+    $infoCandidatoEntrevista = sanitize_text_field($info['infoCandidatoEntrevista']);
+    // $estado = sanitize_text_field($info['estado']);
+
+    $procesoContratoEtapas = $wpdb->get_results("SELECT * from $tabla where idEntrevista = '$idEntrevista'", ARRAY_A);
+
+    $fechaRealizado = $procesoContratoEtapas[0]['fechaPautado'];
+    $horaRealizado = $procesoContratoEtapas[0]['hora'];
+
+    $informacion = $procesoContratoEtapas[0]['resultadosEntrevista'];
+    $informacion = json_decode($informacion,true);
+
+    $informacion['cumpleCandidato'] = ($cumpleCandidato != '' && $cumpleCandidato != null)? $cumpleCandidato: $informacion['cumpleCandidato'];
+    $informacion['recomendabilidad'] = ($recomendabilidad != '' && $recomendabilidad != null)? $recomendabilidad: $informacion['recomendabilidad'];
+    $informacion['infoCandidatoEntrevista'] = ($infoCandidatoEntrevista != '' && $infoCandidatoEntrevista != null)? $infoCandidatoEntrevista: $informacion['infoCandidatoEntrevista'];
+
+
+    // $informacion = array(
+    //     'cumpleCandidato' => $cumpleCandidato,
+    //     'recomendabilidad' => $recomendabilidad,
+    //     'infoCandidatoEntrevista' => $infoCandidatoEntrevista,
+    //     'fechaRealizado' => $fechaRealizado,
+    //     'horaRealizado' => $horaRealizado
+    // );
+
+    // datos para los mensajes
+    $procesoContrato = $wpdb->get_results("SELECT * from $procesoContrato where id = '$idEntrevista'", ARRAY_A);
+
+    $candidatoId = $procesoContrato[0]['candidataId'];
+    $contratistaId = $procesoContrato[0]['contratistaId'];
+    $ofertaId = $procesoContrato[0]['ofertaId'];
+    $infoOferta = $wpdb->get_results("SELECT * from $tablaOfertaLaboral where id = '$ofertaId'", ARRAY_A);
+    $tipoServicio = $infoOferta[0]['tipoServicio'];
+    $serialVacante = $infoOferta[0]['serialOferta'];
+    $vacanteUrl = esc_url(get_permalink(get_page_by_title('Información de vacante'))).'?serial='.$serialVacante;
+    $nombreVacante = $infoOferta[0]['nombreTrabajo'];
+
+    $candidatoInfo = getInfoNameEmailUsers($candidatoId);
+    $familiaInfo = getInfoNameEmailUsers($contratistaId);
+
+    $informacion = json_encode($informacion);
+
+        try {
+
+            $wpdb->query("UPDATE $tabla SET  fechaPautado = 'Adicional', aprobado=1, resultadosEntrevista = '$informacion' WHERE idEntrevista='$idEntrevista'");
+
+            // // parte mensajes
+            // $msj = 'Se ha realizado tu entrevista con éxito para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.';
+            // $mensaje = array(
+            //     'mensaje' => $msj,
+            //     'subject' => 'Te han entrevistado para la vacante la vacante: '.$nombreVacante,
+            //   'estado' => 0,
+            //     'estado' => 0,
+            //  // 'fecha' => ,
+            //     'tipo' => 'completaEntrevista',
+            //     'email' => $candidatoInfo['email'],
+            //     'usuarioMuestra' => $candidatoInfo['id']
+            // );
+            // saveNotification($mensaje);
+
+             // parte Administracion
+            $msj = 'Hemos editado el resumen de entrevista de <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>'.' para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong> y publicado por: <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>';
+
+            $mensaje = array(
+                'mensaje' => $msj,
+                'subject' => 'Hemos editado la entrevista de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')',
+                'estado' => 0,
+             // 'fecha' => ,
+                'tipo' => 'completaEntrevista',
+                'email' => '',
+                'usuarioMuestra' => 'Tsoluciono'
+            );
+            saveNotification($mensaje);
+
+
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+
+
 
 }
 
@@ -803,6 +934,144 @@ function dbProcessOpcionesVacante($data)
 
 
 
+// Array
+// (
+//     [familia] => Array
+//         (
+//             [id] => 218
+//             [idOferta] => 5f18bd75199415f18bd7519943
+//             [etapa] => 0
+//         )
+
+//     [info] => Array
+//         (
+//             [confirmaFecha] => Array
+//                 (
+//                     [admin] => Confirmada
+//                     [familia] => Confirmada
+//                 )
+
+//         )
+
+// )
+    // </pre>
+
+function dbgoomitirFamilyInterview($data){
+
+
+    // return;
+    global $wpdb;
+    $familia = $data['familia'];
+    // $serial = $data['serial'];
+    $contratistaId = $familia['id'];
+    $ofertaId = $familia['idOferta'];
+    $estado = 'Entrevita omitida';
+    $creadoEn = date('d/m/Y');
+    $confirmaFecha = json_encode($data['info']['confirmaFecha']);
+
+    $i = 0;
+        $id = uniqid() . uniqid();
+        $datos1 = array(
+            'id' => sanitize_text_field($id),
+            'contratistaId' => sanitize_text_field($contratistaId),
+            'candidataId' => sanitize_text_field($contratistaId),
+            'ofertaId' => sanitize_text_field($ofertaId),
+            'etapa' => '2',
+            'estado' => 'Selección final de candidato',
+        );
+
+
+        $datos2 = array(
+            'idEntrevista' => sanitize_text_field($id),
+            'fechaCreacion' => sanitize_text_field($creadoEn),
+            'fechaPautado' => 'Sin fecha',
+            'hora' => 'Sin hora',
+            'estado' => $estado,
+            'tipoEntrevista' => 'Entrevista con la familia',
+            'aprobado' => 1,
+            'datoEntrevista' => 'Sin datos',
+            'nota' => 'La entrevista ha sido omitida',
+            'resultadosEntrevista' => '{"solucionPropuesta":"SI","seleccionPor":"Familia","infoEntrevistaFamilia":"Entrevista omitida por administración"}',
+            'confirmaFecha' => sanitize_text_field($confirmaFecha)
+        );
+        $formato1 = array(
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+        );
+        $formato2 = array(
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s'
+        );
+
+        ?>
+        <pre>
+            <?php
+                print_r($datos1);
+                print_r($datos2);
+            ?>
+        </pre>
+        <?php
+        $tabla1 = $wpdb->prefix . 'proceso_contrato';
+        $wpdb->insert($tabla1, $datos1, $formato1);
+        $wpdb->flush();
+        $tabla = $wpdb->prefix . 'proceso_contrato_etapas';
+        $wpdb->insert($tabla, $datos2, $formato2);
+        $wpdb->flush();
+
+
+        try {
+            $wpdb->query("UPDATE $tabla1 SET etapa = '2' where ofertaId = '$ofertaId'");
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+
+
+}
+
+
+// <pre>
+
+// Array
+// (
+// [familia] => Array
+// (
+//     [id] => 218
+//     [idOferta] => 5f18bd75199415f18bd7519943
+//     [etapa] => 0
+// )
+
+// [info] => Array
+// (
+//     [tipoEntrevista] => Entrevista con la Familia
+//     [datoEntrevista] => On Line - Las pruebas serán enviadas por email. Las entrevista via WhatsApp
+//     [date] => 31/07/2020
+//     [hora] => 12 : 35 PM
+//     [notaEntrevista] => sdfsdfsdf
+//     [confirmaFecha] => Array
+//         (
+//             [admin] => Confirmada
+//             [familia] => Pendiente
+//         )
+
+// )
+
+// )
+// </pre>
+
+
 function dbCreateFamilyInterview($data){
 
     global $wpdb;
@@ -888,11 +1157,18 @@ function dbCreateFamilyInterview($data){
         $urlReprogEntrevista = esc_url(get_permalink(get_page_by_title('Mis vacantes'))).'?tab=2';
         $urlReprogEntrevista .= '&drec='.$urlReprogEntrevista;
 
-        $msj = 'Te hemos programado entrevista con nosotros por tu vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>, con fecha: <strong>'.$data['info']['date'].'</strong> y hora: <strong>'.$data['info']['hora'].'</strong>. Para tratar el tema de candidatos disponibles por el cargo de: <strong>'.$tipoServicio.'</strong>.
-         <br><br> Confirma o solicita una reprogramación de fecha y hora <a href="'.$urlReprogEntrevista.'">AQUÍ</a>.';
+
+        $nt = sanitize_text_field($data['info']['notaEntrevista']);
+        $donde = sanitize_text_field($r['info']['datoEntrevista']);
+        $msj = 'Te hemos programado la realización de entrevista con nosotros por tu vacante  <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a> con fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>. Para tratar el tema de candidatos disponibles.<br><br>Donde: <br>'.$donde.'.<br>Confirma la asistencia o solicita una reprogramación de fecha y hora <a href="'.$urlReprogEntrevista.'">AQUÍ</a><br><br>Importante: <br>'.$nt.'';
+
+        // $msj = 'Te hemos programado entrevista con nosotros por tu vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>, con fecha: <strong>'.$data['info']['date'].'</strong> y hora: <strong>'.$data['info']['hora'].'</strong>. Para tratar el tema de candidatos disponibles por el cargo de: <strong>'.$tipoServicio.'</strong>.
+        //  <br><br> Confirma o solicita una reprogramación de fecha y hora <a href="'.$urlReprogEntrevista.'">AQUÍ</a>.';
+
+        //  $msj .= "<br> <br> Nota de Administración: <br> $nt";
         $mensaje = array(
             'mensaje' => $msj,
-            'subject' => 'Tienes una entrevista pendiente con administración por tu vacante: '.$nombreVacante,
+            'subject' => 'Información de entrevista',
             'estado' => 0,
          // 'fecha' => ,
             'tipo' => 'newEntrevista',
@@ -902,11 +1178,18 @@ function dbCreateFamilyInterview($data){
         saveNotification($mensaje);
 
 
-        $msj = 'Se ha programado una entrevista con <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>.'.' Para tratar temas sobre su vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Se realizará en la fecha: <strong>'.$data['info']['date'].'</strong> y hora: <strong>'.$data['info']['hora'].'</strong>.';
+        $nt = sanitize_text_field($data['info']['notaEntrevista']);
+
+        $donde = sanitize_text_field($r['info']['datoEntrevista']);
+        $msj = 'Hemos programado la realización de entrevista con <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong> por su vacante  <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a> con fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>. Para tratar el tema de candidatos disponibles.<br><br>Donde: <br>'.$donde.'.<br>Confirma la asistencia o solicita una reprogramación de fecha y hora <a href="'.$urlReprogEntrevista.'">AQUÍ</a><br><br>Importante: <br>'.$nt.'';
+
+        // $msj = 'Se ha programado una entrevista con <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>.'.' Para tratar temas sobre su vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Se realizará en la fecha: <strong>'.$data['info']['date'].'</strong> y hora: <strong>'.$data['info']['hora'].'</strong>.';
+
+        // $msj .= "<br> <br> Nota de Administración: <br> $nt";
 
         $mensaje = array(
             'mensaje' => $msj,
-            'subject' => 'Hemos programado una entrevista con '.$familiaInfo['nombre'].'('.$familiaInfo['rol'].') por su vacante publicada: '.$nombreVacante,
+            'subject' => 'Información de entrevista',
             'estado' => 0,
          // 'fecha' => ,
             'tipo' => 'newEntrevista',
@@ -989,12 +1272,10 @@ try {
   $familiaInfo = getInfoNameEmailUsers($contratistaId);
 
 
-
-       // parte mensajes
               $msj = 'Se ha realizado tu entrevista con éxito, como dueño de la publicación para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. ';
               $mensaje = array(
                   'mensaje' => $msj,
-                  'subject' => 'Te han entrevistado por tu vacante: '.$nombreVacante.'.',
+                  'subject' => 'Te han entrevistado por tu vacante: '.$nombreVacante,
                 'estado' => 0,
                   'estado' => 0,
                // 'fecha' => ,
@@ -1010,7 +1291,7 @@ try {
               $msj = '<strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>'.' Ha sido entrevistado por su vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.';
               $mensaje = array(
                   'mensaje' => $msj,
-                  'subject' => 'Hemos realizado la entrevista de '.$familiaInfo['nombre'].'('.$familiaInfo['rol'].') por su vacante: '.$nombreVacante.'.',
+                  'subject' => 'Hemos realizado la entrevista de '.$familiaInfo['nombre'].'('.$familiaInfo['rol'].') por su vacante: '.$nombreVacante,
                   'estado' => 0,
                // 'fecha' => ,
                   'tipo' => 'completaEntrevista',
@@ -1087,10 +1368,10 @@ function dbSendSelectForContract($data){
             $familiaInfo = getInfoNameEmailUsers($fam);
 
                         // parte candidato
-           $msj = 'Te han seleccionado para ser contratado por la vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Administración te enviará una propuesta de contrato. Te mantendremos informado.';
+           $msj = 'Te han seleccionado para ejercer el cargo en la vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Te mantendremos al tanto.';
            $mensaje = array(
                'mensaje' => $msj,
-               'subject' => 'Te han seleccionado para contrato por la vacante: '.$nombreVacante,
+               'subject' => 'Te han seleccionado en la vacante: '.$nombreVacante,
                'estado' => 0,
             // 'fecha' => ,
                'tipo' => 'selectForContract',
@@ -1099,10 +1380,10 @@ function dbSendSelectForContract($data){
            );
            saveNotification($mensaje);
                         // parte candidato
-           $msj = 'Felicitaciones has culminado el proceso de selección del candidato <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>  para ser contratado por tu vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Administración le enviará una propuesta de contrato. Te mantendremos informado. ';
+           $msj = 'Felicitaciones has culminado el proceso de selección del candidato <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>  para ser ejercer el cargo por tu vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Candidato seleccionado, tendrás a tu disposición un contrato en PDF suscrito con la persona seleccionada, te mantendremos al tanto.';
            $mensaje = array(
                'mensaje' => $msj,
-               'subject' => 'Seleccionaste a <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> para contrato por la vacante: '.$nombreVacante,
+               'subject' => 'Seleccionaste a <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>',
                'estado' => 0,
             // 'fecha' => ,
                'tipo' => 'selectForContract',
@@ -1111,11 +1392,11 @@ function dbSendSelectForContract($data){
            );
            saveNotification($mensaje);
            // parte Administracion
-           $msj = '<strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>'.' Ha seleccionado al candidato <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> a ser contratado por la vacante publicada  <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Debemos enviarle al candidato la propuesta de contrato';
+           $msj = '<strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>'.' Ha seleccionado al candidato <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> a ejercer el cargo por la vacante publicada  <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>.';
 
            $mensaje = array(
                'mensaje' => $msj,
-               'subject' => '<strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>'.' Ha seleccionado al candidato <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> a ser contratado',
+               'subject' => '<strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>'.' Ha seleccionado a un candidato <strong>',
                'estado' => 0,
             // 'fecha' => ,
                'tipo' => 'selectForContract',
@@ -1207,7 +1488,7 @@ function dbSendAdminSolChangeDate($data){
 
            $mensaje = array(
                'mensaje' => $msj,
-               'subject' => 'Enviamos una solicitud a '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') para reprogramar su asistencía a la entrevista por la vacante: '.$nombreVacante,
+               'subject' => 'Enviamos una solicitud para reprogramar asistencía a la entrevista',
                'estado' => 0,
             // 'fecha' => ,
                'tipo' => 'reprogAsistencia',
@@ -1222,7 +1503,7 @@ function dbSendAdminSolChangeDate($data){
            $msj = 'Has recibido una propuesta de reprogramación para tu asistencía en la entrevista de tu vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>, para la fecha: <strong>'.$x['date'].'</strong> y hora: <strong>'.$x['hora'].'</strong>.';
            $mensaje = array(
                'mensaje' => $msj,
-               'subject' => 'Recibiste una solicitud para reprogramar tu asistencía de entrevista por la vacante: '.$nombreVacante,
+               'subject' => 'Recibiste una solicitud para reprogramar tu asistencía de entrevista',
                'estado' => 0,
             // 'fecha' => ,
                'tipo' => 'reprogAsistencia',
@@ -1235,7 +1516,7 @@ function dbSendAdminSolChangeDate($data){
 
            $mensaje = array(
                'mensaje' => $msj,
-               'subject' => 'Enviamos una solicitud a '.$familiaInfo['nombre'].'('.$familiaInfo['rol'].') para reprogramar su asistencía a la entrevista por la vacante: '.$nombreVacante,
+               'subject' => 'Enviamos una solicitud a '.$familiaInfo['nombre'].'('.$familiaInfo['rol'].') para reprogramar su asistencía a la entrevista',
                'estado' => 0,
             // 'fecha' => ,
                'tipo' => 'reprogAsistencia',
@@ -1315,7 +1596,7 @@ function dbSendAdminConfirmDate($data){
 
      $mensaje = array(
          'mensaje' => $msj,
-         'subject' => 'Aprobada la solicitud de '.$familiaInfo['nombre'].'('.$familiaInfo['rol'].') para reprogramar su asistencía a la entrevista por su vacante publicada: '.$nombreVacante,
+         'subject' => 'Aprobada la solicitud de '.$familiaInfo['nombre'].'('.$familiaInfo['rol'].') para reprogramar su asistencía a la entrevista',
          'estado' => 0,
       // 'fecha' => ,
          'tipo' => 'confAsistencia',
@@ -1357,7 +1638,7 @@ function dbSendAdminConfirmDate($data){
 
      $mensaje = array(
          'mensaje' => $msj,
-         'subject' => 'Confirmación de asistencia de '.$familiaInfo['nombre'].'('.$familiaInfo['rol'].') para la entrevista de su vacante publicada: '.$nombreVacante,
+         'subject' => 'Confirmación de asistencia de '.$familiaInfo['nombre'].'('.$familiaInfo['rol'].') para la entrevista',
          'estado' => 0,
       // 'fecha' => ,
          'tipo' => 'confAsistencia',
@@ -1371,7 +1652,7 @@ function dbSendAdminConfirmDate($data){
      $msj = 'Ha sido confirmada la asistencia de <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>'.' para la entrevista de tu vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>, a la fecha: <strong>'.$data['info']['date'].'</strong> y hora: <strong>'.$data['info']['hora'].'</strong>.';
      $mensaje = array(
          'mensaje' => $msj,
-         'subject' => 'Confirmación de tu asistencía a la entrevista de tu vacante publicada: '.$nombreVacante,
+         'subject' => 'Confirmación de tu asistencía a la entrevista',
          'estado' => 0,
       // 'fecha' => ,
          'tipo' => 'confAsistencia',
@@ -1406,7 +1687,7 @@ function dbSendAdminConfirmDate($data){
 
      $mensaje = array(
          'mensaje' => $msj,
-         'subject' => 'Aprobada la solicitud de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') para reprogramar su asistencía a la entrevista por la vacante: '.$nombreVacante,
+         'subject' => 'Aprobada la solicitud de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') para reprogramar su asistencía a la entrevista',
          'estado' => 0,
       // 'fecha' => ,
          'tipo' => 'confAsistencia',
@@ -1446,7 +1727,7 @@ function dbSendAdminConfirmDate($data){
 
      $mensaje = array(
          'mensaje' => $msj,
-         'subject' => 'Confirmación de asistencia de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') para su entrevista por la vacante: '.$nombreVacante,
+         'subject' => 'Confirmación de asistencia de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') para su entrevista',
          'estado' => 0,
       // 'fecha' => ,
          'tipo' => 'confAsistencia',
@@ -1460,7 +1741,7 @@ function dbSendAdminConfirmDate($data){
      $msj = 'Ha sido confirmada la asistencia de <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>'.' para la entrevista <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>, a la fecha: <strong>'.$data['info']['date'].'</strong> y hora: <strong>'.$data['info']['hora'].'</strong>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.';
      $mensaje = array(
          'mensaje' => $msj,
-         'subject' => 'Confirmación de tu asistencía a la entrevista por la vacante: '.$nombreVacante,
+         'subject' => 'Confirmación de tu asistencía a la entrevista',
          'estado' => 0,
       // 'fecha' => ,
          'tipo' => 'confAsistencia',
@@ -1628,7 +1909,7 @@ function dbSendIntegrateNewPostulate($data){
 
            $mensaje = array(
                'mensaje' => $msj,
-               'subject' => 'Enviamos una propuesta de trabajo a <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> para la vacante: '.$nombreVacante,
+               'subject' => 'Enviamos una propuesta de trabajo a <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>',
                'estado' => 0,
             // 'fecha' => ,
                'tipo' => 'addExtraCand',
@@ -2074,12 +2355,10 @@ function dbsendEvaluatePsicoTest($data){
    $vacanteUrl = esc_url(get_permalink(get_page_by_title('Información de vacante'))).'?serial='.$serialVacante;
 
    // candidato
-    $msj = 'Hemos realizado tus Pruebas Psico laborales para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. <br><br>
-
-    Te estaremos informando sobre tu calificación';
+    $msj = 'Hemos realizado tus Pruebas Psico laborales para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. <br><br> Te estaremos informando sobre tu calificación';
     $mensaje = array(
         'mensaje' => $msj,
-        'subject' => 'Pruebas Psico laborales por la vacante: '.$nombreVacante,
+        'subject' => 'Pruebas Psico laborales',
         'estado' => 0,
      // 'fecha' => ,
         'tipo' => 'testInfo',
@@ -2092,7 +2371,7 @@ function dbsendEvaluatePsicoTest($data){
     $msj = 'Hemos ralizado las Pruebas Psico laborales de <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.';
     $mensaje = array(
         'mensaje' => $msj,
-        'subject' => 'Realizamos las Pruebas Psico laborales de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por la vacante: '.$nombreVacante,
+        'subject' => 'Realizamos las Pruebas Psico laborales de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')',
         'estado' => 0,
      // 'fecha' => ,
         'tipo' => 'testInfo',
@@ -2183,12 +2462,10 @@ function dbFinalResultTest($data){
    $vacanteUrl = esc_url(get_permalink(get_page_by_title('Información de vacante'))).'?serial='.$serialVacante;
 
    // candidato
-    $msj = 'Hemos calificado tus Pruebas Psico laborales para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. <br><br>
-
-    Te calificación es positiva, tu próxima entrevista será programada en breve';
+    $msj = 'Hemos calificado tus Pruebas Psico laborales para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. <br><br> Te calificación es positiva, tu próxima entrevista será programada en breve';
     $mensaje = array(
         'mensaje' => $msj,
-        'subject' => 'Pruebas Psico laborales <strong>APROBADAS</strong> por la vacante: '.$nombreVacante,
+        'subject' => 'Pruebas Psico laborales',
         'estado' => 0,
      // 'fecha' => ,
         'tipo' => 'testInfo',
@@ -2201,7 +2478,7 @@ function dbFinalResultTest($data){
     $msj = 'Hemos calificado de forma positiva las Pruebas Psico laborales de <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.';
     $mensaje = array(
         'mensaje' => $msj,
-        'subject' => 'Pruebas Psico laborales <strong>APROBADAS</strong> de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por la vacante: '.$nombreVacante,
+        'subject' => 'Pruebas Psico laborales de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')',
         'estado' => 0,
      // 'fecha' => ,
         'tipo' => 'testInfo',
@@ -2253,12 +2530,10 @@ function dbFinalResultTest($data){
    $vacanteUrl = esc_url(get_permalink(get_page_by_title('Información de vacante'))).'?serial='.$serialVacante;
 
    // candidato
-    $msj = 'Hemos calificado tus Pruebas Psico laborales para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. <br><br>
-
-    Lamentamos informarte que tu calificación es negativa, por lo tanto no cumples para la entrevista';
+    $msj = 'Hemos calificado tus Pruebas Psico laborales para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. <br><br>Lamentamos informarte que tu calificación es negativa, por lo tanto no cumples para la entrevista';
     $mensaje = array(
         'mensaje' => $msj,
-        'subject' => 'Pruebas Psico laborales <strong>RECHAZADAS</strong> por la vacante: '.$nombreVacante,
+        'subject' => 'Pruebas Psico laborales',
         'estado' => 0,
      // 'fecha' => ,
         'tipo' => 'testInfo',
@@ -2271,7 +2546,7 @@ function dbFinalResultTest($data){
     $msj = 'Hemos calificado de forma negativa las Pruebas Psico laborales de <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong> para la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.';
     $mensaje = array(
         'mensaje' => $msj,
-        'subject' => 'Pruebas Psico laborales <strong>RECHAZADAS</strong> de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por la vacante: '.$nombreVacante,
+        'subject' => 'Pruebas Psico laborales de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')',
         'estado' => 0,
      // 'fecha' => ,
         'tipo' => 'testInfo',
@@ -2401,12 +2676,25 @@ function dbprocesssendsetInterviewCalificate($data){
 $urlReprogEntrevista .= '&drec='.$urlReprogEntrevista;
 
 
-        $msj = 'Te hemos programado una entrevista con nosotros por la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>, con fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.  <br><br>
 
-        Confirma o solicita una reprogramación de fecha y hora <a href="'.$urlReprogEntrevista.'">AQUÍ</a>.';
+
+
+        // $nt = $notaEntrevista;
+
+        $nt = sanitize_text_field($r['info']['notaEntrevista']);
+        $donde = sanitize_text_field($r['info']['datoEntrevista']);
+
+        $msj = 'Te hemos programado una entrevista con nosotros por la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>, con fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>.<br><br>Donde: <br>'.$donde.'.<br>Confirma la asistencia o solicita una reprogramación de fecha y hora <a href="'.$urlReprogEntrevista.'">AQUÍ</a><br><br>Importante: <br>'.$nt.'';
+
+
+        // $msj = 'Te hemos programado una entrevista con nosotros por la vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>, con fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.  <br><br>
+
+        // Confirma o solicita una reprogramación de fecha y hora <a href="'.$urlReprogEntrevista.'">AQUÍ</a>.';
+
+        // $msj .="<br> <br> Nota de administración: <br> $nt";
         $mensaje = array(
             'mensaje' => $msj,
-            'subject' => 'Tienes una entrevista pendiente con administración por la vacante: '.$nombreVacante,
+            'subject' => 'Información de entrevista',
             'estado' => 0,
          // 'fecha' => ,
             'tipo' => 'newInterview',
@@ -2417,11 +2705,15 @@ $urlReprogEntrevista .= '&drec='.$urlReprogEntrevista;
 
 
 
-        $msj = 'Se ha programado una entrevista con <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>.'.' Para la vacante  <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. Se realizará en la fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>.';
+        $msj = 'Se ha programado una entrevista con <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>.'.' Para la vacante  <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. Se realizará en la fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>.<br><br>Donde: <br>'.$donde.'.<br><br>Importante: <br>'.$nt.'';
+
+        // $msj = 'Se ha programado una entrevista con <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>.'.' Para la vacante  <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. Se realizará en la fecha: <strong>'.$r['info']['date'].'</strong> y hora: <strong>'.$r['info']['hora'].'</strong>.';
+
+        // $msj .="<br> <br> Nota de administración: <br> $nt";
 
         $mensaje = array(
             'mensaje' => $msj,
-            'subject' => 'Hemos programado una entrevista con '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por la vacante: '.$nombreVacante,
+            'subject' => 'Información de entrevista',
             'estado' => 0,
          // 'fecha' => ,
             'tipo' => 'newEntrevista',
@@ -3092,7 +3384,9 @@ $conEntrevistas = $wpdb->get_results("SELECT oferta.*, entrevista.* from $tablaO
         <label for="addByAnounce"></label>
         <select class="form-control form-control-sm" name="addByAnounce">
 
-            <?php if(count($sinEntrevistas) > 0){ ?>
+            <?php if(count($sinEntrevistas) > 0){
+                 $sinEntrevistas = array_unique($sinEntrevistas);
+                ?>
                 <option disabled><strong>Vacantes sin entrevistas</strong></option>
                 <?php foreach ($sinEntrevistas as $key => $value) {
 
@@ -3107,7 +3401,9 @@ $conEntrevistas = $wpdb->get_results("SELECT oferta.*, entrevista.* from $tablaO
                 <?php } ?>
             <?php } ?>
 
-            <?php if(count($conEntrevistas) > 0){ ?>
+            <?php if(count($conEntrevistas) > 0){
+                $conEntrevistas = array_unique($conEntrevistas);
+                ?>
                 <option disabled>Vacantes con entrevistas</option>
 
                  <?php foreach ($conEntrevistas as $key => $value) {
@@ -3159,7 +3455,7 @@ function dbprocesssendintegrateNewPostulateByAnounce($data){
 
     $tipoEntrevista = $etapas['tipoEntrevista'];
     $aprobado = $etapas['aprobado'];
-    $aprobado = 0;
+    // $aprobado = 0;
     $datoEntrevista = $etapas['datoEntrevista'];
     $nota = $etapas['nota'];
     $resultadosEntrevista = $etapas['resultadosEntrevista'];
@@ -3288,5 +3584,45 @@ function dbsendstateAnounce($data){
     global $wpdb;
     $tablaOfertaLaboral = $wpdb->prefix . 'ofertalaboral';
 
+
+}
+
+
+
+function dbcontinueforzarAsistencia($data){
+
+       global $wpdb;
+    $tablaEntrevista = $wpdb->prefix . 'proceso_contrato_etapas';
+    $idEntrevista = $data['idEntrevista'];
+
+    $x = $wpdb->get_results("SELECT * from $tablaEntrevista WHERE idEntrevista='$idEntrevista'", ARRAY_A);
+    $wpdb->flush();
+
+    if(isset($x) && count($x) > 0){
+
+        $confirmaFecha = $x[0]['confirmaFecha'];
+        $confirmaFecha = json_decode($confirmaFecha, true);
+
+        // {"admin":"Confirmada","candidato":"Pendiente"}
+        if(isset($confirmaFecha['candidato'])){
+            $confirmaFecha['admin'] = 'Confirmada';
+            $confirmaFecha['candidato'] = 'Confirmada';
+
+        }
+        if(isset($confirmaFecha['familia'])){
+            $confirmaFecha['admin'] = 'Confirmada';
+            $confirmaFecha['familia'] = 'Confirmada';
+
+        }
+
+        $confirmaFecha = json_encode($confirmaFecha, true);
+
+    try {
+        $wpdb->query("UPDATE $tablaEntrevista SET confirmaFecha='$confirmaFecha' WHERE idEntrevista='$idEntrevista'");
+    } catch (Exception $e) {
+        echo 'Caught exception: ', $e->getMessage(), "\n";
+    }
+
+    }
 
 }

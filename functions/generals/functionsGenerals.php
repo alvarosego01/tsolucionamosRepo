@@ -1,6 +1,76 @@
 <?php
 
 
+
+    function formatUTF8($valor='') {
+
+        $utf8_ansi2 = array(
+        "u00c0" =>"À",
+        "u00c1" =>"Á",
+        "u00c2" =>"Â",
+        "u00c3" =>"Ã",
+        "u00c4" =>"Ä",
+        "u00c5" =>"Å",
+        "u00c6" =>"Æ",
+        "u00c7" =>"Ç",
+        "u00c8" =>"È",
+        "u00c9" =>"É",
+        "u00ca" =>"Ê",
+        "u00cb" =>"Ë",
+        "u00cc" =>"Ì",
+        "u00cd" =>"Í",
+        "u00ce" =>"Î",
+        "u00cf" =>"Ï",
+        "u00d1" =>"Ñ",
+        "u00d2" =>"Ò",
+        "u00d3" =>"Ó",
+        "u00d4" =>"Ô",
+        "u00d5" =>"Õ",
+        "u00d6" =>"Ö",
+        "u00d8" =>"Ø",
+        "u00d9" =>"Ù",
+        "u00da" =>"Ú",
+        "u00db" =>"Û",
+        "u00dc" =>"Ü",
+        "u00dd" =>"Ý",
+        "u00df" =>"ß",
+        "u00e0" =>"à",
+        "u00e1" =>"á",
+        "u00e2" =>"â",
+        "u00e3" =>"ã",
+        "u00e4" =>"ä",
+        "u00e5" =>"å",
+        "u00e6" =>"æ",
+        "u00e7" =>"ç",
+        "u00e8" =>"è",
+        "u00e9" =>"é",
+        "u00ea" =>"ê",
+        "u00eb" =>"ë",
+        "u00ec" =>"ì",
+        "u00ed" =>"í",
+        "u00ee" =>"î",
+        "u00ef" =>"ï",
+        "u00f0" =>"ð",
+        "u00f1" =>"ñ",
+        "u00f2" =>"ò",
+        "u00f3" =>"ó",
+        "u00f4" =>"ô",
+        "u00f5" =>"õ",
+        "u00f6" =>"ö",
+        "u00f8" =>"ø",
+        "u00f9" =>"ù",
+        "u00fa" =>"ú",
+        "u00fb" =>"û",
+        "u00fc" =>"ü",
+        "u00fd" =>"ý",
+        "u00ff" =>"ÿ");
+
+        return strtr($valor, $utf8_ansi2);
+
+    }
+
+
+
 function remove_query($url, $which_argument=false){
     return preg_replace( '/'. ($which_argument ? '(\&|)'.$which_argument.'(\=(.*?)((?=&(?!amp\;))|$)|(.*?)\b)' : '(\?.*)').'/i' , '', $url);
 }
@@ -312,6 +382,7 @@ function getInfoNameEmailUsers($data){
     $usuario = get_user_meta($data);
     $u = get_userdata($data);
 
+
     $role = array_shift($u->roles);
     $rolCandidata = $wp_roles->roles[$role]['name'];
 
@@ -336,9 +407,7 @@ function getInfoNameEmailUsers($data){
 function saveNotification($data){
 
     global $wpdb;
-    $tabla = $wpdb->prefix . 'notificacion_msg';
 
-    // PARTE DE LA NOTIFICACIÓN
     $mensaje = $data['mensaje'];
     $subject = $data['subject'];
     $estado = $data['estado'];
@@ -367,20 +436,20 @@ function saveNotification($data){
         '%s',
     );
 
+
     // print_r($datos);
+    $tabla = $wpdb->prefix.'notificacion_msg';
     $wpdb->insert($tabla, $datos, $formato);
     $wpdb->flush();
 
     $sujetoDeCorreo = strip_tags($subject);
-
-
 
     if($usuarioMuestra == 'Tsoluciono'){
 
         $admins = [
             // 'amdaly@tsolucionamos.com',
             // 'apintado@tsolucionamos.com',
-            // 'vpedemonte@tsolucionamos.com',
+            // 'vpedemonte@tsolucionamos.com'
             'alvarosego01@gmail.com'
         ];
 
@@ -426,7 +495,6 @@ function saveNotification($data){
 
         }
 
-
     }else{
 
 
@@ -463,9 +531,10 @@ function saveNotification($data){
             ©Tsolucionamos 2020.
             </small>
             </div>
-
             </div>'
         );
+
+
 
     }
 
@@ -697,6 +766,59 @@ function getSignUser($userId){
 
 }
 
+
+function transformMultipleIMG($files){
+
+
+    $imagesProfeshional = $files;
+
+    if(isset($imagesProfeshional) && ($imagesProfeshional != null)){
+        $imgAjustadas = array();
+        $i = 0;
+        $name = array();
+        $type = array();
+        $tmp_name = array();
+        $error = array();
+        $size = array();
+
+        foreach ($imagesProfeshional as $key => $value) {
+
+            if( $key == 'name'){
+                $name[$key] = $value;
+            }
+            if( $key == 'type'){
+                $type[$key] = $value;
+            }
+            if( $key == 'tmp_name'){
+                $tmp_name[$key] = $value;
+            }
+            if( $key == 'error'){
+                $error[$key] = $value;
+            }
+            if( $key == 'size'){
+                $size[$key] = $value;
+            }
+
+        }
+        $cantidad = count($name['name']);
+        for ($i = 0; $i <= $cantidad; $i++) {
+
+            $imgAjustadas[$i] = array(
+                'name' => $name['name'][$i],
+                'type' => $type['type'][$i],
+                'tmp_name' => $tmp_name['tmp_name'][$i],
+                'error' => $error['error'][$i],
+                'size' => $size['size'][$i],
+            );
+
+        }
+        $imagesProfeshional = $imgAjustadas;
+        return $imagesProfeshional;
+    }
+
+}
+
+
 // extrae imagenes de un form y las ordena en un array para trabajarlas
 function imagesToArray($data){
 
@@ -725,10 +847,25 @@ function imagesToArray($data){
 
 }
 
+
+function eliminarArchivo($data){
+
+    try {
+        //code...
+        $url = $data;
+        $path = parse_url($url, PHP_URL_PATH); // Remove "http://localhost"
+        $fullPath = get_home_path() . $path;
+        unlink($fullPath);
+
+    } catch (\Throwable $th) {
+        //throw $th;
+
+        return;
+    }
+
+}
+
 function cargarImagenes($data){
-
-
-
 
     $imagenes = $data['imagenes'];
     $carpeta = $data['carpeta'];

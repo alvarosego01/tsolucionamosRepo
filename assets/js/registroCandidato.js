@@ -1,12 +1,12 @@
 
 
 
-console.log('registros');
+var addRefer = jQuery('#addRefer').clone()[0];
+jQuery('#addRefer').remove();
 
 
 
-
-
+console.log(addRefer);
 
 function buscarDocumentoRegistros(documento) {
 
@@ -97,3 +97,133 @@ jQuery('#DocumentoIdentidad-89').on('keyup keypress paste', function () {
     }, 2000);
 });
 
+
+
+function sendaddRef(data){
+
+
+
+     var info = jQuery('#addRefer');
+    var values = [];
+    var siguienteEnt = [];
+    var error = false;
+
+    jQuery.each(info[0], function (indexInArray, valueOfElement) {
+        var name = jQuery(valueOfElement).attr('name');
+        var val = jQuery(valueOfElement).val();
+        if (val == '') {
+            val = null;
+        }
+        values[name] = val;
+        // simular click para que salgan los validate message
+        var parent = jQuery(valueOfElement).parent();
+        parent.click();
+        if (jQuery('.validateMessage', parent).is("[error='true']")) {
+            error = true;
+        }
+    });
+    info[0].reset();
+
+          var nt = '';
+
+        // Nombre de la persona que dará la referencia. Teléfono, cargo que desempeño y ano y mes de trabajo
+        nt += (values['nombrePersona'] != null && values['nombrePersona'] != '')? ' Nombre: ' + values['nombrePersona']  : '';
+        nt += (values['telefono'] != null && values['telefono'] != '')? ' teléfono: ' + values['telefono'] : '';
+        nt += (values['cargo'] != null && values['cargo'] != '')? ' cargo: ' + values['cargo'] : '';
+        nt += (values['anio'] != null && values['anio'] != '')? ' año: ' + values['anio'] : '';
+        nt += (values['mes'] != null && values['mes'] != '')? ' mes: ' + values['mes'] : '';
+
+
+    if(data == 'personal' && nt != ''){
+
+        var l = jQuery("textarea#refPersonalesText").text();
+
+        l += (l != '')? '\n' + nt : nt;
+
+        jQuery("textarea#refPersonalesText").text(l);
+
+    }
+
+    if(data == 'laboral' && nt != ''){
+
+        var l = jQuery("textarea#refLaboralesText").text();
+
+        l += (l != '')? '\n' + nt : nt;
+
+        jQuery("textarea#refLaboralesText").text(l);
+
+    }
+
+
+
+    swal.stopLoading();
+}
+
+
+function addRef(data){
+    console.log(data);
+
+       swal({
+        icon: 'success',
+        title: "Agrega una referencia " + data,
+        // text: 'Carga los datos de la siguiente manera',
+        content: addRefer,
+        className: 'formRefusePay',
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: false,
+                visible: true,
+                className: "formOfferCloseButton",
+                closeModal: true
+            },
+            confirm: {
+                text: "Aceptar",
+                value: true,
+                visible: true,
+                className: "formRefuseAccept",
+                closeModal: false
+            }
+        }
+    });
+
+       jQuery('#addRefer').css({
+           display: 'block',
+       });
+
+    var dt = JSON.stringify(data);
+    // colocado de la función de efecto click
+    jQuery('.swal-modal.formRefusePay button.swal-button.swal-button--confirm.formRefuseAccept').attr('onclick',"sendaddRef(" + dt + ")");
+
+
+
+
+}
+function deleteRef(data){
+    console.log(data);
+
+    if(data == 'personal'){
+jQuery("textarea#refPersonalesText").text('');
+    }
+
+    if(data == 'laboral'){
+jQuery("textarea#refLaboralesText").text('');
+    }
+
+}
+
+
+
+
+
+    jQuery('textarea#refPersonalesText').attr('readonly', 'true');
+    jQuery('textarea#refLaboralesText').attr('readonly', 'true');
+
+
+var bt = "<button data-toggle='tooltip' data-placement='bottom' title='Agregar referencia' type='button' onclick='addRef("+'"personal"'+")'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button><button data-toggle='tooltip' data-placement='bottom' title='Eliminar referencias' type='button' onclick='deleteRef("+'"personal"'+")'><i class='fa fa-trash-o' aria-hidden='true'></i></button>";
+
+jQuery(bt).insertAfter("textarea#refPersonalesText");
+
+bt = "<button data-toggle='tooltip' data-placement='bottom' title='Agregar referencia' type='button' onclick='addRef("+'"laboral"'+")'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button><button data-toggle='tooltip' data-placement='bottom' title='Eliminar referencias' type='button' onclick='deleteRef("+'"laboral"'+")'><i class='fa fa-trash-o' aria-hidden='true'></i></button>";
+
+jQuery(bt).insertAfter("textarea#refLaboralesText");

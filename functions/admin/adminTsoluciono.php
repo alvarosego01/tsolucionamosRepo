@@ -1105,10 +1105,7 @@ function adminTsoluciono2()
 
 
 
-    if (count($lista) > 0) {
-
-
-      ?>
+    if (count($lista) > 0) { ?>
 
   <div id="viewReasonsCand">
 
@@ -1185,7 +1182,27 @@ function adminTsoluciono2()
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($seleccionados as $r) {
+
+
+        <?php
+
+
+     // colocar a familia en ultimo lugar
+     $aux = null;
+     foreach ($seleccionados as $key => $value) {
+       if($value['tipoEntrevista'] == 'Entrevista con la familia' ){
+         $aux = $value;
+         unset($seleccionados[$key]);
+       }
+     }
+     if($aux != null){
+       array_push($seleccionados, $aux);
+     }
+     // ----------------------------------
+
+
+
+        foreach ($seleccionados as $r) {
             // etapas obtengo el ultimo de las etapas, lo cual es el mas importantep ara esquematizar las etapas en la lista
             // $et = end($r['etapas']);
 
@@ -1278,9 +1295,6 @@ function adminTsoluciono2()
         }else{
 
         }
-
-//
-
 
           $x = '';
           $tool = '';
@@ -1425,9 +1439,14 @@ function adminTsoluciono2()
               ( $proxima == 'Realizada' || $proxima == 'Adicional' )
               ) { ?>
 
-<?php if($asistencia != 'Confirmada' ){
+<?php if($asistencia != 'Confirmada' ){?>
 
-$x = array(
+<?php } ?>
+
+              <?php } ?>
+
+
+  <?php $x = array(
   'currentId' => $currentId,
   'can' => $postuladoId,
   'fam' => $contratistaId
@@ -1444,9 +1463,8 @@ action="<?php echo $pagina . '?ie=' . $idEntrevista ?>">
 </div>
 </form>
 
-<?php } ?>
 
-              <?php } ?>
+
             <?php if (
               ( $etapaEntrevista < 2 ) &&
               ( isset($confAsistencia['candidato']) ) &&
@@ -1464,20 +1482,12 @@ action="<?php echo $pagina . '?ie=' . $idEntrevista ?>">
 
               ?>
 
-             <form target="_blank" id="formVerEstadoEntrevista" method="post"
-              action="<?php echo $pagina . '?ie=' . $idEntrevista ?>">
-              <input type="hidden" name="dataInterview" value='<?php echo $x; ?>'>
-              <div class="buttonCustom">
-              <button type="submit" class="btn btn-success btn-block"><?php echo $x = ($Tipo == 'Pruebas Psico laborales')? 'Pruebas': 'Entrevista'; ?></button>
-              </div>
-              </form>
-
             <?php } ?>
 
             <button
               onclick="sendDeleteProcessInterview('<?php echo $idEntrevista ?>')"
               type="button" name="" id="" class="btn btn-danger btn-block">
-              Eliminarr
+              Eliminar
             </button>
 
             <?php } ?>
@@ -1485,24 +1495,7 @@ action="<?php echo $pagina . '?ie=' . $idEntrevista ?>">
             <?php if (
               ( $etapaEntrevista == 1 ) &&
               ( isset($confAsistencia['familia']) )
-              ) {
-
-                $x = array(
-                  'currentId' => $currentId,
-                  'can' => $postuladoId,
-                  'fam' => $contratistaId
-                );
-                $x = json_encode($x);
-
-                ?>
-
-               <form target="_blank" id="formVerEstadoEntrevista" method="post"
-                action="<?php echo $pagina . '?ie=' . $idEntrevista ?>">
-                <input type="hidden" name="dataInterview" value='<?php echo $x; ?>'>
-                <div class="buttonCustom">
-                <button type="submit" class="btn btn-success btn-block"><?php echo $x = ($Tipo == 'Pruebas Psico laborales')? 'Pruebas': 'Entrevista'; ?></button>
-                </div>
-                </form>
+              ) { ?>
 
             <?php }
 
@@ -1535,6 +1528,7 @@ action="<?php echo $pagina . '?ie=' . $idEntrevista ?>">
 
 
               <?php
+          /*
           if ((($res['seleccionPor'] == 'Tsoluciono')) && ($r['idEntrevista'] != $ownIntId) && ($res['candidatoSeleccionado'] == $postuladoId ) && (count($i) == 0 ) && (count($verifContrato) == 0)) {
                     $x = array(
                 'ofertaId' => $ofertaId,
@@ -1561,7 +1555,9 @@ action="<?php echo $pagina . '?ie=' . $idEntrevista ?>">
                   ¡Propuesta de contrato enviada!
                 </small>
               <?php }
-            }
+
+            */
+          }
             if(isset($estadoCandidatoContrato) && $estadoCandidatoContrato != null){
 
                 $data = array(
@@ -1587,9 +1583,18 @@ action="<?php echo $pagina . '?ie=' . $idEntrevista ?>">
     <?php
   $slcc = count($seleccionados);
         $nc = 0;
+        $asist = 0;
         $confirmaPruebas = 0;
         foreach ($seleccionados as $key => $value) {
             # code...
+
+            $vaux = $value['confirmaFecha'];
+            $vaux = json_decode($vaux, true);
+
+            if( $vaux['candidato'] == 'Confirmada' ){
+              $asist++;
+            }
+
             if (($value['aprobado'] == 1) && ($value['aprobado'] == '1')) {
                 $nc++;
             }
@@ -1598,7 +1603,8 @@ action="<?php echo $pagina . '?ie=' . $idEntrevista ?>">
             }
         }
 
-        if (($slcc == $nc) && ($etapaEntrevista < 1) && ($confirmaPruebas == 0) && ($tipoPublic != 'Promoción') ) {
+
+        if (($slcc == $nc) && ( $slcc == $asist) && ($etapaEntrevista < 1) && ($confirmaPruebas == 0) && ($tipoPublic != 'Promoción') ) {
 
             $dataEvaluate = array(
                'id' => $oferta['contratistaId'],
@@ -1614,6 +1620,12 @@ action="<?php echo $pagina . '?ie=' . $idEntrevista ?>">
         onclick='CreateFamilyInterview(<?php echo $dataEvaluate ?>)'
         type='button' name=' id=' class='btn btn-success'>
         <i class="fa fa-check" aria-hidden="true"></i> Programar entrevista con la familia
+      </button>
+
+      <button
+        onclick='omitirFamilyInterview(<?php echo $dataEvaluate ?>)'
+        type='button' name=' id=' class='btn btn-success'>
+        <i class="fa fa-check" aria-hidden="true"></i> Omitir entrevista con familia
       </button>
 
     </div>
@@ -1965,6 +1977,33 @@ function adminAddNewInterview()
     }
 }
 
+add_action('wp_ajax_changeDataInterview', 'changeDataInterview');
+add_action('wp_ajax_nopriv_changeDataInterview', 'changeDataInterview');
+
+function changeDataInterview()
+{
+    $id = um_user('ID');
+    $currentId = get_current_user_id();
+    if ( (validateUserProfileOwner($currentId, $currentId, "adminTsoluciono")) ) {
+        if (isset($_POST['dataNew'])) {
+            // recibe json y quita los slash
+            $data = preg_replace('/\\\\\"/', "\"", $_POST['dataNew']);
+            // transforma el string a un array asociativo
+            $data = json_decode($data, true);
+
+            $data['entrevista']['actualizado'] = date('d/m/Y');
+
+
+            dbchangeDataInterview($data);
+
+            die();
+        }
+    } else {
+        $pagina = esc_url(get_permalink(get_page_by_title('Inicio')));
+        die();
+    }
+}
+
 add_action('wp_ajax_adminModifyInterview', 'adminModifyInterview');
 add_action('wp_ajax_nopriv_adminModifyInterview', 'adminModifyInterview');
 
@@ -2299,6 +2338,45 @@ function CreateFamilyInterview()
               $data['info']['confirmaFecha'] = $confirmaFecha;
             // }
             dbCreateFamilyInterview($data);
+
+            die();
+        }
+    } else {
+        $pagina = esc_url(get_permalink(get_page_by_title('Inicio')));
+        die();
+    }
+}
+
+add_action('wp_ajax_goomitirFamilyInterview', 'goomitirFamilyInterview');
+add_action('wp_ajax_nopriv_goomitirFamilyInterview', 'goomitirFamilyInterview');
+
+function goomitirFamilyInterview()
+{
+    $currentId = get_current_user_id();
+    if (validateUserProfileOwner($currentId, $currentId, "adminTsoluciono")) {
+        if (isset($_POST['goomitirFamilyInterview'])) {
+
+            $data = stripslashes($_POST['goomitirFamilyInterview']);
+
+            // transforma el string a un array asociativo
+            $data = json_decode($data, true);
+            $info = $data['info'];
+            $info = json_decode($info,true);
+            $familia = $data['familia'];
+            $familia = json_decode($familia,true);
+
+            $confirmaFecha = array(
+              'admin' => 'Confirmada',
+              'familia' => 'Confirmada'
+            );
+
+
+            $info['confirmaFecha'] = $confirmaFecha;
+            $data['info'] = $info;
+            $data['familia'] = $familia;
+
+
+            dbgoomitirFamilyInterview($data);
 
             die();
         }
@@ -3128,15 +3206,20 @@ function getListCandByAnounce($data = ''){?>
         </a>
       </li>
 
-    <?php foreach ($in2 as $key => $value) {
+    <?php
+    $auxCount = array();
+    foreach ($in2 as $key => $value) {
 
-      $idee = $value['candidataId'];
-      $namedata = getInfoNameEmailUsers($idee);
-      $eRol = $namedata['rol'];
-       ?>
+      $eRol = $value['tipoServicio'];
+
+      array_push($auxCount, $eRol);
+    }
+    $auxCount = array_unique($auxCount); ?>
+
+    <?php foreach ($auxCount as $key => $value) { ?>
       <li>
-        <a href="#" onclick="sendFilterInterviewByAnounce('<?php echo $eRol ?>')" class="hiper">
-        <?php echo $eRol; ?>
+        <a href="#" onclick="sendFilterInterviewByAnounce('<?php echo $value ?>')" class="hiper">
+        <?php echo $value; ?>
         </a>
       </li>
     <?php } ?>
@@ -3653,7 +3736,7 @@ function adminTsoluciono10($tipo = 'todos', $lugar = ''){
 
       <div class="TitleOptions">
       <h6>Filtrar por</h6>
-      <button class="btn btn-success" onclick="exportTableToCSV('bolsaTrabajo.csv')">Exportar a CSV</button>
+      <button class="btn btn-success" id="generadorExcel">Exportar a CSV</button>
       </div>
 
       <ul class="listaFiltro">
@@ -3800,7 +3883,7 @@ foreach( $dep as $kkk => $value ){ ?>
 
       <div class="TitleOptions">
       <h6>Filtrar por</h6>
-      <button class="btn btn-success" onclick="exportTableToCSV('bolsaTrabajo.csv')">Exportar a CSV</button>
+      <button class="btn btn-success" id="generadorExcel">Exportar a CSV</button>
 
       <ul class="listaFiltro">
 
@@ -3938,7 +4021,7 @@ foreach( $dep as $kkk => $value ){ ?>
 
     <div class="TitleOptions">
       <h6>Filtrar por</h6>
-      <button class="btn btn-success" onclick="exportTableToCSV('bolsaTrabajo.csv')">Exportar a CSV</button>
+      <button class="btn btn-success" id="generadorExcel">Exportar a CSV</button>
     </div>
       <ul class="listaFiltro">
       <li>
@@ -4722,6 +4805,26 @@ function processsendchangeState(){
         // print_r($data);
 
         dbprocesssendchangeState($data);
+      }
+  }
+}
+
+add_action('wp_ajax_continueforzarAsistencia', 'continueforzarAsistencia');
+add_action('wp_ajax_nopriv_continueforzarAsistencia', 'continueforzarAsistencia');
+function continueforzarAsistencia(){
+
+  $currentId = get_current_user_id();
+  if (validateUserProfileOwner($currentId, $currentId, "adminTsoluciono")) {
+      if ($_POST['action'] == 'continueforzarAsistencia') {
+
+
+        $data = $_POST['continueforzarAsistencia'];
+        $data = stripslashes($data);
+        $data = json_decode($data, true);
+
+        // print_r($data);
+
+        dbcontinueforzarAsistencia($data);
       }
   }
 }

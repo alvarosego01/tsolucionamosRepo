@@ -1,154 +1,27 @@
 
-[ultimatemember form_id="1371"]
+ Memoria virtual
 
-[ultimatemember form_id="518"]
+ sudo fallocate -l 1G /swapfile2
+ ls -lh /swapfile2
+ sudo chmod 600 /swapfile2
+ sudo mkswap /swapfile2
+ sudo swapon /swapfile2
+ sudo cp /etc/fstab /etc/fstab.bak
+ echo '/swapfile2 none swap sw 0 0' | sudo tee -a /etc/fstab
+ cat /proc/sys/vm/swappiness
+ sudo sysctl vm.swappiness=10
+ sudo nano /etc/sysctl.conf
+ At the bottom, you can add:
 
-<form style="display: none" id='addRefer'>
-	<div class='row'>
-	<div class='form-group col field nombrePersona'>
-	<label for='nombrePersona'>Nombre de la persona que dará la referencia
-</label>
-<input placeholder="Nombre" class='form-control' name='nombrePersona' type='text' id='nombrePersona'>
-</div>
-</div>
-<div class='row'>
-	<div class='form-group col field telefono'>
-	<label for='telefono'>Teléfono
-</label>
-<input type="tel" placeholder="Número de teléfono" class='form-control' name='telefono' type='text' id='telefono'>
-</div>
-</div>
-<div class='row'>
-	<div class='form-group col field cargo'>
-	<label for='cargo'>Cargo que desempeñó
-</label>
-<input placeholder="Describe el cargo que ocupaste" class='form-control' name='cargo' type='text' id='cargo'>
-</div>
-</div>
-<div class='row'>
-	<div class='form-group col field anio'>
-	<label for='anio'>Periodo trabajado
-</label>
-<input placeholder="Describe desde y hasta cuándo fue el trabajo" class='form-control' name='anio' type='text' id='anio'>
-</div>
-</div>
+vm.swappiness=10
+ cat /proc/sys/vm/vfs_cache_pressure
+ sudo sysctl vm.vfs_cache_pressure=50
+ sudo nano /etc/sysctl.conf
+ At the bottom, add the line that specifies your new value:
 
-</form>
+vm.vfs_cache_pressure=50
 
 
 
 
-<p>Contáctanos a través de nuestro correo electrónico:</p>
-<p><a href="mailto:recursosHumanos@tsolucionamos.com" target="_blank" rel="noopener noreferrer">recursosHumanos@tsolucionamos.com</a></p>
-<p>&nbsp;</p>
-<p>O a través de nuestro Instagram:</p>
-<p><img class="wp-image-1061 alignnone size-full" src="http://www.tsolucionamos.com/wp-content/uploads/logo-de-instagram.png" alt="" width="23" height="23" />   <a href="https://www.instagram.com/tsolucionamos/">@tsolucionamos </a></p>
-<p>&nbsp;</p>
-<p>También contamos con un número telefónico para comunicarnos contigo a través del canal de whatsapp:</p>
-<p>&nbsp;</p>
-
-
-
-
-Resolución 22/04/2020
-
-Partiendo de lo anteriormente planteado.. Hemos reunido las siguientes caracteristicas.
-
-Punto 1
-El mejoramiento de especificación de localización al registro de usuario, centrandose en
-Departamento > Ciudad > Municipio.
-El usuario/pyme al momento de registrarse podrá especificar de manera clara su información de localidad.
-
-Esto con la finalidad de emplearlo como recurso al momento del filtrado inicial de publicaciones basandose en la siguiente escala de importancia:
---En primera instancia las publicaciones se organizarán asi:
-  (Publicaciones del municipio del usuario) <- Primera serie de registros
-  (Publcaciones de la ciudad del usuario) <- Segunda serie de registros
-  (Publicaciones del departamento del usuario) <- Tercera serie de registros.
-
-  De esta forma las publicaciones vendrian en principio organizadas de esta manera dandole una mejor recepción
-  de resultados al usuario navegante en cuestión
-
-  (ESTO SOLO FUNCIONARÁ PARA USUARIOS REGISTRADOS QUE HAYAN ESPECIFICADO SU DEPARTAMENTO->CIUDAD->MUNICIPIO)
-  (LOS USUARIOS VISITANTES VERÁN PUBLICACIONES SIN ALGUN ORDEN EN ESPECIAL EN PRIMERA INSTANCIA)
-
-Punto 2
-Agregar la posibilidad de que los usuarios (PYME) registrados al ingresar a su cuenta (panel de control) puedan almacenar su localización(URL) de google maps en un pequeño campo de texto, con el cual se va a mostrar en su perfil de usuario -> el mapa que este ha copiado en cuestión con (URL).
-
-Esto con la finalidad de resaltar la ubicación de la empresa para ayudar a los usuarios clientes a establecer un mejor contacto con la empresa (PYME).
-
-NOTA: El mapa suministrado mediante URL por los usuarios (PYME), solo serviran de manera ilustrativa para mostrar la ubicación geografica
-de dicha empresa. No tendrá ninguna otra funcionalidad en especial, ni tampoco contará con detección de usuarios cercanos a esa ubicación(URL).
-
--ForgeSystems-
-
-
-
-
-
-nombre plan
-fecha creado
-accion del plan
-condicional del plan
-texto promocional del plan
-
-
-nombre plan : Oro
-fecha creado : la fecha de hoy
-accion del plan: (podria denotarse como un json  que seria algo como) {
-	'MesesAdicionalesGratis': 2,
-	'Descuento': 20%
-	'talcosa': dato
-}
-condicional del plan: acá se configura el WHEN este plan puede aplicarse.. por ejemplo Si pagas 10 meses te llevas 2 meses + gratis con 20% de descuento..
-texto promocional del plan: COMPRA YA! POR TAN SOLO 10 MESES, TE LLEVAS 2 MESES ADICIONALES Y VEVEVEVEEEINTE PORCIENTO DE DESCUENNTOOOOOHH jajaj equis de
-
-
-
-
-
-
-
-Página Totalmente administrable ¿podemos cambiar los nombres de los filtros por ejemplo para adicionar más?
-
- Re: Si... La parte administrativa contará con una interfaz para añadir, cambiar nombre y retirar CATEGORIAS (o tambien llamado FILTROS)
-
-•	¿Tendremos categorías adicionales en blanco ocultas para nosotros posteriormente activar según tenga requerimientos q no tengamos identificados aun?
-
-Re: Esto es un poco el punto anterior, de requerirse una categoria nueva, se podrá añadir por la interfaz de administración
-
-•	Acceso a ocultar las categorías q queramos para visitantes o pyme
-
-Re: Podemos añadir esto, dentro de las funcionalidades de administrador.
-
-•	¿Cuándo el usuario vea el primer anuncio de su visita le puede aparecer la opción de q le lleguen notificaciones? ¿O como lo hacemos para q no sea intrusivo?
-
-Re: Si, habrá un momento de primer acceso de sesión y en este momento se podrá preguntar si desea recbir notificaciones, de todos modos habrá una opción disponible que el usuario podrá activar o desactivar para recibir o dejar de recibir notificaciones
-
-•	podemos tener una parte donde el anunciante marque la cantidad de meses q tendrá la publicidad y eso indexarlo al precio y o paquetes que diseñemos desde el área comercial?
-
-Re: Si, al momento de crear la publicación.. el usuario podrá seleccionar de meses y de esta forma multiplicarlo por el (COSTO DEL MES) para asi tener el precio total que tendrá que pagar el usuario..
-Si, en el area comercial de administración podrá modificar parametros tales como (costo del mes de publicaciones) y crear planes o paquetes como por ejemplo (5 meses por el precio de 3) O lo que se desee plantear en cuestión.
-
-
-•	¿Q podamos extender tiempo de anuncio el quedarse en la plataforma dado un click nosotros y correo automático al anunciante para q lo renueve?
-	Re: Habrá un sistema de detección que estará cada dia analizando cuales son las publicaciones con pocos dias de actividad, para avisarle al dueño y asi pueda renovar el tiempo de publicidad.
-
-•	En pasarela. ¿De pago se genera factura? O como se. ¿Maneja eso? ¿Luego se envía al correo? ¿Debe ser manual ya?
-	Re: Si, se genera una orden de pedido que incluira todos los datos referentes a esa transaccion, tales como por ejemplo (nombre de dueño, nombre de publicación, meses, costo total, fecha de pago), al momento de pagar el usuario recibirá un correo con estos detalles.
-
-- Poder revisar el post para ser aprobados, antes de que salga en las búsquedas, evitando que se publique pornografía o armas, entre otros...
-	Re: Si, el sistema administrativo, tendrá que validar las publicaciones una vez sean creadas.
-
-- La parte de las calificaciones va a ser por Likes o por estrellas?
-	Re: Ambas, tendrá likes y calificaciones de estrella para mejorar la importancia o relevancia de las publicaciones.
-
--Los datos de cada cuenta donde van a ser arrojados? Dónde se va a poder ver la base de datos y se puede especificar en qué orden se guarden? Ejemplo: ver qué cantidad de mujeres y hombres están inscritos, cuales son sus preferencias y edades... O que capacidades tiene esta base de datos
-Re: Si, en el panel de administración estará listado la cantidad de usuarios, mostrando si son naturales o juridicos, por genero, por edades, por distintos departamentos etc.
-
-
-•	Podemos dejar las otras 2 pestañas listas, las q en inicio teníamos previstas para Factoring y Bonos (solo en blanco pero ocultas para cuando queramos llenarlas con alternativas como las plantillas para página web?)
-
-Re: Si, puedo crear las paginas de esas dos secciones en blanco sin ningun tipo de contenido.
-
-- En la interna de los post junto con las estrellas, podremos ver los comentarios de usuarios que hayan adquirido el producto servicio, sería solo para usuarios registrados
-	Si, los usuarios registrados podrán dejar una pequeña reseña si asi lo desean.
+{"solucionPropuesta":"SI","seleccionPor":"Familia","infoEntrevistaFamilia":"Entrevista omitida por administraciu00f3n"}

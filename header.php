@@ -27,6 +27,24 @@
 	</script>
 
 	<?php wp_head(); ?>
+
+	<!-- -https://unpkg.com/xlsx/dist/shim.min.js
+	-https://unpkg.com/xlsx/dist/xlsx.full.min.js
+	-https://unpkg.com/blob.js@1.0.1/Blob.js
+	-https://unpkg.com/file-saver@1.3.3/FileSaver.js -->
+<!--
+	<script type="text/javascript" src="https://unpkg.com/xlsx/dist/shim.min.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/blob.js@1.0.1/Blob.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/file-saver@1.3.3/FileSaver.js"></script> -->
+
+	<link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
+	<script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
+
+
+
+
+
 </head>
 <body <?php body_class(); ?>>
 <?php
@@ -253,10 +271,10 @@
 				 * @param string $logo_container
 				 */
 				echo et_core_intentionally_unescaped( apply_filters( 'et_html_logo_container', $logo_container ), 'html' );
-			
-				 
+
+
 			?>
-			
+
 				<div id="et-top-navigation" data-height="<?php echo esc_attr( et_get_option( 'menu_height', '66' ) ); ?>" data-fixed-height="<?php echo esc_attr( et_get_option( 'minimized_menu_height', '40' ) ); ?>">
 					<?php if ( ! $et_slide_header || is_customize_preview() ) : ?>
 						<nav id="top-menu-nav">
@@ -265,7 +283,7 @@
 							if ( 'on' === et_get_option( 'divi_disable_toptier' ) ) $menuClass .= ' et_disable_top_tier';
 							$primaryNav = '';
 
-							$primaryNav = wp_nav_menu( array( 
+							$primaryNav = wp_nav_menu( array(
 								'theme_location' => 'primary-menu',
 							 	'container' => '',
 							 	'fallback_cb' => '',
@@ -275,14 +293,14 @@
 							if ( empty( $primaryNav ) ) :
 						?>
 							<ul id="top-menu" class="<?php echo esc_attr( $menuClass ); ?>">
-				 
+
 								<?php if ( 'on' === et_get_option( 'divi_home_link' ) ) { ?>
 
-							 
+
 									<li <?php if ( is_home() ) echo( 'class="current_page_item"' ); ?>><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'Divi' ); ?></a></li>
 								<?php }; ?>
 
-								 
+
 
 								<?php show_page_menu( $menuClass, false, false ); ?>
 								<?php show_categories_menu( $menuClass, false ); ?>
@@ -291,14 +309,14 @@
 							else :
 								// -----MODIFICADO-----
 								// busca la ultima ocurrencia de /ul
-								$lastUl = strripos($primaryNav,"</ul>"); 
+								$lastUl = strripos($primaryNav,"</ul>");
 								// coloca el boton de navegacion
 								$notifNav = do_shortcode('[notificationNavBar]');
-								$modifyNav = substr_replace( $primaryNav, $notifNav, $lastUl ); 
+								$modifyNav = substr_replace( $primaryNav, $notifNav, $lastUl );
 								// ----------------------
 								echo et_core_esc_wp( $modifyNav );
-								
-			 
+
+
 							endif;
 						?>
 						</nav>
@@ -369,3 +387,4 @@
 		 * @since 3.10
 		 */
 		do_action( 'et_before_main_content' );
+

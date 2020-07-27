@@ -48,7 +48,7 @@ if (isset($_GET['fserial']) && is_user_logged_in()) {
 
     }
 
-  
+
 
 
     $currentId = get_current_user_id();
@@ -143,7 +143,7 @@ if (validateUserProfileOwner($currentId, $currentId, "adminTsoluciono") && (coun
                        <?Php }else{ ?>
 
                         <div class="buttonCustom">
-                        <button type="button" onclick='acceptPay('<?php echo $serial ?>')" name="" id="" class="btn-sm btn btn-primary btn-block">Aprobar</button>
+                        <button type="button" onclick="acceptPay('<?php echo $serial ?>')" name="" id="" class="btn-sm btn btn-primary btn-block">Aprobar</button>
                         <button type="button" onclick="refusePay('<?php echo $serial ?>')" name="" id="" class="btn-sm btn btn-warning btn-block">Rechazar</button>
                         <button type="button" onclick="deletePay('<?php echo $serial ?>')" name="" id="" class="btn-sm btn btn-danger btn-block">Eliminar</button>
                         </div>
@@ -201,7 +201,7 @@ if (validateUserProfileOwner($currentId, $currentId, "adminTsoluciono") && (coun
                                <?php }else{ ?>
 
                                 <div class="monto">
-                                    <p style="text-align: center">Costo total:<Strong> $7.000  </Strong></p>
+                                    <p style="text-align: center">Costo total:<Strong> $3.000  </Strong></p>
                                 </div>
                                 <?php } ?>
 
@@ -460,7 +460,7 @@ if (validateUserProfileOwner($currentId, $currentId, "adminTsoluciono") && (coun
             </div>
            <?php }else{ ?>
             <div class="monto">
-                <p style="text-align: center">Costo total:<Strong> $7.000  </Strong></p>
+                <p style="text-align: center">Costo total:<Strong> $3.000  </Strong></p>
             </div>
          <?php } ?>
 
@@ -722,7 +722,7 @@ if (validateUserProfileOwner($currentId, $currentId, "adminTsoluciono") && (coun
             </div>
            <?php }else{ ?>
             <div class="monto">
-                <p style="text-align: center">Costo total:<Strong> $7.000  </Strong></p>
+                <p style="text-align: center">Costo total:<Strong> $3.000  </Strong></p>
             </div>
          <?php } ?>
 

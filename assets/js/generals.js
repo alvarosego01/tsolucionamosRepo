@@ -1,22 +1,179 @@
-// jQuery.datepicker.regional['es'] = {
-//     closeText: 'Cerrar', // set a close button text
-//     currentText: 'Hoy', // set today text
-//     monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',   'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'], // set month names
-//     monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'], // set short month names
-//     dayNames: ['Domingo','Lunes&#236','Martes&#236','Miercoles&#236','Jueves&#236','Viernes&#236','Sabado'], // set days names
-//     dayNamesShort: ['Dom','Lun','Mar','Mier','Jue','Vie','Sab'], // set short day names
-//     dayNamesMin: ['Do','Lu','Ma','Mie','Jue','Vie','Sab'], // set more short days names
-//     dateFormat: 'dd/mm/yy' // set format date
-// };
-
-// jQuery.datepicker.setDefaults(jQuery.datepicker.regional['es']);
 
 
+/*
+ *  jQuery table2excel - v1.0.2
+ *  jQuery plugin to export an .xls file in browser from an HTML table
+ *  https://github.com/rainabba/jquery-table2excel
+ *
+ *  Made by rainabba
+ *  Under MIT License
+ */
+!function (a, b, c, d) { function e(b, c) { this.element = b, this.settings = a.extend({}, k, c), this._defaults = k, this._name = j, this.init() } function f(a) { return a.filename ? a.filename : "table2excel" } function g(a) { var b = /(\s+alt\s*=\s*"([^"]*)"|\s+alt\s*=\s*'([^']*)')/i; return a.replace(/<img[^>]*>/gi, function (a) { var c = b.exec(a); return null !== c && c.length >= 2 ? c[2] : "" }) } function h(a) { return a.replace(/<a[^>]*>|<\/a>/gi, "") } function i(a) { var b = /(\s+value\s*=\s*"([^"]*)"|\s+value\s*=\s*'([^']*)')/i; return a.replace(/<input[^>]*>|<\/input>/gi, function (a) { var c = b.exec(a); return null !== c && c.length >= 2 ? c[2] : "" }) } var j = "table2excel", k = { exclude: ".noExl", name: "Table2Excel" }; e.prototype = { init: function () { var b = this; b.template = { head: '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head>\x3c!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets>', sheet: { head: "<x:ExcelWorksheet><x:Name>", tail: "</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>" }, mid: "</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--\x3e</head><body>", table: { head: "<table>", tail: "</table>" }, foot: "</body></html>" }, b.tableRows = [], a(b.element).each(function (c, d) { var e = ""; a(d).find("tr").not(b.settings.exclude).each(function (c, d) { e += "<tr>", a(d).find("td,th").not(b.settings.exclude).each(function (c, d) { a(d).find(b.settings.exclude).length >= 1 ? e += "<td> </td>" : e += "<td>" + a(d).html() + "</td>" }), e += "</tr>" }), b.settings.exclude_img && (e = g(e)), b.settings.exclude_links && (e = h(e)), b.settings.exclude_inputs && (e = i(e)), b.tableRows.push(e) }), b.tableToExcel(b.tableRows, b.settings.name, b.settings.sheetName) }, tableToExcel: function (d, e, g) { var h, i, j, k = this, l = ""; if (k.format = function (a, b) { return a.replace(/{(\w+)}/g, function (a, c) { return b[c] }) }, g = void 0 === g ? "Sheet" : g, k.ctx = { worksheet: e || "Worksheet", table: d, sheetName: g }, l = k.template.head, a.isArray(d)) for (h in d) l += k.template.sheet.head + g + h + k.template.sheet.tail; if (l += k.template.mid, a.isArray(d)) for (h in d) l += k.template.table.head + "{table" + h + "}" + k.template.table.tail; l += k.template.foot; for (h in d) k.ctx["table" + h] = d[h]; if (delete k.ctx.table, !c.documentMode) { var m = new Blob([k.format(l, k.ctx)], { type: "application/vnd.ms-excel" }); b.URL = b.URL || b.webkitURL, i = b.URL.createObjectURL(m), j = c.createElement("a"), j.download = f(k.settings), j.href = i, c.body.appendChild(j), j.click(), c.body.removeChild(j) } else if ("undefined" != typeof Blob) { l = k.format(l, k.ctx), l = [l]; var n = new Blob(l, { type: "text/html" }); b.navigator.msSaveBlob(n, f(k.settings)) } else txtArea1.document.open("text/html", "replace"), txtArea1.document.write(k.format(l, k.ctx)), txtArea1.document.close(), txtArea1.focus(), sa = txtArea1.document.execCommand("SaveAs", !0, f(k.settings)); return !0 } }, a.fn[j] = function (b) { var c = this; return c.each(function () { a.data(c, "plugin_" + j) || a.data(c, "plugin_" + j, new e(this, b)) }), c } }(jQuery, window, document);
 
-function typeValid(type, value, dataValid) {
+var icoMoney = '<svg height="487pt" viewBox="-29 0 487 487.71902" width="487pt" xmlns="http://www.w3.org/2000/svg"><path d="m220.867188 266.175781c-.902344-.195312-1.828126-.230469-2.742188-.09375-9.160156-1.066406-16.070312-8.816406-16.085938-18.035156 0-4.417969-3.582031-8-8-8-4.417968 0-8 3.582031-8 8 .023438 15.394531 10.320313 28.878906 25.164063 32.953125v8c0 4.417969 3.582031 8 8 8s8-3.582031 8-8v-7.515625c17.132813-3.585937 28.777344-19.542969 26.976563-36.953125-1.804688-17.410156-16.472657-30.640625-33.976563-30.644531-10.03125 0-18.164063-8.132813-18.164063-18.164063s8.132813-18.164062 18.164063-18.164062 18.164063 8.132812 18.164063 18.164062c0 4.417969 3.582031 8 8 8 4.417968 0 8-3.582031 8-8-.023438-16.164062-11.347657-30.105468-27.164063-33.441406v-7.28125c0-4.417969-3.582031-8-8-8s-8 3.582031-8 8v7.769531c-16.507813 4.507813-27.132813 20.535157-24.859375 37.496094s16.746094 29.621094 33.859375 29.617187c9.898437 0 17.972656 7.925782 18.152344 17.820313.183593 9.894531-7.597657 18.113281-17.488281 18.472656zm0 0"/><path d="m104.195312 222.5c0 64.070312 51.9375 116.007812 116.007813 116.007812s116.007813-51.9375 116.007813-116.007812-51.9375-116.007812-116.007813-116.007812c-64.039063.070312-115.933594 51.96875-116.007813 116.007812zm116.007813-100.007812c55.234375 0 100.007813 44.773437 100.007813 100.007812s-44.773438 100.007812-100.007813 100.007812-100.007813-44.773437-100.007813-100.007812c.0625-55.207031 44.800782-99.945312 100.007813-100.007812zm0 0"/><path d="m375.648438 358.230469-62.667969 29.609375c-8.652344-16.09375-25.25-26.335938-43.515625-26.851563l-57.851563-1.589843c-9.160156-.261719-18.148437-2.582032-26.292969-6.789063l-5.886718-3.050781c-30.140625-15.710938-66.066406-15.671875-96.175782.101562l.367188-13.335937c.121094-4.417969-3.359375-8.097657-7.777344-8.21875l-63.4375-1.746094c-4.417968-.121094-8.09375 3.359375-8.214844 7.777344l-3.832031 139.210937c-.121093 4.417969 3.359375 8.097656 7.777344 8.21875l63.4375 1.746094h.21875c4.335937 0 7.882813-3.449219 8-7.78125l.183594-6.660156 16.480469-8.824219c6.46875-3.480469 14.03125-4.308594 21.097656-2.308594l98.414062 27.621094c.171875.050781.34375.089844.519532.128906 7.113281 1.488281 14.363281 2.234375 21.628906 2.230469 15.390625.007812 30.601562-3.308594 44.589844-9.730469.34375-.15625.675781-.339843.992187-.546875l142.691406-92.296875c3.554688-2.300781 4.703125-6.96875 2.621094-10.65625-10.59375-18.796875-34.089844-25.957031-53.367187-16.257812zm-359.070313 107.5625 3.390625-123.21875 47.441406 1.304687-3.390625 123.222656zm258.925781-2.09375c-17.378906 7.84375-36.789062 10.007812-55.46875 6.191406l-98.148437-27.550781c-11.046875-3.121094-22.871094-1.828125-32.976563 3.605468l-8.421875 4.511719 2.253907-81.925781c26.6875-17.75 60.914062-19.574219 89.335937-4.765625l5.886719 3.050781c10.289062 5.3125 21.636718 8.242188 33.210937 8.578125l57.855469 1.589844c16.25.46875 30.050781 12.039063 33.347656 27.960937l-86.175781-2.378906c-4.417969-.121094-8.09375 3.363282-8.21875 7.777344-.121094 4.417969 3.363281 8.097656 7.777344 8.21875l95.101562 2.617188h.222657c4.332031-.003907 7.875-3.453126 7.992187-7.78125.097656-3.476563-.160156-6.957032-.773437-10.378907l64.277343-30.371093c.0625-.027344.125-.058594.1875-.089844 9.117188-4.613282 20.140625-3.070313 27.640625 3.871094zm0 0"/><path d="m228.203125 84v-76c0-4.417969-3.582031-8-8-8s-8 3.582031-8 8v76c0 4.417969 3.582031 8 8 8s8-3.582031 8-8zm0 0"/><path d="m288.203125 84v-36c0-4.417969-3.582031-8-8-8s-8 3.582031-8 8v36c0 4.417969 3.582031 8 8 8s8-3.582031 8-8zm0 0"/><path d="m168.203125 84v-36c0-4.417969-3.582031-8-8-8s-8 3.582031-8 8v36c0 4.417969 3.582031 8 8 8s8-3.582031 8-8zm0 0"/></svg>';
+
+
+
+// lastModified: 1594069689449
+// lastModifiedDate: Mon Jul 06 2020 17:08:09 GMT-0400 (hora de Venezuela) {}
+// name: "WhatsApp Image 2020-07-03 at 3.14.11 PM.jpeg"
+// size: 77560
+// type: "image/jpeg"
+// webkitRelativePath: ""
+
+const loadVideo = file => new Promise((resolve, reject) => {
+    try {
+        let video = document.createElement('video')
+        video.preload = 'metadata'
+
+        video.onloadedmetadata = function () {
+            resolve(this)
+        }
+
+        video.onerror = function () {
+            reject("Invalid video. Please select a video file.")
+        }
+
+        video.src = window.URL.createObjectURL(file)
+    } catch (e) {
+        reject(e)
+    }
+})
+
+function validateFile(file) {
+
+    return x = new Promise ((resolve, reject) => {
+
+        var video = document.createElement('video');
+        video.preload = 'metadata';
+
+    video.onloadedmetadata = async function() {
+
+        window.URL.revokeObjectURL(video.src);
+
+        if (video.duration < 1) {
+
+            console.log("Invalid Video! video is less than 1 second");
+            return;
+        }
+
+        // methodToCallIfValid();
+     }
+
+    })
+    video.src = URL.createObjectURL(file);
+}
+
+function getDuration(file) {
+    let videoNode = document.createElement("video");
+    let promise = new Promise(function(resolve, reject) {
+      videoNode.addEventListener("loadedmetadata", function() {
+        resolve(videoNode.duration);
+      });
+      videoNode.addEventListener("error", function() {
+        reject(videoNode.error.message + "(" + videoNode.error.code + ")");
+      });
+    });
+
+    const URL = window.URL || window.webkitURL;
+    videoNode.src = URL.createObjectURL(file);
+
+    return promise;
+  }
+
+ function typeValid(type, value, dataValid) {
     // image/jpeg, image/png, application/pdf
     switch (type) {
-        // campo vacio
+        // // campo vacio
+        case 'nullTime15':
+            return x = new Promise ( async (resolve, reject ) => {
+            // var e = false;
+            var vidFortmat = ['AVI', 'avi', 'MP4', 'mp4', '3GP', '3gp'];
+            if(value){
+
+            console.log('maldito archivo', value);
+                var l = value[0].type;
+                l = l.split("/");
+                if(vidFortmat.indexOf(l[1]) == -1){
+                    console.log('error de formato');
+                    resolve(true);
+                }
+
+               await getDuration(value[0]).then((duration) => {
+                    // duration in seconds (as float)
+
+                    console.log('la maldita duracion', duration );
+                    if(duration > 110){
+                        console.log('duracion true');
+                        resolve(true);
+                    }else{
+                        console.log('duracion false');
+                        reject(false);
+                    }
+
+                },
+                error => {
+                    console.log('el error', error);
+                    resolve(true);
+                });
+
+
+            }else{
+                console.log('duracion false');
+                reject(false);
+            }
+
+            // console.log('el ultimo retorno', e);
+            // return e;
+        });
+
+        break;
+
+        case 'nullImage1':
+
+            if( (!value.length) || value.length == 0 ){
+
+                return true;
+            }else{
+                return false;
+            }
+
+        break;
+
+        case 'nullImageOver10':
+
+            if( (value.length) && value.length > 10 ){
+
+                return true;
+            }else{
+                return false;
+            }
+
+        break;
+
+        case 'formatImages':
+            var imgFormat = ['PNG', 'png', 'JPG', 'jpg', 'JPEG', 'jpeg'];
+            var e = false;
+            if(value){
+
+                value.forEach((ele, idx) => {
+
+                    var l = ele.type;
+                    l = l.split("/");
+                    console.log(l);
+                    console.log(imgFormat.indexOf(l[1]));
+                if ( imgFormat.indexOf(l[1]) == -1 ) {
+
+                    e = true;
+
+                }
+
+            });
+            }
+
+            return e;
+
+            break;
         case 'null':
             console.log(value);
             if ((value == null) || (value == '')) return true; else return false;
@@ -62,6 +219,16 @@ function typeValid(type, value, dataValid) {
             var regex = /^\+?(\d.*){3,}jQuery/;
             return regex.test(value);
             break;
+        case 'nullUrl':
+            if ((value != null) || (value != '')) {
+                var regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+
+                console.log('resp', !regex.test(value));
+                return !regex.test(value);
+            } else {
+                return false;
+            }
+            break;
         case 'number':
             console.log(value);
             if (/^\d*jQuery/.test(value) == true) {
@@ -101,8 +268,47 @@ function typeValid(type, value, dataValid) {
 }
 
 
-function typeField(indexInArray, field) {
+async function typeField(indexInArray, field) {
 
+
+    if ((field.field == 'url')) {
+
+        jQuery('.' + indexInArray + '').on('keyup click change', function (e) {
+            var error = [];
+            var val = jQuery('input', this).val();
+
+            console.log('envio', val);
+
+            if (field.required == false && val == '') {
+                jQuery('.validateMessage', this).text('');
+                jQuery('.validateMessage', this).removeAttr('error');
+                return;
+            }
+
+            jQuery.each(field.valid, function (index, valueValid) {
+
+                if (typeValid(index, val)) {
+                    console.log('entra en valid');
+                    jQuery('.' + indexInArray + ' .validateMessage').text(valueValid.message);
+                    jQuery('.' + indexInArray + ' .validateMessage').attr('error', true);
+                    error.push(true);
+                } else {
+                    error.push(false);
+                }
+            });
+            // si no existen errores entonces elimina el mensaje de error
+            if (!error.includes(true)) {
+                jQuery('.validateMessage', this).text('');
+                jQuery('.validateMessage', this).removeAttr('error');
+
+                // jQuery('input#um-submit-btn').removeAttr('disabled');
+                // jQuery('input#um-submit-btn').removeAttr('title');
+            } else {
+                // jQuery('input#um-submit-btn').attr('disabled', true);
+                // jQuery('input#um-submit-btn').attr('title', 'Debes completar la información de forma correcta para continuar');
+            }
+        });
+    }
 
     if ((field.field == 'textfield')) {
 
@@ -304,10 +510,18 @@ function typeField(indexInArray, field) {
             var val = jQuery('input', this).val();
             if ((val != null) && (val != '')) {
 
-                val = jQuery('input', this)[0].files[0].type;
+                val = jQuery('input', this)[0].files;
             }
 
-            console.log(val);
+
+            if (field.required == false && val.length == 0) {
+                console.log('files', val);
+                jQuery('.validateMessage', this).text('');
+                jQuery('.validateMessage', this).removeAttr('error');
+                return;
+            }
+
+            // return;
 
             jQuery.each(field.valid, function (index, valueValid) {
 
@@ -330,14 +544,68 @@ function typeField(indexInArray, field) {
             }
         });
     }
+    if ((field.field == 'video')) {
+
+        jQuery('.' + indexInArray + '').on('keyup click change', function (e) {
+            var error = [];
+
+            var val = jQuery('input', this).val();
+            if ((val != null) && (val != '')) {
+
+                val = jQuery('input', this)[0].files;
+            }
+
+            if (field.required == false && val.length == 0) {
+                console.log('files', val);
+                jQuery('.validateMessage', this).text('');
+                jQuery('.validateMessage', this).removeAttr('error');
+                return;
+            }
+
+            jQuery.each(field.valid, async function (index, valueValid) {
+
+                var x = typeValid(index, val, valueValid);
+                await x.then(resp => {
+                    jQuery('.' + indexInArray + ' .validateMessage').text(valueValid.message);
+                    jQuery('.' + indexInArray + ' .validateMessage').attr('error', true);
+                    console.log('se recibe true');
+                    error.push(true);
+                }, err => {
+                    error.push(false);
+                });
+
+                // if (typeValid(index, val, valueValid)) {
+                //     jQuery('.' + indexInArray + ' .validateMessage').text(valueValid.message);
+                //     jQuery('.' + indexInArray + ' .validateMessage').attr('error', true);
+                //     console.log('se recibe true');
+                //     error.push(true);
+                // } else {
+                //     error.push(false);
+                // }
+            });
+            if (!error.includes(true)) {
+                jQuery('.validateMessage', this).text('');
+                jQuery('.validateMessage', this).removeAttr('error');
+                // jQuery('input#um-submit-btn').removeAttr('disabled');
+                // jQuery('input#um-submit-btn').removeAttr('title');
+            } else {
+                // jQuery('input#um-submit-btn').attr('disabled', true);
+                // jQuery('input#um-submit-btn').attr('title', 'Debes completar la información de forma correcta para continuar');
+            }
+        });
+    }
 }
 
 function configValidatorType(data) {
 
+    // console.log('abre validator');
 
 
     jQuery.each(data, function (indexInArray, valueOfElement) {
+
+        // console.log(valueOfElement);
         typeField(indexInArray, valueOfElement);
+
     });
 
 }
@@ -502,6 +770,218 @@ function setStars(element) {
 
 
 
+// ajustar enlaces
+function enlaces() {
+    var url = window.location.href;
+    if (url.includes('localhost')) {
+        var l = jQuery('[src]');
+        jQuery.each(l, function (indexInArray, valueOfElement) {
+
+            var s = jQuery(valueOfElement).attr('src');
+
+            if (s.includes('/wp-content/')) {
+
+                if (s.includes("/tsoluciono/")) {
+
+                    s = s.replace("/tsoluciono/", "/tsolucionamos/");
+                    jQuery(valueOfElement).attr('src', s);
+
+                }
+
+                if (!s.includes('/tsolucionamos/')) {
+
+                    s = s.replace('/wp-content/', '/tsolucionamos/wp-content/');
+                    jQuery(valueOfElement).attr('src', s);
+
+                }
+            }
+
+        });
+
+    }
+}
+
+
 jQuery(document).ready(function () {
     // jQuery('[data-toggle="tooltip"]').tooltip();}
+    enlaces();
 });
+
+
+
+
+jQuery(document).on("keydown", "form", function (event) {
+    return event.key != "Enter";
+});
+
+
+
+function deletePublicOfert(serial) {
+
+
+    var serialOferta = serial;
+
+    swal({
+        icon: 'warning',
+        title: "Eliminar publicación",
+        // text: '',
+        // content: formDataPresupuesto,
+        className: 'formSendPresupuesto',
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: false,
+                visible: true,
+                className: "formEditOfferCloseButton",
+                closeModal: true
+            },
+            confirm: {
+                text: "Aceptar",
+                value: true,
+                visible: true,
+                className: "formEditOfferButton",
+                closeModal: false
+            }
+        }
+    });
+
+
+    // colocado de la función de efecto click
+    serialOferta = JSON.stringify(serialOferta);
+    jQuery(".swal-modal.formSendPresupuesto button.swal-button.swal-button--confirm.formEditOfferButton").attr("onclick", "senddeletePublicOfert('" + serialOferta + "')");
+
+
+}
+
+
+function senddeletePublicOfert(serial) {
+
+    var d = serial;
+
+    var obj = _.extend({}, d);
+    var valJson = JSON.stringify(obj);
+
+    valJson = JSON.parse(serial);
+
+    console.log(valJson);
+    // return;
+
+    jQuery.ajax({
+        url: s.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'senddeletePublicOfert',
+            senddeletePublicOfert: valJson
+        },
+        beforeSend: function () {
+            console.log("before");
+            // setting a timeout
+            // jQuery("#spinnerPro").css('visibility', 'visible');
+        },
+        error: function () {
+            console.log("error");
+            swal.stopLoading();
+
+            swal({
+                icon: 'error',
+                title: "No pudimos procesar tu solicitud",
+                text: 'Por favor intente mas tarde',
+                className: 'errorSentOffer'
+            });
+
+        },
+        success: function (data) {
+            console.log("exito", data);
+
+            swal({
+                icon: 'success',
+                title: '¡Listo!',
+                text: 'La publicación ha sido eliminada',
+                className: 'successSendOffer'
+            }).then(
+                function (retorno) {
+                    location.reload();
+                });
+        },
+        complete: function () {
+            console.log("complete");
+            swal.stopLoading();
+
+        },
+    });
+
+}
+
+
+function gotoUrl(url) {
+
+    console.log(url);
+    // window.location.href = url;
+}
+
+
+
+
+
+
+function download_csv(csv, filename) {
+    var csvFile;
+    var downloadLink;
+
+    // CSV FILE
+    csvFile = new Blob([csv], { type: "text/xlsx" });
+
+    // Download link
+    downloadLink = document.createElement("a");
+
+    // File name
+    downloadLink.download = filename;
+
+    // We have to create a link to the file
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+
+    // Make sure that the link is not displayed
+    downloadLink.style.display = "none";
+
+    // Add the link to your DOM
+    document.body.appendChild(downloadLink);
+
+    // Lanzamos
+    downloadLink.click();
+}
+
+function export_table_to_csv(html, filename) {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+
+        for (var j = 0; j < cols.length; j++)
+            row.push(cols[j].innerText);
+
+        csv.push(row.join(","));
+    }
+
+    // Download CSV
+    download_csv(csv.join("\n"), filename);
+}
+
+document.querySelector("#generadorExcel").addEventListener("click", function () {
+    // var html = document.querySelector("#tablaBolsa").outerHTML;
+
+
+    var fileName = 'tabla';
+    var fileType = 'xlsx';
+
+    var table = document.getElementById('tablaBolsa');
+    //   var table = html;
+    var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet JS" });
+    return XLSX.writeFile(wb, null || (fileName.value + '.' + (fileType.value || 'xlsx')));
+
+
+});
+
+
+
+
