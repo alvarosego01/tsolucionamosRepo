@@ -152,6 +152,16 @@ function resources($resource, $extra = '')
 
         // break;
 
+        case 'pdfJS':
+
+        // wp_register_style('lightboxCss', get_template_directory_uri() . '/../Divi-child/assets/lightbox/ekko-lightbox.css', rand(), 'all');
+        // wp_enqueue_style('lightboxCss');
+
+        // wp_register_script('pdfJS',  get_template_directory_uri() . '/../Divi-child/assets/pdfjs/html2pdf.bundle.min.js', rand(), 'all');
+        // wp_enqueue_script('pdfJS');
+
+        break;
+
         case 'lightbox':
 
         wp_register_style('lightboxCss', get_template_directory_uri() . '/../Divi-child/assets/lightbox/ekko-lightbox.css', rand(), 'all');
@@ -628,6 +638,7 @@ function aditionalConfig()
         resources('sweetAlert');
         resources('signature');
         resources('bootstrap');
+        resources('pdfJS');
 
         // estilos y script de pagina
         wp_register_style('infoContratoCss', get_template_directory_uri() . '/../Divi-child/assets/css/informacionContrato.css', array(), rand(), 'all');

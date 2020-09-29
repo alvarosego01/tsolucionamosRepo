@@ -527,6 +527,7 @@ function misVacantes2($pagController = '')
   ?>
 
 
+
 <div id="viewReasonsCand">
 
 </div>
@@ -567,7 +568,7 @@ function misVacantes2($pagController = '')
 
             $tablaprocesoEntrevistas = $wpdb->prefix . 'proceso_contrato';
             $tablaprocesoEntrevistasEtapas = $wpdb->prefix . 'proceso_contrato_etapas';
-            $elegidos = $wpdb->get_results("SELECT * from $tablaprocesoEntrevistas as proceso INNER JOIN $tablaprocesoEntrevistasEtapas as etapas ON (proceso.id = etapas.idEntrevista) WHERE proceso.ofertaId='$idOferta'", ARRAY_A);
+            $elegidos = $wpdb->get_results("SELECT * from $tablaprocesoEntrevistas as proceso INNER JOIN $tablaprocesoEntrevistasEtapas as etapas ON (proceso.id = etapas.idEntrevista) WHERE proceso.ofertaId='$idOferta' and etapas.aprobado = 1 and ( etapas.tipoEntrevista = 'Entrevista con Recursos Humanos' OR etapas.tipoEntrevista = 'Añadido al proceso de entrevistas' )", ARRAY_A);
             $wpdb->flush();
 
             $tablaprocesoEntrevistas = $wpdb->prefix . 'proceso_contrato';
@@ -590,6 +591,7 @@ function misVacantes2($pagController = '')
                     $res = $res['seleccionPor'];
                 }
             } ?>
+
 
       <?php $existeContrato = ''; ?>
   <?php if(count($elegidos) > 0){ ?>
@@ -751,8 +753,21 @@ function misVacantes2($pagController = '')
                 // $ft = explode('"', $ft);
                 // $fotoBlanco = $ft[7];
                 // $fotoBlanco = str_replace('/temp/', '/'.$candidataId.'/', $fotoBlanco );
-                $url = '/wp-content/uploads/ultimatemember/' . $value['candidataId'] . '/' . $ft;
-                $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsoluciono' . $url : $url;
+                // $url = '/wp-content/uploads/ultimatemember/' . $value['candidataId'] . '/' . $ft;
+                // $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsoluciono' . $url : $url;
+
+
+                            if($ft != null){
+
+                                $url = '/wp-content/uploads/ultimatemember/' . $value['candidataId'] . '/' . $ft;
+                                $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos' . $url : $url;
+
+                            }else{
+
+                                $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos/wp-content/uploads/no-imagen.jpeg': '/wp-content/uploads/no-imagen.jpeg';
+                            }
+
+
           } ?>
 
 
@@ -836,6 +851,7 @@ function misVacantes2($pagController = '')
                 if ( (($res == 'Familia') || ($res == 'Ambos')) &&
                   ( (!isset($statusContrato['status']['solCambio'])  )  )
                 ) {
+
                       $x = array(
                     'ofertaId' => $ofid,
                     'current' => $currentId,
@@ -843,10 +859,6 @@ function misVacantes2($pagController = '')
                     'fam' => $cccid,
                 );
 
-                // can
-                // fam
-                // serial
-                // current
 
                 $x = json_encode($x, JSON_UNESCAPED_UNICODE);
                 $paginaContrato = esc_url(get_permalink(get_page_by_title('Información de contrato'))); ?>
@@ -1569,7 +1581,6 @@ function misVacantes3($pagController = '')
 <h4>Tus contratos</h4>
 
 <div class="row contractListCand">
-
 <?php
 foreach ($data as $r) {
 
@@ -1630,7 +1641,6 @@ if($r['cancelado'] == 1){
       'fam' => $contratistaId,
     );
 
-
     $diasPasados = dias_pasados($fechaInicio, $fechaActual);
     $estado = array();
 
@@ -1649,7 +1659,7 @@ if($r['cancelado'] == 1){
     $estado['cd'] = $r['contratoId'];
     $estado['datos'] = $x;
     $xx = json_encode($estado, JSON_UNESCAPED_UNICODE);
-    $x = json_encode($x, JSON_UNESCAPED_UNICODE, JSON_UNESCAPED_UNICODE);
+    $x = json_encode($x, JSON_UNESCAPED_UNICODE);
 
     //-----
     $nnn =  getInfoNameEmailUsers($postuladoId);
@@ -1768,6 +1778,10 @@ if($r['cancelado'] == 1){
 
         ?>
 
+        <pre>
+          <?php print_r($data); ?>
+        </pre>
+
 <?php if (count($data) > 0) {?>
 
   <h4>Tus contratos</h4>
@@ -1823,12 +1837,15 @@ foreach ($data as $r) {
     $vacanteUrl = esc_url(get_permalink(get_page_by_title('Información de vacante'))).'?serial='.$serialOferta;
 
     $x = array(
-        'ofertaId' => $ofertaId,
+        'ofertaId' => $ofid,
         'current' => $c,
         'can' => $postuladoId,
         'fam' => $contratistaId,
       );
-      $x = json_encode($x, JSON_UNESCAPED_UNICODE); ?>
+      $x = json_encode($x, JSON_UNESCAPED_UNICODE);
+
+      print_r($x);
+      ?>
 
   <div class="card col-12">
 
@@ -2940,6 +2957,7 @@ function deleteOfferContract()
 add_action('wp_ajax_sendSelectForContract', 'sendSelectForContract');
 add_action('wp_ajax_nopriv_sendSelectForContract', 'sendSelectForContract');
 
+// funcion para elegir candidato
 function sendSelectForContract()
 {
     global $wpdb;

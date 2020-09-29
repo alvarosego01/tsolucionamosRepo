@@ -146,8 +146,20 @@ if (count($info) > 0) {
 
             $ft = $usuario['fotoFondoBlanco'][0];
 
-            $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$ft;
-            $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsolucionamos'.$url : $url;
+            // $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$ft;
+            // $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsolucionamos'.$url : $url;
+
+
+                            if($ft != null){
+
+                                $url = '/wp-content/uploads/ultimatemember/' . $value['candidataId'] . '/' . $ft;
+                                $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos' . $url : $url;
+
+                            }else{
+
+                                $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos/wp-content/uploads/no-imagen.jpeg': '/wp-content/uploads/no-imagen.jpeg';
+                            }
+
 
             $turno = $usuario['Turno'][0];
             $turno = explode('"',$turno);
@@ -543,11 +555,16 @@ if (count($info) > 0) {
                             $infoCandidatoEntrevista = $infoResultadoCandidato['infoCandidatoEntrevista'];
 
                             $ft = $usuario['fotoFondoBlanco'][0];
-                            // $ft = explode('"', $ft);
-                            // $fotoBlanco = $ft[7];
-                            // $fotoBlanco = str_replace('/temp/', '/'.$candidataId.'/', $fotoBlanco );
-                            $url = '/wp-content/uploads/ultimatemember/' . $value['candidataId'] . '/' . $ft;
-                            $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos' . $url : $url;
+
+                            if($ft != null){
+
+                                $url = '/wp-content/uploads/ultimatemember/' . $value['candidataId'] . '/' . $ft;
+                                $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos' . $url : $url;
+
+                            }else{
+
+                                $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos/wp-content/uploads/no-imagen.jpeg': '/wp-content/uploads/no-imagen.jpeg';
+                            }
 
                             $entrevistaCandidatoUrl = esc_url(get_permalink(get_page_by_title('Información de entrevista')));
                             $entrevistaCandidatoUrl .= '?ie='.$ide;
@@ -970,6 +987,13 @@ if (count($info) > 0) {
             <?php  if( confirmStep2($stepData, 'fam') ){
 
                 $foto = esc_url( get_avatar_url( $candidataId ) );
+
+                if($foto == null || $foto == ''){
+
+                    $foto = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos/wp-content/uploads/no-imagen.jpeg': '/wp-content/uploads/no-imagen.jpeg';
+
+
+                }
 
                 ?>
 

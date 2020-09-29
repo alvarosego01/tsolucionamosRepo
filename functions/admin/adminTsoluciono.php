@@ -1604,7 +1604,8 @@ action="<?php echo $pagina . '?ie=' . $idEntrevista ?>">
         }
 
 
-        if (($slcc == $nc) && ( $slcc == $asist) && ($etapaEntrevista < 1) && ($confirmaPruebas == 0) && ($tipoPublic != 'Promoción') ) {
+        // if (($slcc == $nc) && ( $slcc == $asist) && ($etapaEntrevista < 1) && ($confirmaPruebas == 0) && ($tipoPublic != 'Promoción') ) {
+        if ( ($etapaEntrevista < 1) && ($tipoPublic != 'Promoción') ) {
 
             $dataEvaluate = array(
                'id' => $oferta['contratistaId'],
@@ -1803,7 +1804,7 @@ if($r['cancelado'] == 1){
     $diasPasados = dias_pasados($fechaCreacionContrato, $fechaActual);
     $estado = array();
 
-    $gdias = 30 - $diasPasados;
+    $gdias = 90 - $diasPasados;
 
     if ($r['activos'] == 1) {
 

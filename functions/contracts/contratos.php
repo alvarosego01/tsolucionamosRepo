@@ -43,14 +43,16 @@ function contractByUser($newContractTemplate)
 
         if (validateUserProfileOwner($fam, $currentId, 'familia')) {
             // si existe contrato entocnes
+
             if (isset($currentId) && isset($dataEntrada['can']) && isset($dataEntrada['fam']) && isset($serial) && ( count($exist) > 0)) {
 
                 $currentcurrent = $currentId;
                 $cancan = $dataEntrada['can'];
                 $famfam = $dataEntrada['fam'];
-                $serialserial = $serial;
+                $serialserial = $exist[0]['serialContrato'];
 
                 viewInfoContractTemplate($currentcurrent, $cancan, $famfam, $serialserial);
+
 
             }
             if (isset($currentId) && isset($dataEntrada['can']) && isset($dataEntrada['fam']) && isset($serial) && ( count($exist) == 0)) {
@@ -60,6 +62,8 @@ function contractByUser($newContractTemplate)
                 $famfam = $dataEntrada['fam'];
                 $serialserial = $serial;
 
+                // echo 'maldita sea3';
+                // print_r($)
                 preContractTemplateFamily($can, $fam, $serial, $newContractTemplate);
 
             }
@@ -126,6 +130,7 @@ function viewInfoContractTemplate($currentId, $can, $fam, $serial)
 
     $info = getInfoContractExist($data);
 
+
 //    esto para quitar slashes del texto contrato
     $contratoGenerado = $info[0]['textoContrato'];
     $x = stripslashes($contratoGenerado);
@@ -142,6 +147,38 @@ function viewInfoContractTemplate($currentId, $can, $fam, $serial)
 
 
   <div id="textoContrato1" class="textoContrato row">
+  <script src="https://kendo.cdn.telerik.com/2017.2.621/js/jszip.min.js"></script>
+ <script src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script>
+
+
+
+  <script type="text/javascript">
+
+
+kendo.pdf.defineFont({
+			"DejaVu Sans": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
+			"DejaVu Sans|Bold": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+			"DejaVu Sans|Bold|Italic": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+			"DejaVu Sans|Italic": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+			"WebComponentsIcons": "https://kendo.cdn.telerik.com/2017.1.223/styles/fonts/glyphs/WebComponentsIcons.ttf"
+});
+
+      function generatePDF() {
+        kendo.drawing
+    .drawDOM("#textoContrato1",
+    {
+        paperSize: "auto",
+        margin: { top: "0cm", bottom: "0cm" },
+        scale: 0.8,
+        font: "12px DejaVu"
+    })
+        .then(function(group){
+        kendo.drawing.pdf.saveAs(group, "contratoPDF.pdf")
+    });
+      }
+
+  </script>
+
     <?php
 // esto para quitar los slashes que mysql le añade al codigo
     echo $textoContrat;
@@ -153,6 +190,10 @@ function viewInfoContractTemplate($currentId, $can, $fam, $serial)
    <div class="envio_formulario row justify-content-around">
 
     <a class="botonWam btn btn-danger" href="<?php echo $pagina ?>"> <i class="fa fa-long-arrow-left" aria-hidden="true"></i>Regresar</a>
+    <a
+    style="color: white!important;"
+    onclick="generatePDF()"
+    class="botonWam btn btn-success" > <i class="fa fa-file-text" aria-hidden="true"></i> Obtener PDF</a>
 
   </div>
 
@@ -167,31 +208,21 @@ function preContractTemplateFamily($can, $fam, $serial, $newContractTemplate)
         'fam' => $fam,
         'serial' => $serial,
     );
-
     $infoContract = dbGetAllOfferInfo($serial);
-
-
-
     $datosUsuarios = array(
         'familia' => datosUsuarios('familia', $fam, $can),
         'candidata' => datosUsuarios('candidata', $fam, $can),
     );
-
-
     $codigoContrato = uniqid('c-', true);
 
     $pagina = esc_url(get_permalink(get_page_by_title('Home')));
-
     $textoContrato = $newContractTemplate;
-
     // datos familia
     $i = 'familia';
     $textoContrato = str_replace("{{nombreFam}}",'<strong>' .$datosUsuarios[$i]['nombreFam'].'</strong>', $textoContrato);
 
     $textoContrato = str_replace("{{rolFam}}", '<a href="' . $datosUsuarios[$i]['urlFam'] . '">' . $datosUsuarios[$i]['rolFam'] . '</a>', $textoContrato);
-
     // $textoContrato = str_replace("{{contratista}}", $datosUsuarios[$i]['nombreFam'], $textoContrato);
-
     $codFirma = $infoContract[0]['firmaCandidata'];
     $codFirma = getSignUser($codFirma);
     // print_r($codFirma);
@@ -208,50 +239,16 @@ function preContractTemplateFamily($can, $fam, $serial, $newContractTemplate)
     $textoContrato = str_replace("{{direccionRegistroCan}}", '<strong>'.$datosUsuarios[$i]['direccionRegistroCan'].'</strong>', $textoContrato);
     $textoContrato = str_replace("{{documentoCan}}", '<strong>'.$datosUsuarios[$i]['documentoCan'].'</strong>', $textoContrato);
 
-
-
     $c = '<strong id="codContrato"> En espera </strong>';
     $textoContrato = str_replace("{{serialContrato}}", $c, $textoContrato);
-
-
-
-    // para el nuevo contrato
-    // logoEmpresa
-    // fechaInicio
-    // fechaFinal
-    // nombreFam
-    // documentoFam
-    // direccionRegistroFam
-    // nombreCan
-    // documentoCan
-    // direccionRegistroCan
-    // sueldoVacante
-    // diaActual
-    // mesActual
-    // añoActual
-    // nombreFam
-    // firmaContratista
-    // nombreCan
-    // firmaCandidata
-    // serialContrato
-
-
 
     $fechaActual = date('d/m/Y');
 
     $fechaActual = tranformMeses($fechaActual);
-
-
     $infoContract = $infoContract[0];
-
     $fechaCreacion = date('d/m/Y');
     $fechaInicio = $fechaCreacion;
     $fechaFin= date('d/m/Y', strtotime(' + 90 days'));
-
-
-
-    $imag = '<img src="">';
-    $textoContrato = str_replace("{{firmaCandidata}}", $imag, $textoContrato);
 
     $textoContrato = str_replace("{{fechaInicio}}", setCalendarContract($fechaInicio), $textoContrato);
     $textoContrato = str_replace("{{fechaFinal}}", setCalendarContract($fechaFin), $textoContrato);
@@ -370,11 +367,7 @@ function preContractTemplate($can, $fam, $serial, $newContractTemplate)
 
 
     $fechaActual = date('d/m/Y');
-
-
-
     $fechaActual = tranformMeses($fechaActual);
-
 
     $fechaCreacion = date('d/m/Y');
     $fechaInicio = $fechaCreacion;
@@ -385,10 +378,10 @@ function preContractTemplate($can, $fam, $serial, $newContractTemplate)
 
     $fx = getSignUser($can);
 
-    $existeFirma = ( (isset($fx['firma'])) && ($fx['firma'] != null) && ($fx['firma'] != '') )? $fx['firma'] : null;
+    // $existeFirma = ( (isset($fx['firma'])) && ($fx['firma'] != null) && ($fx['firma'] != '') )? $fx['firma'] : null;
 
-    $imag = '<img src="'.$existeFirma.'">';
-    $textoContrato = str_replace("{{firmaCandidata}}", $imag, $textoContrato);
+    // $imag = '<img src="'.$existeFirma.'">';
+    // $textoContrato = str_replace("{{firmaCandidata}}", $imag, $textoContrato);
 
     $textoContrato = str_replace("{{fechaInicio}}", setCalendarContract($fechaInicio), $textoContrato);
     $textoContrato = str_replace("{{fechaFinal}}", setCalendarContract($fechaFin), $textoContrato);

@@ -1,0 +1,66 @@
+@import generals
+
+
+
+
+h3.anunTitle
+	text-align: center
+	margin-top: 25px
+	margin-bottom: 25px
+	span
+		color: $verdeOscuro
+		font-weight: bold
+
+
+
+
+.areaProfesionales
+	.gridOffer
+
+.container
+	max-width: unset!important
+
+#areaProfesionales
+	width: 80%!important
+	padding: 0!important
+	// max-width: unset!important
+
+
+
+#listOfProfesionals
+	.container
+		width: 100%!important
+		.row.rowList
+			width: 100%
+			// display: block
+			// grid-column-gap: 5px
+			// margin-bottom: 0
+			// @include responsivo(telefonoTable)
+			// 	grid-template-columns: repeat(1,1fr)!important
+			// @include responsivo(pcMedio)
+			// 	grid-template-columns: repeat(2,1fr)!important
+			// @include responsivo(general)
+			// 	grid-template-columns: repeat(3,1fr)!important
+			// @include responsivo(resto)
+			// 	grid-template-columns: repeat(3,1fr)!important
+			.gridOffer
+				width: 100%
+				.card
+					width: 100%!important
+					img
+						// height: 380px!important
+						// max-height: 300px!important
+						object-position: center top!important
+						// display: none
+					@include responsivo(telefonoTable)
+						img
+							height: auto!important
+					@include responsivo(pcMedio)
+						img
+							height: auto!important
+					@include responsivo(general)
+						img
+							height: 20vw!important
+					@include responsivo(resto)
+						img
+							height: 18vw!important

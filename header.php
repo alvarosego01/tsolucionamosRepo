@@ -32,11 +32,11 @@
 	-https://unpkg.com/xlsx/dist/xlsx.full.min.js
 	-https://unpkg.com/blob.js@1.0.1/Blob.js
 	-https://unpkg.com/file-saver@1.3.3/FileSaver.js -->
-<!--
+
 	<script type="text/javascript" src="https://unpkg.com/xlsx/dist/shim.min.js"></script>
 	<script type="text/javascript" src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 	<script type="text/javascript" src="https://unpkg.com/blob.js@1.0.1/Blob.js"></script>
-	<script type="text/javascript" src="https://unpkg.com/file-saver@1.3.3/FileSaver.js"></script> -->
+	<script type="text/javascript" src="https://unpkg.com/file-saver@1.3.3/FileSaver.js"></script>
 
 	<link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
 	<script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>

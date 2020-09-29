@@ -446,16 +446,23 @@ function saveNotification($data){
 
     if($usuarioMuestra == 'Tsoluciono'){
 
+
+
+
+
+
+
         $admins = [
-            // 'amdaly@tsolucionamos.com',
-            // 'apintado@tsolucionamos.com',
-            // 'vpedemonte@tsolucionamos.com'
-            'alvarosego01@gmail.com'
+            'amdaly@tsolucionamos.com',
+            'apintado@tsolucionamos.com',
+            'vpedemonte@tsolucionamos.com'
         ];
+        // 'alvarosego01@gmail.com'
 
 
         foreach ($admins as $key => $value) {
 
+            // return;
             wp_mail(
                 $value,
                 $sujetoDeCorreo.' ('.$fecha.')',
@@ -497,10 +504,10 @@ function saveNotification($data){
 
     }else{
 
-
+        // return;
         wp_mail(
-            // $email,
-            'alvarosego01@gmail.com',
+            $email,
+            // 'alvarosego01@gmail.com',
             $sujetoDeCorreo.' ('.$fecha.')',
             '<div style="width: 50%;
             margin: 25px auto;

@@ -43,7 +43,12 @@ function tiempoGarantia(){
         $estado = array();
         $gdias = 90 - $diasPasados;
 // notificacion de 3 dias
-        if($gdias > 3){
+        if(
+            $gdias == 1 ||
+            $gdias == 3 ||
+            $gdias == 5
+            // $gdias == 10 |
+        ){
 
             $contratistaId = $value['contratistaId'];
             $candidataId = $value['candidataId'];
@@ -63,7 +68,7 @@ function tiempoGarantia(){
 
             $mensaje = array(
                 'mensaje' => $msj,
-                'subject' => 'Te restan '.$gdias.' días de garantía por el contrato de prueba con <strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>',
+                'subject' => 'Días de garantía por el contrato de prueba',
                 'estado' => 0,
                 // 'fecha' => ,
                 'tipo' => 'addExtraCandAccept',

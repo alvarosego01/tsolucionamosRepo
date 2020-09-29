@@ -1242,8 +1242,6 @@ function dbSendCreateFamilyPostulantSelectionStep($data){
 
     $informacion = json_encode($informacion);
 
-
-
 try {
     $tabla = $wpdb->prefix . 'proceso_contrato';
 
@@ -1251,7 +1249,6 @@ try {
 
     $tabla = $wpdb->prefix . 'proceso_contrato_etapas';
    $wpdb->query("UPDATE $tabla SET fechaCreacion='$creadoEn', fechaPautado = 'Realizada',estado='En espera de selección final', aprobado=1, resultadosEntrevista = '$informacion' WHERE idEntrevista='$idEntrevista'");
-
 
     // parte de mensaje
   // datos mensajes
@@ -1285,8 +1282,6 @@ try {
               );
               saveNotification($mensaje);
 
-
-
                // parte Administracion
               $msj = '<strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>'.' Ha sido entrevistado por su vacante <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.';
               $mensaje = array(
@@ -1305,6 +1300,112 @@ try {
     echo 'Caught exception: ', $e->getMessage(), "\n";
 }
     die();
+}
+
+
+
+function initContract($can, $fam, $serial, $newContractTemplate, $serialOfert){
+
+    $data = array(
+        'can' => $can,
+        'fam' => $fam,
+        'serial' => $serial,
+    );
+
+    $infoContract = dbGetAllOfferInfo($serial);
+
+    $datosUsuarios = array(
+        'familia' => datosUsuarios('familia', $fam, $can),
+        'candidata' => datosUsuarios('candidata', $fam, $can),
+    );
+
+    // $codigoContrato = uniqid('C-', true);
+
+    $codigoContrato = $serialOfert;
+
+    $pagina = esc_url(get_permalink(get_page_by_title('Home')));
+
+    $textoContrato = $newContractTemplate;
+
+    // datos familia
+    $i = 'familia';
+    $textoContrato = str_replace("{{nombreFam}}",'<strong>' .$datosUsuarios[$i]['nombreFam'].'</strong>', $textoContrato);
+
+    $textoContrato = str_replace("{{rolFam}}", '<a href="' . $datosUsuarios[$i]['urlFam'] . '">' . $datosUsuarios[$i]['rolFam'] . '</a>', $textoContrato);
+
+    // $textoContrato = str_replace("{{contratista}}", $datosUsuarios[$i]['nombreFam'], $textoContrato);
+
+    $codFirma = $infoContract[0]['firmaCandidata'];
+    $codFirma = getSignUser($codFirma);
+    // print_r($codFirma);
+    $firma = '<div id="firmaContratista"><img src="' . $codFirma['firma'] . '"></div>';
+    $textoContrato = str_replace("{{firmaContratista}}", $firma, $textoContrato);
+
+    $textoContrato = str_replace("{{direccionRegistroFam}}", '<strong>'.$datosUsuarios[$i]['direccionRegistroFam'].'</strong>', $textoContrato);
+    $textoContrato = str_replace("{{documentoFam}}", '<strong>'.$datosUsuarios[$i]['documentoFam'].'</strong>', $textoContrato);
+
+    // datos candidata
+    $i = 'candidata';
+    $textoContrato = str_replace("{{nombreCan}}", '<strong>'.$datosUsuarios[$i]['nombreCan'].'</strong>', $textoContrato);
+
+    $textoContrato = str_replace("{{direccionRegistroCan}}", '<strong>'.$datosUsuarios[$i]['direccionRegistroCan'].'</strong>', $textoContrato);
+    $textoContrato = str_replace("{{documentoCan}}", '<strong>'.$datosUsuarios[$i]['documentoCan'].'</strong>', $textoContrato);
+
+
+
+    $c = '<br><strong id="codContrato">'.$codigoContrato.'</strong>';
+    $textoContrato = str_replace("{{serialContrato}}", $c, $textoContrato);
+
+
+
+    // para el nuevo contrato
+    // logoEmpresa
+    // fechaInicio
+    // fechaFinal
+    // nombreFam
+    // documentoFam
+    // direccionRegistroFam
+    // nombreCan
+    // documentoCan
+    // direccionRegistroCan
+    // sueldoVacante
+    // diaActual
+    // mesActual
+    // añoActual
+    // nombreFam
+    // firmaContratista
+    // nombreCan
+    // firmaCandidata
+    // serialContrato
+
+
+
+    $fechaActual = date('d/m/Y');
+    $fechaActual = tranformMeses($fechaActual);
+
+    $fechaCreacion = date('d/m/Y');
+    $fechaInicio = $fechaCreacion;
+    $fechaFin= date('d/m/Y', strtotime(' + 90 days'));
+
+
+    $infoContract = $infoContract[0];
+
+    // $fx = getSignUser($can);
+
+    // $existeFirma = ( (isset($fx['firma'])) && ($fx['firma'] != null) && ($fx['firma'] != '') )? $fx['firma'] : null;
+
+    // $imag = '<img src="'.$existeFirma.'">';
+    // $textoContrato = str_replace("{{firmaCandidata}}", $imag, $textoContrato);
+
+    $textoContrato = str_replace("{{fechaInicio}}", setCalendarContract($fechaInicio), $textoContrato);
+    $textoContrato = str_replace("{{fechaFinal}}", setCalendarContract($fechaFin), $textoContrato);
+
+    $textoContrato = str_replace("{{sueldoVacante}}", '<strong>'.$infoContract['sueldo'].'</strong>', $textoContrato);
+    $textoContrato = str_replace("{{diaActual}}", $fechaActual['dia'].' ', $textoContrato);
+    $textoContrato = str_replace("{{mesActual}}", $fechaActual['mes'], $textoContrato);
+    $textoContrato = str_replace("{{añoActual}}", $fechaActual['anio'], $textoContrato);
+
+    return $textoContrato;
 
 }
 
@@ -1318,9 +1419,8 @@ function dbSendSelectForContract($data){
     $can = $data['can'];
     $fam = $data['fam'];
 
-
-
     if($fam == $current){
+
         $tablaOfertaLaboral = $wpdb->prefix . 'ofertalaboral';
 
         $tabla = $wpdb->prefix . 'proceso_contrato';
@@ -1330,7 +1430,6 @@ function dbSendSelectForContract($data){
 
         $idEntrevista = $i[0]['id'];
 
-
         $tabla = $wpdb->prefix . 'proceso_contrato_etapas';
         $tablaprocesoEntrevistas = $tabla;
         $i = $wpdb->get_results("SELECT id, resultadosEntrevista from $tabla where idEntrevista = '$idEntrevista'", ARRAY_A);
@@ -1339,15 +1438,13 @@ function dbSendSelectForContract($data){
 
         $resultadosEntrevista = json_decode($resultadosEntrevista, true);
 
-        $resultadosEntrevista['seleccionPor'] = 'Tsoluciono';
+        // $resultadosEntrevista['seleccionPor'] = 'Tsoluciono';
         $resultadosEntrevista['candidatoSeleccionado'] = $can;
 
         $resultadosEntrevista = json_encode($resultadosEntrevista);
-
         $id = $i['0']['id'];
 
         try {
-
 
             $tabla = $wpdb->prefix . 'proceso_contrato_etapas';
             $wpdb->query("UPDATE $tabla SET resultadosEntrevista='$resultadosEntrevista' where id=$id and idEntrevista='$idEntrevista'");
@@ -1409,7 +1506,326 @@ function dbSendSelectForContract($data){
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
+
+    // adicion del contrato dentro del proceso interno..-------------------------------------------------------------------------
+
+    $tablaOferta = $wpdb->prefix . 'ofertalaboral';
+    $tablaContratos = $wpdb->prefix . 'contratos';
+    $tablaProcesoContratos = $wpdb->prefix . 'proceso_contrato';
+    $tablaPostulantes = $wpdb->prefix . 'ofertapostulantes';
+    $tablaEstado = $wpdb->prefix . 'estadoofertalaboral';
+    $tablaContratoHistoriales = $wpdb->prefix . 'historialcontratos';
+    $can = $can;
+
+    // [id] => 5f18bd75199415f18bd7519943
+    // [contratistaId] => 218
+    // [estado] => En revisión de pago efectuado
+    // [fechaCreacion] => 22/07/2020
+    // [gestion] => Gestionado por administración
+    // [fechaInicio] => 30/07/2020
+    // [fechaFin] => 31/07/2020
+    // [nombreTrabajo] => la prueba
+    // [cargo] =>
+    // [nombreFamilia] => familia01@gmail.com
+    // [direccion] => sdf
+    // [turno] =>
+    // [pais] => Uruguay
+    // [ciudad] => sadfasdf
+    // [sueldo] => 1234
+    // [horario] => Matutino
+    // [tipoServicio] => Cocinero
+    // [descripcionExtra] => afsdfsf
+    // [firmaCandidata] => 218
+    // [serialOferta] => O-5f18bd7c4abfe2.31033098
+    // [contratoTerminosPublicacion] => -
+    // [aceptaTerminosContrato] => 1
+    // [aceptaTerminosPublicacion] => 1
+    // [serialFactura] => F-5f18bd75199799.47910632
+    // [publico] => 1
+    // [departamento] => Artigas
+    // [imagenes] =>
+    // [tipoPublic] =>
+
+
+    $infoContract = $wpdb->get_results("SELECT * from $tablaOferta AS oferta where oferta.id = '$ofertaId' ", ARRAY_A);
+
+    $infoContract = $infoContract[0];
+    $idContratosta = $infoContract['contratistaId'];
+    $serialOferta = $infoContract['serialOferta'];
+    $idCandidata = $can;
+    // $firmaCandidata = $data['jsonfirmaCandidata'];
+    $ofertaId = $ofertaId;
+
+    $fechaCreacion = date('d/m/Y');
+    $fechaInicio = $fechaCreacion;
+    $fechaFin= date('d/m/Y', strtotime(' + 90 days'));
+    $serial = uniqid('C-', true);
+
+
+    $page = get_page_by_title( 'Información de contrato' );
+    $page_id = $page->ID;  //Page ID
+    $page_data = get_page($page_id);
+    $title = $page_data->post_title;
+    $textoContrato = $page_data->post_content;
+
+    // $can, $fam, $serial, $newContractTemplate
+    $textoContrato = initContract($can, $fam, $serialOferta, $textoContrato, $serial);
+
+    $idContrato = uniqid() . uniqid();
+    $datos = array(
+        'id' => sanitize_text_field($idContrato),
+        'contratistaId' => sanitize_text_field($infoContract['contratistaId']),
+        'candidataId' => sanitize_text_field($can),
+        'ofertaId' => sanitize_text_field($ofertaId),
+        'estado' => sanitize_text_field($infoContract['estado']),
+        'fechaCreacion' => sanitize_text_field($fechaCreacion),
+        'fechaInicio' => sanitize_text_field($fechaInicio),
+        'fechaFin' => sanitize_text_field($fechaFin),
+        'gestion' => sanitize_text_field($infoContract['gestion']),
+        'urlPdf' => sanitize_text_field(''),
+        'textoContrato' => $textoContrato,
+        'firmaCandidata' => "-",
+        'firmaContratista' => "-",
+        'serialContrato' => sanitize_text_field($serial),
+        'nombreTrabajo' => sanitize_text_field($infoContract['nombreTrabajo']),
+        'cargo' => sanitize_text_field($infoContract['cargo']),
+        'nombreFamilia' => sanitize_text_field($infoContract['nombreFamilia']),
+        'direccion' => sanitize_text_field($infoContract['direccion']),
+        'turno' => sanitize_text_field(''),
+        'pais' => sanitize_text_field($infoContract['pais']),
+        'departamento' => sanitize_text_field($infoContract['departamento']),
+        'ciudad' => sanitize_text_field($infoContract['ciudad']),
+        'sueldo' => sanitize_text_field($infoContract['sueldo']),
+        'tipoServicio' => sanitize_text_field($infoContract['tipoServicio']),
+        'descripcionExtra' => sanitize_text_field($infoContract['descripcionExtra']),
+        // 'horario' => sanitize_text_field(''),
+    );
+
+    // [id] => 5f1f168be1c9b5f1f168be1c9e
+    // [contratistaId] => 218
+    // [candidataId] => 126
+    // [ofertaId] => 5f18bd75199415f18bd7519943
+    // [estado] => En revisión de pago efectuado
+    // [fechaCreacion] => 27/07/2020
+    // [fechaInicio] => 27/07/2020
+    // [fechaFin] => 25/10/2020
+    // [gestion] => Gestionado por administración
+    // [urlPdf] =>
+    // [textoContrato] => <div class="card container">
+    // [firmaCandidata] => -
+    // [firmaContratista] => -
+    // [serialContrato] => C-5f1f168bd5b795.62001911
+    // [nombreTrabajo] => la prueba
+    // [cargo] =>
+    // [nombreFamilia] => familia01@gmail.com
+    // [direccion] => sdf
+    // [turno] =>
+    // [pais] => Uruguay
+    // [departamento] => Artigas
+    // [ciudad] => sadfasdf
+    // [sueldo] => 1234
+    // [tipoServicio] => Cocinero
+    // [descripcionExtra] => afsdfsf
+
+
+    $formato = array(
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+    );
+
+    $datoHistoriales = array(
+        'id' => sanitize_text_field(uniqid() . uniqid()),
+        'aceptado' => 1,
+        'cancelado' => 0,
+        'espera' => 0,
+        'caducado' => 0,
+        'activos' => 1,
+        'eliminado' => 0,
+        'engarantia' => 1,
+        'definitivo' => 0,
+        'contratoId' => sanitize_text_field($idContrato),
+        'fecha' => sanitize_text_field($fechaCreacion)
+    );
+
+    $datosHistorialesFormato = array(
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+    );
+
+// if(isset($firmaCandidata) && ($firmaCandidata != '') && ($firmaCandidata != null)){
+
+//     $idFamilia = $idCandidata;
+// $tabla = $wpdb->prefix . 'usuariofirmas';
+// $data = $wpdb->get_results("SELECT * FROM $tabla WHERE usuarioId = '$idFamilia'", ARRAY_A);
+
+// if(count($data) > 0){
+//     // si existe update
+
+//     try {
+//     $wpdb->query(" UPDATE $tabla SET firma = '$firmaCandidata' WHERE usuarioId='$idCandidata'");
+// } catch (Exception $e) {
+//     echo 'Caught exception: ', $e->getMessage(), "\n";
+// }
+
+// }else{
+//     // si no existe se crea
+//     $f = array(
+//         'firma' => $firmaCandidata,
+//         'usuarioId' => $idFamilia
+//     );
+
+//     $ft = array(
+//         '%s',
+//         '%s'
+//     );
+
+//     $wpdb->insert($tabla, $f, $ft);
+//     $wpdb->flush();
+
+//     }
+// }
+
+    try {
+
+        $wpdb->insert($tablaContratos, $datos, $formato);
+        $wpdb->insert($tablaContratoHistoriales, $datoHistoriales, $datosHistorialesFormato);
+        $ofertaId = $ofertaId;
+        // $wpdb->query("DELETE FROM $tablaEstado WHERE postuladoID = $can AND  ofertaId = '$ofertaId'");
+
+        $cont = $infoContract['contratistaId'];
+
+        // $wpdb->query("DELETE FROM $tablaProcesoContratos WHERE contratistaId = $cont AND  ofertaId = '$ofertaId'");
+
+        $tb = $wpdb->prefix . 'proceso_contrato';
+
+        $i = $wpdb->get_results("SELECT * from $tb where ofertaId='$ofertaId' and candidataId!=$cont and candidataId!=$can", ARRAY_A);
+        print_r($i);
+        // print_r($ofertaId);
+        // print_r($cont);
+
+        ?>
+            <pre>
+                <?php print_r($i); ?>
+            </pre>
+        <?php
+
+        $wpdb->query("UPDATE $tablaProcesoContratos SET etapa=4 WHERE ofertaId = '$ofertaId'");
+
+
+        foreach ($i as $key => $value) {
+            $tb = $wpdb->prefix . 'usuarios_recomendados';
+            $datos = array(
+                'idCandidato' => $value['candidataId'],
+                'idOferta' => $value['ofertaId'],
+                'idEntrevista' => $value['id'],
+                'fechaRecomendado' => date('d/m/Y')
+            );
+            $formato = array(
+                '%s',
+                '%s',
+                '%s',
+                '%s'
+            );
+            $wpdb->insert($tb, $datos, $formato);
+
+        }
+          // datos mensajes
+    // $candidatoId = $idCandidata;
+    // $contratistaId = $idContratosta;
+
+    // $tipoServicio = $infoContract['tipoServicio'];
+    // $serialVacante = $infoContract['serialOferta'];
+    // $nombreVacante = $infoContract['nombreTrabajo'];
+
+    // $vacanteUrl = esc_url(get_permalink(get_page_by_title('Información de vacante'))).'?serial='.$serialVacante;
+
+    // $candidatoInfo = getInfoNameEmailUsers($candidatoId);
+    // $familiaInfo = getInfoNameEmailUsers($contratistaId);
+
+    // print_r($candidatoInfo);
+    // print_r($familiaInfo);
+
+    //     // mensaje notificacion
+    //  // parte candidato
+    //  $msj = 'Has aceptado la propuesta de contrato por la vacante laboral publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. A partir de este momento te encuentras en un periodo de prueba de 90 dias en el cargo laboral.';
+    //  $mensaje = array(
+    //      'mensaje' => $msj,
+    //      'subject' => 'Has aceptado una propuesta de contrato por la vacante: '.$nombreVacante,
+    //      'estado' => 0,
+    //   // 'fecha' => ,
+    //      'tipo' => 'acceptContract',
+    //      'email' => $candidatoInfo['email'],
+    //      'usuarioMuestra' => $candidatoInfo['id']
+    //  );
+    //  saveNotification($mensaje);
+
+    //  // parte Familia
+    //  $msj = '<strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>'.' Ha aceptado una propuesta de contrato por tu vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.';
+
+    //  $mensaje = array(
+    //      'mensaje' => $msj,
+    //      'subject' => 'Contrato aceptado de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por el cargo de la vacante: '.$nombreVacante,
+    //      'estado' => 0,
+    //   // 'fecha' => ,
+    //      'tipo' => 'acceptContract',
+    //      'email' => $familiaInfo['email'],
+    //      'usuarioMuestra' => $familiaInfo['id']
+    //  );
+    //  saveNotification($mensaje);
+
+    //  // parte Admin
+    //  $msj = '<strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>'.' Ha aceptado una propuesta de contrato por la vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. Publicado por: <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>.';
+
+    //  $mensaje = array(
+    //      'mensaje' => $msj,
+    //      'subject' => 'Contrato aceptado de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por el cargo de la vacante: '.$nombreVacante,
+    //      'estado' => 0,
+    //   // 'fecha' => ,
+    //      'tipo' => 'acceptContract',
+    //      'email' => '',
+    //      'usuarioMuestra' => 'Tsoluciono'
+    //  );
+    //  saveNotification($mensaje);
+
+    } catch (Exception $e) {
+
     }
+    // -------------------------------------------------------------------------------------------------------------------
+
+}
+
 
 }
 

@@ -1134,62 +1134,62 @@ if(count($data) > 0){
 
         }
           // datos mensajes
-    $candidatoId = $idCandidata;
-    $contratistaId = $idContratosta;
+    // $candidatoId = $idCandidata;
+    // $contratistaId = $idContratosta;
 
-    $tipoServicio = $infoContract['tipoServicio'];
-    $serialVacante = $infoContract['serialOferta'];
-    $nombreVacante = $infoContract['nombreTrabajo'];
+    // $tipoServicio = $infoContract['tipoServicio'];
+    // $serialVacante = $infoContract['serialOferta'];
+    // $nombreVacante = $infoContract['nombreTrabajo'];
 
-    $vacanteUrl = esc_url(get_permalink(get_page_by_title('Información de vacante'))).'?serial='.$serialVacante;
+    // $vacanteUrl = esc_url(get_permalink(get_page_by_title('Información de vacante'))).'?serial='.$serialVacante;
 
-    $candidatoInfo = getInfoNameEmailUsers($candidatoId);
-    $familiaInfo = getInfoNameEmailUsers($contratistaId);
+    // $candidatoInfo = getInfoNameEmailUsers($candidatoId);
+    // $familiaInfo = getInfoNameEmailUsers($contratistaId);
 
-    print_r($candidatoInfo);
-    print_r($familiaInfo);
+    // print_r($candidatoInfo);
+    // print_r($familiaInfo);
 
-        // mensaje notificacion
-     // parte candidato
-     $msj = 'Has aceptado la propuesta de contrato por la vacante laboral publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. A partir de este momento te encuentras en un periodo de prueba de 90 dias en el cargo laboral.';
-     $mensaje = array(
-         'mensaje' => $msj,
-         'subject' => 'Has aceptado una propuesta de contrato por la vacante: '.$nombreVacante,
-         'estado' => 0,
-      // 'fecha' => ,
-         'tipo' => 'acceptContract',
-         'email' => $candidatoInfo['email'],
-         'usuarioMuestra' => $candidatoInfo['id']
-     );
-     saveNotification($mensaje);
+    //     // mensaje notificacion
+    //  // parte candidato
+    //  $msj = 'Has aceptado la propuesta de contrato por la vacante laboral publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. A partir de este momento te encuentras en un periodo de prueba de 90 dias en el cargo laboral.';
+    //  $mensaje = array(
+    //      'mensaje' => $msj,
+    //      'subject' => 'Has aceptado una propuesta de contrato por la vacante: '.$nombreVacante,
+    //      'estado' => 0,
+    //   // 'fecha' => ,
+    //      'tipo' => 'acceptContract',
+    //      'email' => $candidatoInfo['email'],
+    //      'usuarioMuestra' => $candidatoInfo['id']
+    //  );
+    //  saveNotification($mensaje);
 
-     // parte Familia
-     $msj = '<strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>'.' Ha aceptado una propuesta de contrato por tu vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.';
+    //  // parte Familia
+    //  $msj = '<strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>'.' Ha aceptado una propuesta de contrato por tu vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>.';
 
-     $mensaje = array(
-         'mensaje' => $msj,
-         'subject' => 'Contrato aceptado de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por el cargo de la vacante: '.$nombreVacante,
-         'estado' => 0,
-      // 'fecha' => ,
-         'tipo' => 'acceptContract',
-         'email' => $familiaInfo['email'],
-         'usuarioMuestra' => $familiaInfo['id']
-     );
-     saveNotification($mensaje);
+    //  $mensaje = array(
+    //      'mensaje' => $msj,
+    //      'subject' => 'Contrato aceptado de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por el cargo de la vacante: '.$nombreVacante,
+    //      'estado' => 0,
+    //   // 'fecha' => ,
+    //      'tipo' => 'acceptContract',
+    //      'email' => $familiaInfo['email'],
+    //      'usuarioMuestra' => $familiaInfo['id']
+    //  );
+    //  saveNotification($mensaje);
 
-     // parte Admin
-     $msj = '<strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>'.' Ha aceptado una propuesta de contrato por la vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. Publicado por: <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>.';
+    //  // parte Admin
+    //  $msj = '<strong>'.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].')</strong>'.' Ha aceptado una propuesta de contrato por la vacante publicada <a href="'.$vacanteUrl.'" class="hiper">'.$nombreVacante.'</a>. Por el cargo de: <strong>'.$tipoServicio.'</strong>. Publicado por: <strong>'.$familiaInfo['nombre'].'('.$familiaInfo['rol'].')</strong>.';
 
-     $mensaje = array(
-         'mensaje' => $msj,
-         'subject' => 'Contrato aceptado de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por el cargo de la vacante: '.$nombreVacante,
-         'estado' => 0,
-      // 'fecha' => ,
-         'tipo' => 'acceptContract',
-         'email' => '',
-         'usuarioMuestra' => 'Tsoluciono'
-     );
-     saveNotification($mensaje);
+    //  $mensaje = array(
+    //      'mensaje' => $msj,
+    //      'subject' => 'Contrato aceptado de '.$candidatoInfo['nombre'].'('.$candidatoInfo['rol'].') por el cargo de la vacante: '.$nombreVacante,
+    //      'estado' => 0,
+    //   // 'fecha' => ,
+    //      'tipo' => 'acceptContract',
+    //      'email' => '',
+    //      'usuarioMuestra' => 'Tsoluciono'
+    //  );
+    //  saveNotification($mensaje);
 
 
 

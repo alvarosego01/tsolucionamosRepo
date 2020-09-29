@@ -1316,7 +1316,7 @@ function preSendClickOffer() {
 function selectForContract(data) {
     swal({
         icon: 'info',
-        title: "Selección para ejercer cargo de vacante ",
+        title: "Selección para ejercer el cargo de la vacante ",
         // text: 'Nuestro equipo se hará cargo de formalizar el contrato con el candidato que selecciones',
         className: 'formSelectForContract',
         buttons: {
@@ -1417,7 +1417,7 @@ function showGarantContractOpc(data) {
     // garantia: "Días de garantía: 14"
     //
     // return;
-    var gdias = 30 - data['dias'];
+    var gdias = 90 - data['dias'];
     swal({
         icon: 'info',
         title: "Estado de garantía",
@@ -1437,14 +1437,14 @@ function showGarantContractOpc(data) {
                 visible: true,
                 className: "formSubmitPetition",
                 closeModal: false
-            },
-            confirm: {
-                text: "Confirmar candidato",
-                value: true,
-                visible: true,
-                className: "formSubmitConfirm",
-                closeModal: false
             }
+            // confirm: {
+            //     text: "Confirmar candidato",
+            //     value: true,
+            //     visible: true,
+            //     className: "formSubmitConfirm",
+            //     closeModal: false
+            // }
         }
     });
     // activacion datepicker
@@ -1453,7 +1453,7 @@ function showGarantContractOpc(data) {
     jQuery(".swal-modal.formSelectForContract button.swal-button.swal-button--petition.formSubmitPetition").attr("onclick", "sendPetitionChange(" + data + ")");
 
 
-    jQuery(".swal-modal.formSelectForContract button.swal-button.swal-button--confirm.formSubmitConfirm").attr("onclick", "sendConfirmService(" + data + ")");
+    // jQuery(".swal-modal.formSelectForContract button.swal-button.swal-button--confirm.formSubmitConfirm").attr("onclick", "sendConfirmService(" + data + ")");
 }
 
 
@@ -1785,7 +1785,7 @@ function preSendFamSolChangeDate(data) {
             }
         }
     });
-    jQuery("#date").datepicker({ minDate: 2, dateFormat: 'dd/mm/yy' });
+    jQuery("#date").datepicker({ minDate: 0, dateFormat: 'dd/mm/yy' });
 
     var options = {
         now: "12:35", //hh:mm 24 hour format only, defaults to current time
@@ -1937,7 +1937,7 @@ function preSendCandSolChangeDate(data) {
             }
         }
     });
-    jQuery("#date").datepicker({ minDate: 2, dateFormat: 'dd/mm/yy' });
+    jQuery("#date").datepicker({ minDate: 0, dateFormat: 'dd/mm/yy' });
 
     var options = {
         now: "12:35", //hh:mm 24 hour format only, defaults to current time

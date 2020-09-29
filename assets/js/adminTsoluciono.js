@@ -1076,7 +1076,7 @@ function sendAdminSelectPostulant(idpostulant, serial) {
         }
     });
     // activacion datepicker
-    jQuery("#date").datepicker({ minDate: 2, dateFormat: 'dd/mm/yy' });
+    jQuery("#date").datepicker({ minDate: 0, dateFormat: 'dd/mm/yy' });
     jQuery("#anim").on("change", function () {
         jQuery("#date").datepicker("option", "showAnim", jQuery(this).val());
     });
@@ -2397,9 +2397,9 @@ function sendCreateFamilyInterview(datos) {
     });
     // activacion datepicker
 
-    // jQuery('.swal-modal.formSelectFamilyInterview .date input').datepicker({ minDate: 2, dateFormat: 'dd/mm/yy' });
+    // jQuery('.swal-modal.formSelectFamilyInterview .date input').datepicker({ minDate: 0, dateFormat: 'dd/mm/yy' });
 
-    jQuery("#date").datepicker({ minDate: 2, language: 'es', dateFormat: 'dd/mm/yy' });
+    jQuery("#date").datepicker({ minDate: 0, language: 'es', dateFormat: 'dd/mm/yy' });
 
     var options = {
         now: "12:35", //hh:mm 24 hour format only, defaults to current time
@@ -2714,8 +2714,8 @@ function preSendAdminSolChangeDate(data) {
             }
         }
     });
-    // jQuery(".formSendChangeDate #date").datepicker({ minDate: 2, });
-    jQuery("#date").datepicker({ minDate: 2, language: 'he', dateFormat: 'dd/mm/yy' });
+    // jQuery(".formSendChangeDate #date").datepicker({ minDate: 0, });
+    jQuery("#date").datepicker({ minDate: 0, language: 'he', dateFormat: 'dd/mm/yy' });
 
     var options = {
         now: "12:35", //hh:mm 24 hour format only, defaults to current time
@@ -3513,7 +3513,7 @@ function setInterviewCalificate(data) {
         }
     });
     // activacion datepicker
-    jQuery("#date").datepicker({ minDate: 2, dateFormat: 'dd/mm/yy' });
+    jQuery("#date").datepicker({ minDate: 0, dateFormat: 'dd/mm/yy' });
     jQuery("#anim").on("change", function () {
         jQuery("#date").datepicker("option", "showAnim", jQuery(this).val());
     });

@@ -220,8 +220,19 @@ function infoInterview($data)
             // $ft = explode('"', $ft);
             // $fotoBlanco = $ft[7];
             // $fotoBlanco = str_replace('/temp/', '/'.$candidataId.'/', $fotoBlanco );
-            $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$ft;
-            $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsoluciono'.$url : $url;
+            // $url = '/wp-content/uploads/ultimatemember/'.$candidataId.'/'.$ft;
+            // $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost')?'/tsoluciono'.$url : $url;
+
+                             if($ft != null){
+
+                                $url = '/wp-content/uploads/ultimatemember/' . $value['candidataId'] . '/' . $ft;
+                                $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos' . $url : $url;
+
+                            }else{
+
+                                $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos/wp-content/uploads/no-imagen.jpeg': '/wp-content/uploads/no-imagen.jpeg';
+                            }
+
 
 
 
@@ -535,8 +546,20 @@ function infoInterview($data)
                             // $ft = explode('"', $ft);
                             // $fotoBlanco = $ft[7];
                             // $fotoBlanco = str_replace('/temp/', '/'.$candidataId.'/', $fotoBlanco );
-                            $url = '/wp-content/uploads/ultimatemember/' . $value['candidataId'] . '/' . $ft;
-                            $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsoluciono' . $url : $url;
+                            // $url = '/wp-content/uploads/ultimatemember/' . $value['candidataId'] . '/' . $ft;
+                            // $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsoluciono' . $url : $url;
+
+                 if($ft != null){
+
+                                $url = '/wp-content/uploads/ultimatemember/' . $value['candidataId'] . '/' . $ft;
+                                $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos' . $url : $url;
+
+                            }else{
+
+                                $fotoBlanco = ($_SERVER['SERVER_NAME'] == 'localhost') ? '/tsolucionamos/wp-content/uploads/no-imagen.jpeg': '/wp-content/uploads/no-imagen.jpeg';
+                            }
+
+
                             ?>
 
                             <div class="row candidato">

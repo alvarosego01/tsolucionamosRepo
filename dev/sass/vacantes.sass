@@ -1,0 +1,261 @@
+
+@import generals
+
+
+
+h3.anunTitle
+	text-align: center
+	margin-top: 25px
+	margin-bottom: 25px
+	span
+		color: $verdeOscuro
+		font-weight: bold
+
+a.aLink
+	text-decoration: none
+	// display: block
+	width: 100%
+	margin-top: 25px
+	// margin-bottom:
+	// width: fit-content
+
+	.row
+		min-height: 150px
+		height: 100%
+
+	&:hover
+		cursor: pointer
+		.card
+			box-shadow: $boxShadow2!important
+			transition: $trans
+
+
+#anounceLists
+	position: relative
+	margin-bottom: 50px
+	&:after
+		content: ''
+		border-bottom: 1.5px solid rgba(0,0,0,0.4)
+		width: 90%
+		bottom: -50px
+		left: 0
+		right: 0
+		display: block
+		margin: 0 auto
+		position: absolute
+
+	.row
+		margin: 0
+		width: 100%
+	.card
+		// padding: 0 2.5%
+		padding-left: 0
+		box-shadow: $boxShadow1
+		margin-bottom: 25px
+		box-sizing: border-box
+		width: 75%
+		margin: 0 auto
+		transition: $trans
+		.buttonCustom
+			margin-bottom: 0
+			display: flex
+			flex-direction: row
+			justify-content: space-around
+			margin-top: 15px
+			a
+				display: block
+		.info
+			padding: 25px 2.5%
+			.subInfo
+				// margin-top: 15px
+				.row
+					// margin-bottom: 1
+					.desc
+						p
+							overflow: auto
+							max-height: 180px
+							font-size: 20px
+							line-height: normal
+							color: black
+			h6
+				padding-bottom: 0
+				// margin-top: 25px
+				margin-bottom: 25px
+				width: 100%
+				text-align: center
+				font-size: 25px
+		.contratistaImg
+			padding: 0
+			position: relative
+			span
+				position: absolute
+				left: 0
+				right: 0
+				display: block
+				margin: 0 auto
+				padding: 5px 25px
+				text-align: center
+				width: 100%
+				transition: $trans
+				z-index: 1
+				font-weight: bold
+				letter-spacing: 2.5px
+			span.etiqueta
+				bottom: 0
+				background-color: $azulOscuro
+				color: white
+				// margin: 0
+			img
+				object-fit: cover!important
+				object-position: top
+				position: absolute
+				height: 100%
+				width: 100%
+				// height: 100%!important
+
+
+a.vacantLink
+	display: block
+	width: 100%
+	text-decoration: none
+	padding: 0 10px!important
+	margin-bottom: 20px!important
+
+div#listOfferts
+	padding-top: 50px!important
+	h4.noResults
+		width: 100%
+		display: block
+		text-align: center
+		margin: 25px 0
+		padding: 0
+	.selectors
+		ul
+			display: flex
+			flex-flow: wrap
+			list-style: none
+			justify-content: center
+			width: 100%
+			// display: block
+			// margin-bottom: 0
+			padding-bottom: 50px
+			li
+				margin-left: 10px
+				margin-right: 10px
+				transition: $trans
+				font-size: 22px
+				width: fit-content
+				&:hover
+					color: $azulOscuro
+		// flex-direction:
+		@include responsivo(telefonoTable)
+			ul
+				padding-left: 0
+			h6
+				// text-align: center
+			li
+				text-align: center
+				width: 100%
+				font-size: 18px!important
+	.list.row
+		@include responsivo(telefonoTable)
+			display: flex!important
+			justify-content: center
+			text-align: center
+			.vacantLink
+				display: block!important
+				width: 100%!important
+				max-width: 100%!important
+				flex: unset!important
+				.public.card
+					width: 100%!important
+					flex-direction: column
+					// margin: auto
+					.icon
+						margin: auto
+						padding-right: 0
+						padding-bottom: 15px
+						svg
+							width: 60px
+							height: 60px
+					.info
+						width: 100%
+						h6
+							text-align: center
+							margin-bottom: 10px
+						.subInfo
+							flex-direction: column
+		@include responsivo(pcMedio)
+			display: flex!important
+			justify-content: center
+			text-align: center
+			.vacantLink
+				display: block!important
+				width: 50%!important
+				max-width: 100%!important
+				flex: unset!important
+				.public.card
+					width: 100%!important
+					flex-direction: column
+					// margin: auto
+					.icon
+						margin: auto
+						padding-right: 0
+						padding-bottom: 15px
+						svg
+							width: 60px
+							height: 60px
+					.info
+						width: 100%
+						h6
+							text-align: center
+							margin-bottom: 10px
+						.subInfo
+							flex-direction: column
+
+	.public
+		display: flex
+		flex-direction: row
+		padding: 20px 10px!important
+		box-shadow: $boxShadow1
+		transition: $trans
+		height: 100%
+		.icon
+			display: flex
+			// margin: 0 2%
+			padding-right: 10px
+			width: 20%
+			svg
+				height: 45px
+				width: 45px
+				display: block
+				margin: auto
+				transition: $trans
+		.info
+			width: 80%
+			h6
+				font-size: 20px
+				padding-bottom: 0
+				margin: 0
+				color: $azulOscuro
+				transition: $trans
+		.subInfo
+			display: flex
+			justify-content: space-between
+			width: 100%
+			small
+				font-size: 16px
+				color: black
+				&:nth-of-type(2)
+					margin-left: 10px
+		&:hover
+			background-color: $azulOscuro
+			.icon
+				svg
+					fill: white
+			.info
+				h6
+					color: white
+				small
+					color: white
+

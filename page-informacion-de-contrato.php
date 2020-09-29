@@ -12,14 +12,13 @@ $textoContrato1 = apply_filters('the_content', $post->post_content);
 
  ?>
 
-
 <div id="globalContainerNewContract">
 <div id="containerNewContract" class="container">
 
 
             <div class="row titleSection">
                 <h2><span class="resalte1">Contrato</span> de trabajo</h2>
-                <h5>Lee con atención los términos</h5>
+                <!-- <h5>Lee con atención los términos</h5> -->
             </div>
 
         <?php
@@ -28,7 +27,7 @@ $textoContrato1 = apply_filters('the_content', $post->post_content);
 
         // echo $textoContrato1;
         ?>
-     
+
 </div>
 </div>
 

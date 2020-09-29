@@ -1,27 +1,235 @@
 
- Memoria virtual
 
- sudo fallocate -l 1G /swapfile2
- ls -lh /swapfile2
- sudo chmod 600 /swapfile2
- sudo mkswap /swapfile2
- sudo swapon /swapfile2
- sudo cp /etc/fstab /etc/fstab.bak
- echo '/swapfile2 none swap sw 0 0' | sudo tee -a /etc/fstab
- cat /proc/sys/vm/swappiness
- sudo sysctl vm.swappiness=10
- sudo nano /etc/sysctl.conf
- At the bottom, you can add:
+<div class="card container">
 
-vm.swappiness=10
- cat /proc/sys/vm/vfs_cache_pressure
- sudo sysctl vm.vfs_cache_pressure=50
- sudo nano /etc/sysctl.conf
- At the bottom, add the line that specifies your new value:
+    <div class="contenido row justify-content-center">
+        <h3 class="tituloContrato"> CONTRATO DE TRABAJO A PRUEBA.</h3>
+        <div>
+                <!-- <div class="fechas">
+                    <div class="desde">
+                        INICIO: {{fechaInicio}}
+                    </div>
+                    <div class="hasta">
+                        VENCIMIENTO: {{fechaFinal}}.
+                    </div>
+                </div> -->
 
-vm.vfs_cache_pressure=50
+                <p style="display: block;">
+                    <strong>CONTRATO DE TRABAJO A PRUEBA:</strong> Entre los abajo firmantes: I) Por una parte la Sra. {{nombreFam}} con C.I. {{documentoFam}} en su calidad de Empleador domiciliada en la calle {{direccionRegistroFam}}, Montevideo (en adelante “la Empleadora) y II) Por la otra parte la Sra.{{nombreCan}} . con C.I. {{documentoCan}}, domiciliada en {{direccionRegistroCan}} Montevideo (en adelante “la Trabajadora”).
+                </p>
+                <p style="display: block;">
+                    <strong>SE CONVIENEN LO SIGUIENTE:</strong>
+                    <br>
+                    <strong>PRIMERO:</strong> El La Empleadora contrata a prueba los servicios de la interesada Trabajadora para desempeñar trabajos domésticos a partir de la fecha del contrato y por un período de noventa (90) días a partir de la firma del presente.
+                </p>
+                <p style="display: block;">
+                    En cualquier momento del plazo establecido en el párrafo anterior, la Empleadora podrá dar por terminada la relación laboral sin necesidad de expresión de causa.
+                </p>
+                <p style="display: block;">
+                    Asimismo, durante el período de este contrato, las modificaciones o cambios que ela Eempleadora determine en las labores asignadas a la Trabajadora aspirante no podrán considerarse  en ningún caso o circunstancia como despido técnico o indirecto.
+                </p>
+                <p style="display: block;">
+                    <strong>SEGUNDO:</strong> Una vez vencido el plazo de prueba establecido, el empleador determinará la confirmación de la interesada en su puesto de trabajo, o bien su alejamiento definitivo del mismo si sus servicios o su desempeño no resultaran satisfactorios. El Ama de Casa no está obligada a confirmarla en su cargo, aún cuando su trabajo y rendimiento resultaran satisfactorios.
+                </p>
+                <p style="display: block;">
+                    <strong>TERCERO:</strong> el salario mensual nominal de la Trabajadora será de {{sueldoVacante}} (pesos uruguayos). En caso de producirse la confirmación de la interesada, el empleador determinará el salario. El salario que  se establezca no podrá ser inferior al fijado al iniciarse la relación laboral que se pacta en virtud del presente contrato.
+                </p>
+                <p style="display: block;">
+                    <strong>CUARTO:</strong> El cese de la relación laboral que se produzca enmarcado en la facultad acordada en la cláusula PRIMERO de este contrato, comprenderá la terminación Si el empleador resolviera no confirmar a la interesada en sus funciones, quedará automáticamente rescindida de toda obligación existente entre las partes, salvo la del pago del salario correspondiente al período de prueba. La Trabajadora interesada renuncia desde ya a cualquier acción, excepción o reclamación que entendiera o pretendiera le puede corresponder.
+                </p>
+                <p style="display: block;">
+                    <strong>QUINTO:</strong> Obligación de preaviso: En caso que la Trabajadora decida renunciar al puesto de trabajo durante el período de prueba, se obliga a comunicar a la Empleadora dicha circunstancia con un preaviso de por lo menos quince (15) días de anticipación.
+                </p>
+                <p style="display: block;">
+                    <strong>SEXTO: Otros deberes</strong>
+                    <br>
+                    <strong>6.1.</strong> La Trabajadora se obliga a observar buena conducta, cumpliendo diligentemente las instrucciones que le impartan, prestar sus servicios de forma diligente y asistir a su trabajo de acuerdo a las instrucciones que le impartan.
+                    <br>
+                    <strong>6.2.</strong> La Trabajadora solo podrá justificar inasistencias mediante certificados expedidos por BPS y Banco de Seguros del Estado.
+                </p>
+                <p style="display: block;">
+                    <strong>SEPTIMO: Jurisdicción:</strong> cualquier diferencia que pueda surgir entre las partes en la interpretación o ejecución de este documento y que no pueda ser solucionada amistosamente, será sometida ante los tribunales de la ciudad en que fue firmado el presente contrato.
+                </p>
+                <p style="display: block;">
+                    <strong>OCTAVO:</strong> Notificaciones: las partes constituyen domicilio en los indicados como suyos en la comparecencia y aceptan el telegrama colacionado como medio hábil de notificación.
+                </p>
+                <p style="display: block;">
+                    <strong>NOVENO:</strong> previa lectura y otorgamiento, las partes firman el presente de conformidad en dos ejemplares de un mismo tenor, en ____________, La interesada acepta este contrato en forma expresa e irrevocable y en todos sus términos.
+                </p>
+                <p style="display: block;">
+                    Para constancia se firma en dos ejemplares en Montevideo el {{diaActual}}de {{mesActual}} de {{añoActual}}
+                </p>
+        </div>
+    </div>
+
+    <div class="areaFirmas row justify-content-around">
+        <div class="familia col-6">
+            <strong>{{nombreFam}}</strong>
+            <div class="cuadroFirma"></div>
+        </div>
+        <div class="candidata col-6">
+            <strong>{{nombreCan}}</strong>
+            <div class="cuadroFirma"></div>
+        </div>
+    </div>
+
+    <div class="footerContrato row justify-content-between">
+        <div class="headerEmpresa col-6">
+        </div>
+        <div class="infoContrato col-6">
+            <h5>Código del contrato: {{serialContrato}}</h5>
+        </div>
+    </div>
+
+</div>
+
+server {
+    server_name erp.minimarket.com.uy www.erp.minimarket.com.uy;
+    listen 51.222.25.113;
+        #root /home/minimarket/domains/erp.minimarket.com.uy/public_html;
+
+      listen 80;
+    listen 443 default_server ssl;
+
+    access_log /var/log/virtualmin/erp.minimarket.com.uy_access_log;
+    error_log /var/log/virtualmin/erp.minimarket.com.uy_error_log;
+
+      location / {
+          root  /home/minimarket/domains/erp.minimarket.com.uy/public_html;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+          proxy_pass http://51.222.25.113:8069;
+      }
+      #root  /home/minimarket/domains/erp.minimarket.com.uy/public_html;
+
+
+
+    ssl_certificate /home/minimarket/domains/erp.minimarket.com.uy/ssl.cert;
+    ssl_certificate_key /home/minimarket/domains/erp.minimarket.com.uy/ssl.key;
+
+  }
 
 
 
 
-{"solucionPropuesta":"SI","seleccionPor":"Familia","infoEntrevistaFamilia":"Entrevista omitida por administraciu00f3n"}
+
+
+  curl -k "sftp://167.114.113.140/var/www/mercadopyme/domains/api.mercadopyme/public_html/uploadsRespaldo.zip" --user "root:AA9jkF5W" -o "/home/PYMEuploadsRespaldo.zip" --ftp-create-dirs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="card container">
+    <div class="card container">
+
+        <div class="contenido row justify-content-center">
+            <h3 class="tituloContrato"> CONTRATO DE TRABAJO A PRUEBA.</h3>
+            <div>
+                <p>
+
+                    <div class="fechas">
+                        <div class="desde">
+                            INICIO: <div class='dat'>
+        <div class='mes'>
+            Agosto
+        </div>
+        <div class='dia'>
+            07
+        </div>
+        <div class='anio'>
+            2020
+        </div>
+        </div>
+                        </div>
+                        <div class="hasta">
+                            VENCIMIENTO: <div class='dat'>
+        <div class='mes'>
+            Noviembre
+        </div>
+        <div class='dia'>
+            05
+        </div>
+        <div class='anio'>
+            2020
+        </div>
+        </div>.
+                        </div>
+                    </div>
+
+                    <strong>CONTRATO DE TRABAJO A PRUEBA:</strong> Entre los abajo firmantes: I) Por una parte la Sra. <strong>Sindia Natalia Gonzalez Apud </strong> con C.I. <strong>39771052</strong> en su calidad de Empleador domiciliada en la calle <strong>Direccion</strong>, Montevideo (en adelante “la Empleadora) y II) Por la otra parte la Sra.<strong>Katherine Sabrina Gares Rodriguez </strong> . con C.I. <strong>50309529</strong>, domiciliada en <strong>Ciudad del Plata</strong> Montevideo (en adelante “la Trabajadora”).
+
+                    <strong>SE CONVIENEN LO SIGUIENTE:</strong>
+
+                    <strong>PRIMERO:</strong> El La Empleadora contrata a prueba los servicios de la interesada Trabajadora para desempeñar trabajos domésticos a partir de la fecha del contrato y por un período de noventa (90) días a partir de la firma del presente.
+
+                    En cualquier momento del plazo establecido en el párrafo anterior, la Empleadora podrá dar por terminada la relación laboral sin necesidad de expresión de causa.
+
+                    Asimismo, durante el período de este contrato, las modificaciones o cambios que ela Eempleadora determine en las labores asignadas a la Trabajadora aspirante no podrán considerarse  en ningún caso o circunstancia como despido técnico o indirecto.
+
+                    <strong>SEGUNDO:</strong> Una vez vencido el plazo de prueba establecido, el empleador determinará la confirmación de la interesada en su puesto de trabajo, o bien su alejamiento definitivo del mismo si sus servicios o su desempeño no resultaran satisfactorios. El Ama de Casa no está obligada a confirmarla en su cargo, aún cuando su trabajo y rendimiento resultaran satisfactorios.
+
+                    <strong>TERCERO:</strong> el salario mensual nominal de la Trabajadora será de <strong>0000</strong> (pesos uruguayos). En caso de producirse la confirmación de la interesada, el empleador determinará el salario. El salario que  se establezca no podrá ser inferior al fijado al iniciarse la relación laboral que se pacta en virtud del presente contrato.
+
+                    CUARTO: El cese de la relación laboral que se produzca enmarcado en la facultad acordada en la cláusula PRIMERO de este contrato, comprenderá la terminación Si el empleador resolviera no confirmar a la interesada en sus funciones, quedará automáticamente rescindida de toda obligación existente entre las partes, salvo la del pago del salario correspondiente al período de prueba. La Trabajadora interesada renuncia desde ya a cualquier acción, excepción o reclamación que entendiera o pretendiera le puede corresponder.
+
+                    <strong>QUINTO:</strong> Obligación de preaviso: En caso que la Trabajadora decida renunciar al puesto de trabajo durante el período de prueba, se obliga a comunicar a la Empleadora dicha circunstancia con un preaviso de por lo menos quince (15) días de anticipación.
+
+                    <strong>SEXTO: Otros deberes:</strong>
+
+                    <strong>6.1.</strong> La Trabajadora se obliga a observar buena conducta, cumpliendo diligentemente las instrucciones que le impartan, prestar sus servicios de forma diligente y asistir a su trabajo de acuerdo a las instrucciones que le impartan.
+
+                    <strong>6.2.</strong> La Trabajadora solo podrá justificar inasistencias mediante certificados expedidos por BPS y Banco de Seguros del Estado.
+
+                    <strong>SEPTIMO: Jurisdicción:</strong> cualquier diferencia que pueda surgir entre las partes en la interpretación o ejecución de este documento y que no pueda ser solucionada amistosamente, será sometida ante los tribunales de la ciudad en que fue firmado el presente contrato.
+
+                    <strong>OCTAVO:</strong> Notificaciones: las partes constituyen domicilio en los indicados como suyos en la comparecencia y aceptan el telegrama colacionado como medio hábil de notificación.
+
+                    <strong>NOVENO:</strong> previa lectura y otorgamiento, las partes firman el presente de conformidad en dos ejemplares de un mismo tenor, en ____________, La interesada acepta este contrato en forma expresa e irrevocable y en todos sus términos.
+
+                    Para constancia se firma en dos ejemplares en Montevideo el 07 de Agosto de 2020
+
+
+                </p>
+            </div>
+        </div>
+
+        <div class="areaFirmas row justify-content-around">
+            <div class="familia col-6">
+                <strong>Firma: <strong>Sindia Natalia Gonzalez Apud </strong></strong>
+                <div id="firmaContratista"><img src=""></div>
+            </div>
+            <div class="candidata col-6">
+                <strong>Firma: <strong>Katherine Sabrina Gares Rodriguez </strong></strong>
+                {{firmaCandidata}}
+            </div>
+        </div>
+
+        <div class="footerContrato row justify-content-between">
+            <div class="headerEmpresa col-6">
+                <h5>Tsoluciono C.A</h5>
+                Nro xxxxxxxxxxxxxx
+
+            </div>
+            <div class="infoContrato col-6">
+                <h5>Codigo del contrato: <br><strong id="codContrato">C-5f2d7265757d40.70918165</strong></h5>
+            </div>
+        </div>
+
+    </div>
